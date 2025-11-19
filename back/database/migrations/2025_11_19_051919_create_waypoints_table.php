@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('waypoints', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("shop_id");
-            $table->unsignedBigInteger("travel_plan_id");
+            $table->foreign("shop_id")->references("id")->on("shops")->cascadeOnDelete();
+            $table->foreign("travel_plan_id")->references("id")->on("travel_plans")->cascadeOnDelete();
             $table->time("time");
             $table->timestamps();
         });

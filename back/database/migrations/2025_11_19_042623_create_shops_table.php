@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string("address");
             $table->time("opens_at");
             $table->time("closes_at");
-            $table->string("tell");
+            $table->string("phone_number");
             $table->string("img_url");
             $table->double("latitude");
             $table->double("longitude");

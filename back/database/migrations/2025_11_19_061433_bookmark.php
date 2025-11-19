@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create("bookmark", function (Blueprint $table) {
-            $table->unsignedBigInteger("user_id");
-            $table->unsignedBIgInteger("shop_id");
+            $table->foreign("user_id")->references("id")->on("users")->cascadeOnDelete();
+            $table->foreign("shop_id")->references("id")->on("shops")->cascadeOnDelete();
         });
     }
 
@@ -22,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists("bookmark");
     }
 };
