@@ -46,4 +46,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function bookmarked() {
+        return $this->belongsToMany(Shop::class, "bookmark");
+    }
+    public function travelPlans() {
+        return $this->hasMany(TravelPlan::class);
+    }
 }
