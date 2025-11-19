@@ -14,13 +14,22 @@ return new class extends Migration
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
             $table->string("name");
+            $table->text("description");
             $table->string("address");
+            $table->string("phone_number");
+            $table->string("image_url");
+            $table->unsignedInteger("min_budget");
             $table->time("opens_at");
             $table->time("closes_at");
-            $table->string("phone_number");
-            $table->string("img_url");
             $table->double("latitude");
             $table->double("longitude");
+            $table->boolean("is_sun");
+            $table->boolean("is_mon");
+            $table->boolean("is_tue");
+            $table->boolean("is_wed");
+            $table->boolean("is_thu");
+            $table->boolean("is_fri");
+            $table->boolean("is_sat");
             $table->timestamps();
         });
     }
