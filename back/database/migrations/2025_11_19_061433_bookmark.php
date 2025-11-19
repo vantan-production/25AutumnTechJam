@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('waypoints', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger("shop_id");
-            $table->unsignedBigInteger("travel_plan_id");
-            $table->time("time");
-            $table->timestamps();
+        Schema::create("bookmark", function (Blueprint $table) {
+            $table->unsignedBigInteger("user_id");
+            $table->unsignedBIgInteger("shop_id");
         });
     }
 
@@ -25,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('waypoints');
+        //
     }
 };

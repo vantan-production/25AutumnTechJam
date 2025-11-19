@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('waypoints', function (Blueprint $table) {
+        Schema::create('travel_plans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("shop_id");
-            $table->unsignedBigInteger("travel_plan_id");
-            $table->time("time");
+            $table->unsignedBigInteger("user_id");
+            $table->unsignedInteger("budget");
+            $table->integer("staying_time");
+            $table->time("stay_at");
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('waypoints');
+        Schema::dropIfExists('travel_plans');
     }
 };
