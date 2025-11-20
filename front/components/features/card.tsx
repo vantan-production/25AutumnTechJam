@@ -9,7 +9,7 @@ type Props = {
 
 export function Card({shopName, businessHours, parse, explanation}: Props) {
     return (
-        <div className="rounded-2 bg-green w-100 flex p-2 gap-x-4">
+        <div className="rounded-2 bg-green mx-3 flex p-2 gap-x-4">
             <div className="rounded-2 bg-white p-18">
             </div>
             <div className="w-full flex flex-col gap-1">
