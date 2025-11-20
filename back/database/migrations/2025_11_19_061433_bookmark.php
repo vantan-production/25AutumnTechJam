@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create("bookmark", function (Blueprint $table) {
-            $table->foreign("user_id")->references("id")->on("users")->cascadeOnDelete();
-            $table->foreign("shop_id")->references("id")->on("shops")->cascadeOnDelete();
+            $table->foreignId("user_id")->references("id")->on("users")->cascadeOnDelete();
+            $table->foreignId("shop_id")->references("id")->on("shops")->cascadeOnDelete();
         });
     }
 

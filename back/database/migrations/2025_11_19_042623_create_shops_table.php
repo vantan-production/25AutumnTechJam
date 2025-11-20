@@ -13,24 +13,24 @@ return new class extends Migration
     {
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
-            $table->boolean("is_cafe");
+            $table->boolean("is_cafe")->default(true);
             $table->string("name");
             $table->text("description");
             $table->string("address");
             $table->string("phone_number");
             $table->string("image_url");
-            $table->unsignedInteger("min_budget");
+            $table->unsignedInteger("min_budget")->default(0)->nullable();
             $table->time("opens_at");
             $table->time("closes_at");
             $table->double("latitude");
             $table->double("longitude");
-            $table->boolean("is_sun");
-            $table->boolean("is_mon");
-            $table->boolean("is_tue");
-            $table->boolean("is_wed");
-            $table->boolean("is_thu");
-            $table->boolean("is_fri");
-            $table->boolean("is_sat");
+            $table->boolean("is_sun")->default(true);  
+            $table->boolean("is_mon")->default(true);  
+            $table->boolean("is_tue")->default(true);  
+            $table->boolean("is_wed")->default(true);  
+            $table->boolean("is_thu")->default(true);  
+            $table->boolean("is_fri")->default(true);  
+            $table->boolean("is_sat")->default(true);  
             $table->timestamps();
         });
     }
