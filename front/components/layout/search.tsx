@@ -34,7 +34,7 @@ function Search() {
   }, [inputPH, search]);
 
   return (
-    <div className="w-full mx-3 h-14 bg-beige radius-2 p-2 flex box-shadow">
+    <div className="w-[382px] mx-auto h-14 bg-beige radius-2 p-2 box-shadow">
       {search ? (
         <div className="w-full h-full flex">
           <input
