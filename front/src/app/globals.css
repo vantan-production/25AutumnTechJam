@@ -42,7 +42,3 @@ body {
     border-radius: var(--radius-3);
   }
 }
-
-.drop-shadow-1 {
-  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.25);
-}
