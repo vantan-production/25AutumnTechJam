@@ -1,9 +1,9 @@
-import GenreTab from "../../../components/layout/genre-tab";
+import Language from "../../../components/layout/language";
 
 function Test() {
   return (
     <div>
-      <GenreTab />
+      <Language />
     </div>
   );
 }
