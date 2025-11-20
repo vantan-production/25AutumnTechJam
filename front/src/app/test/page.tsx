@@ -1,9 +1,11 @@
-import Search from "../../../components/search";
+import GenreTab from "../../../components/layout/genre-tab";
 
-export default function TestPage() {
+function Test() {
   return (
     <div>
-      <Search />
+      <GenreTab />
     </div>
   );
 }
+
+export default Test;
