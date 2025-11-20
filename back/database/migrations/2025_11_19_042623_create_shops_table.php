@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
+            $table->boolean("is_cafe");
             $table->string("name");
             $table->text("description");
             $table->string("address");
