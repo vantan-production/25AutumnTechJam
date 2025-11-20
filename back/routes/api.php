@@ -13,6 +13,3 @@ Route::get('/way_point', [WaypointTableController::class, 'index']);
 
 Route::post('/user/register', [UserController::class, 'store']);
 Route::post('/user/login', [UserController::class, 'index']);
-
-Route::middleware('auth:sanctum')->group(function () {
-});
