@@ -36,4 +36,10 @@ class TravelPlansTableController extends Controller
             'success'=>true
         ]);
     }
+
+    public function destroy($id){
+        TravelPlan::destroy($id);
+    }
+
 }
+
