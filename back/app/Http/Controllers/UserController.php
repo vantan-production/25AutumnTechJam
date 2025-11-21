@@ -18,22 +18,28 @@ class UserController extends Controller
     }
     public function store(LoginRequest $request)
     {
-        dd("hello");
-        $validated = $request->validated();
+        try {
+            $validated = $request->validated();
 
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => bcrypt($validated['password']),
-        ]);
+            $user = User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'password' => bcrypt($validated['password']),
+            ]);
 
-        return response()->json([
-            'success' => true,
-            'data' => [
-                "user_id" => $user->id,
-                "user_name" => $user->name,
-            ],
-        ], 201);    
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    "user_id" => $user->id,
+                    "user_name" => $user->name,
+                ],
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'ユーザー登録に失敗しました。',
+            ], 500);
+        }
     }
 
     public function login(LoginRequest $request) {

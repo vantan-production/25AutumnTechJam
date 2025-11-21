@@ -25,4 +25,12 @@ class ShopTableController extends Controller
             "data" => $shops,
         ]);
     }
+
+    public function show($id) {
+        $shop = Shop::find($id);
+        return response()->json([
+            'success' => true,
+            'data' => $shop,
+        ]);
+    }
 }
