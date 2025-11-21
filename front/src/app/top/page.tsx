@@ -6,7 +6,7 @@ import Tag from "../../../components/ui/tag";
 function Page() {
     return (
         <div>
-            {/*<Card
+            <Card
             shopName="shop-name"
             businessHours="8:00~18:00"
             parse="¥800~2,000"
