@@ -1,11 +1,11 @@
 
 
-import TabBar from "../../../components/layout/navbar";
+import Page from "../top-page/page";
 
 export default function TestPage() {
   return (
     <div>
-      <TabBar />
+      <Page />
     </div>
   );
 }
