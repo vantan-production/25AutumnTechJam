@@ -23,14 +23,14 @@ function Language() {
       />
     </svg>
   );
-  const cliikes = (selectIndex: number) => {
+  const handleClick = (selectIndex: number) => {
     setCount(selectIndex);
     setTimeout(() => {
       setIndex(true);
     }, 400);
   };
   const languageList = language.map((item, index) => (
-    <div key={index} onClick={() => cliikes(index)}>
+    <div key={index} onClick={() => handleClick(index)}>
       {item}
       {count === index ? checkMark : null}
     </div>
@@ -82,7 +82,7 @@ function Language() {
         <div className="w-full h-fit flex flex-col gap-2">
           <div
             className="flex items-center gap-2 h-8"
-            onClick={() => cliikes(0)}
+            onClick={() => handleClick(0)}
           >
             <img src="/country/japan.png" alt="japan" className="w-6 h-6" />
             <div>{language[0]}</div>
@@ -90,7 +90,7 @@ function Language() {
           </div>
           <div
             className="flex items-center gap-2 h-8"
-            onClick={() => cliikes(1)}
+            onClick={() => handleClick(1)}
           >
             <img src="/country/usa.png" alt="english" className="w-6 h-6" />
             <div>{language[1]}</div>
@@ -98,7 +98,7 @@ function Language() {
           </div>
           <div
             className="flex items-center gap-2 h-8"
-            onClick={() => cliikes(2)}
+            onClick={() => handleClick(2)}
           >
             <img
               src="/country/southKorea.png"
@@ -110,7 +110,7 @@ function Language() {
           </div>
           <div
             className="flex items-center gap-2 h-8"
-            onClick={() => cliikes(3)}
+            onClick={() => handleClick(3)}
           >
             <img src="/country/china.png" alt="chinese" className="w-6 h-6" />
             <div>{language[3]}</div>
