@@ -1,9 +1,9 @@
-import { Filter } from "@/components/layout/filter";
+import Header from "../../../components/layout/header";
 
 export default function Test() {
   return (
     <div>
-      <Filter />
+      <Header getGenreTab={true} getLanguage={true} getSearch={true} />
     </div>
   );
 }
