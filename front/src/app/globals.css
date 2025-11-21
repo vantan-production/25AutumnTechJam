@@ -46,3 +46,44 @@ body {
 .drop-shadow-1 {
   box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.25);
 }
+
+.rc-slider {
+  position: relative;
+  width: 329px !important;
+  height: 24px;
+  border-radius: var(--radius-2) !important;
+  touch-action: none;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: var(--color-black) !important;
+}
+.rc-slider * {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: var(--color-black) !important;
+}
+.rc-slider-track,
+.rc-slider-tracks {
+  position: absolute;
+  height: 4px;
+  background-color: var(--color-black) !important;
+  border-radius: var(--radius-2) !important;
+}
+.rc-slider-handle {
+  position: absolute;
+  z-index: 1;
+  width: 14px;
+  height: 14px;
+  margin-top: -5px;
+  background-color: var(--color-black) !important;
+  border: solid 2px var(--color-black) !important;
+  border-radius: 50% !important;
+  cursor: pointer;
+  cursor: -webkit-grab;
+  cursor: grab;
+  opacity: 1 !important;
+  user-select: none;
+  touch-action: pan-x;
+}
+.rc-slider-handle-dragging.rc-slider-handle-dragging.rc-slider-handle-dragging {
+  border-color: none !important;
+  box-shadow: none !important;
+}
