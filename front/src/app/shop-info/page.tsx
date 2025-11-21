@@ -178,7 +178,24 @@ export default function ShopInfo() {
           </div>
 
           <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
+          <div className="grid grid-cols-[4fr_6fr]  text-black pl-4 pt-3 pb-3">
+            <p className="font-bold text-xl">
+              Distance from<br></br>
+              Nagoya Station
+            </p>
+            <p>6 minutes walk</p>
+          </div>
 
+          <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
+
+          <div className="grid grid-cols-[4fr_6fr]   text-black pl-4 pt-3 pb-3">
+            <p className="font-bold text-xl">Address</p>
+            <p>
+              4-1-4 Taiko, Nakamura-ku,<br></br>
+              Nagoya City,Aichi<br></br>
+              Prefecture, 453-0801
+            </p>
+          </div>
           <div className="grid grid-cols-[4fr_6fr]   text-black pl-4 pt-3 pb-3">
             <p className="font-bold text-xl">Address</p>
             <p>
@@ -189,19 +206,30 @@ export default function ShopInfo() {
           </div>
 
           <div className=" bg-black h-[0.3px] w-[360px] mx-auto"></div>
+          <div className=" bg-black h-[0.3px] w-[360px] mx-auto"></div>
 
+          <div className="grid grid-cols-[4fr_6fr]   text-black pl-4 pt-3 pb-3">
+            <p className="font-bold text-xl">Business hours</p>
+            <p>AM 7:30 ～PM 15:00</p>
+          </div>
           <div className="grid grid-cols-[4fr_6fr]   text-black pl-4 pt-3 pb-3">
             <p className="font-bold text-xl">Business hours</p>
             <p>AM 7:30 ～PM 15:00</p>
           </div>
 
           <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
+          <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
 
           <div className="grid grid-cols-[4fr_6fr]  text-black pl-4 pt-3 pb-3">
             <p className="font-bold text-xl">budget</p>
             <p>¥ 1,000 ~ 5,000</p>
           </div>
+          <div className="grid grid-cols-[4fr_6fr]  text-black pl-4 pt-3 pb-3">
+            <p className="font-bold text-xl">budget</p>
+            <p>¥ 1,000 ~ 5,000</p>
+          </div>
 
+          <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
           <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
 
           <div className="grid grid-cols-[4fr_6fr]   text-black pl-4 pt-3 pb-2">
@@ -213,3 +241,4 @@ export default function ShopInfo() {
     </div>
   );
 }
+
