@@ -29,4 +29,8 @@ class WaypointTableController extends Controller
             "success"=>true
         ]);
     }
+
+    public function destroy($id){
+        Waypoint::destroy($id);
+    }
 }
