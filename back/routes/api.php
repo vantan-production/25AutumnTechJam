@@ -21,4 +21,5 @@ Route::post('/user/login', [UserController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/bookmark', [BookmarkController::class, 'index']);
+    ROute::post('/bookmark/store', [BookmarkController::class, 'store']);
 });

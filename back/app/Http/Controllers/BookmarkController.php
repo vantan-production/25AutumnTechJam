@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use APP\Models\User;
 use App\Models\Bookmark;
 use App\Models\Shop;
 
@@ -42,5 +43,23 @@ class BookmarkController extends Controller
             ], 500);
 
         }
+    }
+
+    public function store(Request $request) {
+        try {
+            $shop_id = $request['shop_id'];
+            /** @var User $user */
+            $user = Auth::User();
+            $user->bookmarked()->attach([$shop_id]);
+        } catch(\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'ブックマークの紐付けに失敗しました ' + $e
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+        ]);
     }
 }
