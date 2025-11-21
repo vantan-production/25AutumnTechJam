@@ -1,5 +1,6 @@
 import { Card } from "../../../components/features/card";
 import Header from "../../../components/layout/header";
+import TabBar from "../../../components/layout/navbar"
 
 export default function Page() {
     const items = [
@@ -24,6 +25,9 @@ export default function Page() {
             explanation={item.explanation}
             />
         ))}
+            <div className="fixed bottom-4 left-0 w-full z-50">
+                <TabBar />
+            </div>
         </div>
     );
 }
