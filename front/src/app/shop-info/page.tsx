@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import Header from "../../../components/layout/header";
 import Bookmark from "../../../components/ui/bookmark";
+import Navbar from "../../../components/layout/navbar";
 
 export default function ShopInfo() {
   const images = [
@@ -40,8 +41,13 @@ export default function ShopInfo() {
   };
 
   return (
-    <div>
-      <Header></Header>
+    <div className="bg-beige">
+      <Header
+        getGenreTab={false}
+        getLanguage={false}
+        getSearch={false}
+        getBackButton={true}
+      />
       {selectedImageIndex !== null && (
         <div className="fixed inset-0 bg-white/70 flex items-center justify-center z-50">
           {selectedImageIndex !== null && selectedImageIndex > 0 && (
@@ -108,7 +114,7 @@ export default function ShopInfo() {
         </div>
       )}
 
-      <div className="flex justify-center flex-col my-1">
+      <div className="flex justify-center flex-col my-2">
         <div className="flex gap-2 overflow-x-auto px-2">
           <Image
             src={images[0]}
@@ -152,13 +158,13 @@ export default function ShopInfo() {
           />
         </div>
       </div>
-      <div className="flex justify-center items-center my-1">
+      <div className="flex justify-center items-center my-2">
         <div className="bg-green h-fit w-[377px] radius-3">
-        <div className="flex justify-end">
-          <div className="p-2">
-            <Bookmark></Bookmark>
+          <div className="flex justify-end">
+            <div className="p-2">
+              <Bookmark></Bookmark>
             </div>
-        </div>
+          </div>
           <div className="grid grid-cols-[4fr_6fr]  text-black pl-4 pb-3">
             <p className="font-bold text-xl">explanation</p>
             <p>
@@ -237,8 +243,8 @@ export default function ShopInfo() {
             <p>052-452-5113</p>
           </div>
         </div>
+        <Navbar />
       </div>
     </div>
   );
 }
-

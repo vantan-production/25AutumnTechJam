@@ -2,7 +2,7 @@ import { Card } from "../../../components/features/card";
 import Header from "../../../components/layout/header";
 import TabBar from "../../../components/layout/navbar";
 
-export default function Page() {
+export default function Bookmark() {
   const items = [
     {
       shopName: "shop-name",
@@ -14,20 +14,24 @@ export default function Page() {
 
   const repeatedItems = Array.from({ length: 10 }, () => items[0]);
   return (
-    <div className="space-y-4">
-      <Header />
+    <div className="bg-beige">
+      <Header
+        getGenreTab={false}
+        getLanguage={false}
+        getSearch={true}
+        getBackButton={false}
+      />
       {repeatedItems.map((item, index) => (
-        <Card
-          key={index}
-          shopName={item.shopName}
-          businessHours={item.businessHours}
-          parse={item.parse}
-          explanation={item.explanation}
-        />
+        <div key={index} className="py-1">
+          <Card
+            shopName={item.shopName}
+            businessHours={item.businessHours}
+            parse={item.parse}
+            explanation={item.explanation}
+          />
+        </div>
       ))}
-      <div className="fixed bottom-4 left-0 w-full z-50">
-        <TabBar />
-      </div>
+      <TabBar />
     </div>
   );
 }
