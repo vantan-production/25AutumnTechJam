@@ -14,18 +14,25 @@ export default function Page() {
 
   const repeatedItems = Array.from({ length: 10 }, () => items[0]);
   return (
-    <div className="space-y-4">
-      <Header />
+    <div className="bg-beige">
+      <Header
+        getGenreTab={false}
+        getLanguage={false}
+        getSearch={true}
+        getBackButton={false}
+      />
       {repeatedItems.map((item, index) => (
-        <Card
-          key={index}
-          shopName={item.shopName}
-          businessHours={item.businessHours}
-          parse={item.parse}
-          explanation={item.explanation}
-        />
+        <div className="py-1">
+          <Card
+            key={index}
+            shopName={item.shopName}
+            businessHours={item.businessHours}
+            parse={item.parse}
+            explanation={item.explanation}
+          />
+        </div>
       ))}
-      <div className="fixed bottom-4 left-0 w-full z-50">
+      <div className="fixed bottom-3">
         <TabBar />
       </div>
     </div>
