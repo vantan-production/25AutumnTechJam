@@ -6,7 +6,7 @@ import "rc-slider/assets/index.css";
 import { useEffect, useState } from "react";
 import Select from "react-select";
 
-export const Filter = () => {
+function Filter() {
   const router = useRouter();
   const [defaultValues, setDefaultValues] = useState([0, 20000]);
   const minBudget = 0;
@@ -56,7 +56,7 @@ export const Filter = () => {
     }
   }, [selectedTime, defaultValues]);
   return (
-    <div className="fixed bottom-0 left-1/2 -translate-x-1/2 bg-beige w-full max-w-[393px] h-[474px] rounded-tl-[50px] rounded-tr-[50px]">
+    <div className="fixed bottom-0 left-0 bg-beige w-full h-[500px] rounded-t-[50px] z-40">
       <div className="flex justify-center items-center">
         <div className="bg-black w-[138px] h-[3px] mt-[8.5px]"></div>
       </div>
@@ -191,4 +191,6 @@ export const Filter = () => {
       </div>
     </div>
   );
-};
+}
+
+export default Filter;

@@ -45,10 +45,9 @@ function Language() {
     <div className="w-[123px] h-fit radius-3 box-shadow bg-beige">
       {index === true ? (
         <div
-          className="w-full h-10 flex items-center gap-1"
+          className="w-full h-10 flex items-center gap-1 px-1"
           onClick={() => setIndex(false)}
         >
-          <p className="p">Language</p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="15"
@@ -63,6 +62,7 @@ function Language() {
               fill="#050505"
             />
           </svg>
+          <p className="p">Language</p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="15"
@@ -73,8 +73,8 @@ function Language() {
             <path
               d="M3.75 5.625L7.5 9.375L11.25 5.625"
               stroke="#050505"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </div>
@@ -120,12 +120,6 @@ function Language() {
       )}
     </div>
   );
-
-  // return (
-  //   <div className="w-[382px] h-13 mx-auto bg-beige radius-2 box-shadow flex items-center gap-2 px-2.5 left-1">
-  //     {languageList}
-  //   </div>
-  // );
 }
 
 export default Language;
