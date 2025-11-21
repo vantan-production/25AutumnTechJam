@@ -5,7 +5,7 @@ export function TabBar () {
     const [active, setActive] = useState(1);
 
     return (
-        <div className="flex bg-beige w-80 h-14 m-auto rounded-lg justify-between">
+        <div className="flex bg-beige  h-14 mx-3 rounded-lg justify-between">
                 <button 
                 onClick={() => setActive(1)}
                 className={`w-28 h-12 my-1 mx-1.5 rounded-md ${active === 1 ? "bg-white shadow-md" : "bg-beige shadow-none"}`}
