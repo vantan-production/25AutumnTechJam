@@ -1,11 +1,9 @@
+import { Filter } from "@/components/layout/filter";
 
-
-import Page from "../top-page/page";
-
-export default function TestPage() {
+export default function Test() {
   return (
     <div>
-      <Page />
+      <Filter />
     </div>
   );
 }
