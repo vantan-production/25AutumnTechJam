@@ -1,11 +1,11 @@
-import Language from "../../../components/layout/language";
 
-function Test() {
+
+import TabBar from "../../../components/layout/navbar";
+
+export default function TestPage() {
   return (
     <div>
-      <Language />
+      <TabBar />
     </div>
   );
 }
-
-export default Test;
