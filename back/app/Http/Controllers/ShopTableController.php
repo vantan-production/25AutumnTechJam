@@ -12,7 +12,7 @@ class ShopTableController extends Controller
             'is_cafe', 
             'name', 
             'description', 
-            'open_at', 
+            'opens_at', 
             'closes_at', 
             'image_url', 
             'min_budget', 
