@@ -14,3 +14,5 @@ Route::get('/way_point', [WaypointTableController::class, 'index']);
 Route::get('/user', [UserController::class, 'index']);
 Route::post('/user/register', [UserController::class, 'store']);
 Route::post('/user/login', [UserController::class, 'login']);
+
+Route::get('/shop/{id}', [ShopTableController::class, 'show']);
