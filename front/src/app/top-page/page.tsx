@@ -1,6 +1,7 @@
 import { Card } from "../../../components/features/card";
+import Header from "../../../components/layout/header";
 
-export default function TopPage() {
+export default function Page() {
     const items = [
         { 
         shopName: "shop-name", 
@@ -13,6 +14,7 @@ export default function TopPage() {
     const repeatedItems = Array.from({ length: 10 }, () => items[0]);
     return (
         <div className="space-y-4">
+            <Header />
         {repeatedItems.map((item, index) => (
             <Card
             key={index}
