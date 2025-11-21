@@ -6,7 +6,7 @@ export default function Page() {
         { 
         shopName: "shop-name", 
         businessHours: "7:00-11:30", 
-        parse: "¥800~100", 
+        parse: "¥800~1000", 
         explanation: "This shop is beautiful and traditional."  
         },
     ];
