@@ -23,8 +23,8 @@ class LoginRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email',
-            'password' => 'required|string|min:8',
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string',
         ];
     }
 
@@ -38,11 +38,8 @@ class LoginRequest extends FormRequest
             'email.string' => 'メールアドレスは文字列である必要があります。',
             'email.email' => '有効なメールアドレスを入力してください。',
             'email.max' => 'メールアドレスは255文字以内である必要があります。',
-            'email.unique' => 'このメールアドレスは既に使用されています。',
             'password.required' => 'パスワードは必須項目です。',
             'password.string' => 'パスワードは文字列である必要があります。',
-            'password.min' => 'パスワードは8文字以上である必要があります。',
-            'password.confirmed' => 'パスワード確認が一致しません。',
         ];
     }
 }

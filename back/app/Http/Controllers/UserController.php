@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,7 @@ class UserController extends Controller
             "data" => $users,
         ]);
     }
-    public function store(LoginRequest $request)
+    public function store(RegisterRequest $request)
     {
         try {
             $validated = $request->validated();
