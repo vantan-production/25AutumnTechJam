@@ -11,5 +11,6 @@ Route::get('/shop', [ShopTableController::class, 'index']);
 Route::get('/travel_plan', [TravelPlansTableController::class, 'index']);
 Route::get('/way_point', [WaypointTableController::class, 'index']);
 
+Route::get('/user', [UserController::class, 'index']);
 Route::post('/user/register', [UserController::class, 'store']);
-Route::post('/user/login', [UserController::class, 'index']);
+Route::post('/user/login', [UserController::class, 'login']);

@@ -9,8 +9,16 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    public function index(Request $request) {
+        $users = User::all();
+        return response()->json([
+            "success" => true,
+            "data" => $users,
+        ]);
+    }
     public function store(LoginRequest $request)
     {
+        dd("hello");
         $validated = $request->validated();
 
         $user = User::create([
@@ -28,23 +36,21 @@ class UserController extends Controller
         ], 201);    
     }
 
-    public function index(LoginRequest $request) {
+    public function login(LoginRequest $request) {
         
         $validated = $request->validated();
-        try {
-            Auth::attempt([
-                'name' => $validated['name'],
+        if (Auth::attempt([
                 'email' => $validated['email'],
                 'password' => $validated['password'],
-            ]);
-        } catch (\Exception $e) {
+            ])) {
+        } else {
             return response()->json([
                 "success" => false,
                 "message" => "ログインに失敗しました。",
             ], 401);
         }
-        $user = Auth::user()->id;
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $user = Auth::user();
+        $token = $user->id->createToken('auth_token')->plainTextToken;
 
         return response()->json([
             'success' => true,
