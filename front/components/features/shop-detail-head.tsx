@@ -11,8 +11,8 @@ export function DetailHead({shopName, tag}: Props) {
             <div className="flex flex-col gap-y-6 w-full pt-1 pl-1">
                 <div className="text-black text-2xl">{shopName}</div>
                 <div className="flex flex-wrap gap-1">
-                    {tag.map((tag) => (
-                        <Tag content={tag}></Tag>
+                    {tag.map((tag, index) => (
+                        <Tag key={index}content={tag}></Tag>
                     ))}
                 </div>
             </div>
