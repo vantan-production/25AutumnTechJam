@@ -2,7 +2,7 @@ import { Card } from "../../../components/features/card";
 import Header from "../../../components/layout/header";
 import TabBar from "../../../components/layout/navbar";
 
-export default function ShopList() {
+export default function Page() {
   const items = [
     {
       shopName: "shop-name",
@@ -24,6 +24,7 @@ export default function ShopList() {
       {repeatedItems.map((item, index) => (
         <div className="py-1">
           <Card
+            key={index}
             shopName={item.shopName}
             businessHours={item.businessHours}
             parse={item.parse}
