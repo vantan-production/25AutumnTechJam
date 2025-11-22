@@ -13,12 +13,12 @@ class BookmarkController extends Controller
     public function index(Request $request) {
 
         try {
-            $max_item = $request["max_number"];
 
             /** @var User $user */
             $user = Auth::User();
             $bookmarks = $user->bookmarked()
                 ->select(
+                    'id',
                     'is_cafe', 
                     'name', 
                     'description', 
@@ -29,7 +29,6 @@ class BookmarkController extends Controller
                     'latitude', 
                     'longitude'  
                 )
-                ->take($max_item)
                 ->get();
 
             return response()->json([

@@ -9,6 +9,7 @@ class ShopTableController extends Controller
 {
     public function index(Request $request) {
         $shops = Shop::select(
+            'id',
             'is_cafe', 
             'name', 
             'description', 

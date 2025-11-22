@@ -41,6 +41,7 @@ class UserController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'ユーザー登録に失敗しました。',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -76,5 +77,21 @@ class UserController extends Controller
                 'message' => $e,
             ]);
         };
+    }
+
+    public function delete($id) {
+        try {
+            User::destroy($id);
+        } catch(\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'データの削除に失敗しました',
+                'error' => $e->getMessage(),
+            ]);
+        }
+
+        return response()->json([
+            'seccess' => true,
+        ]);
     }
 }
