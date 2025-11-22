@@ -45,7 +45,7 @@ function Search() {
             className="w-[297px] h-full bg-white radius-1 text-black/60 pl-1 text-start outline-none !important auto-line: none !important drop-shadow-1"
           />
           <div className="w-21 h-full flex items-center justify-center">
-            <button className="w-8 h-8">
+            <div className="w-8 h-8">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="32"
@@ -68,7 +68,7 @@ function Search() {
                   strokeLinejoin="round"
                 />
               </svg>
-            </button>
+            </div>
           </div>
         </div>
       ) : (

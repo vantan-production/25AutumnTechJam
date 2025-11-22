@@ -1,11 +1,9 @@
+import Header from "../../../components/layout/header";
 
-
-import TabBar from "../../../components/layout/navbar";
-
-export default function TestPage() {
+export default function Test() {
   return (
     <div>
-      <TabBar />
+      <Header getGenreTab={true} getLanguage={true} getSearch={true} />
     </div>
   );
 }

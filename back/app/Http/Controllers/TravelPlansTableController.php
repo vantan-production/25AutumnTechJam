@@ -23,4 +23,26 @@ class TravelPlansTableController extends Controller
             "data" => $travelPlans,
         ]);
     }
+
+
+    public function store(Request $request){
+        $userId = Auth::user()->id;
+
+        TravelPlan::create([
+            'user_id' => $userId,
+            'budget' => $request->budget,
+            'staying_time' => $request->staying_time,
+            'stay_at' => $request->stay_at
+        ]);
+
+        return response()->json([
+            'success'=>true
+        ]);
+    }
+
+    public function destroy($id){
+        TravelPlan::destroy($id);
+    }
+
 }
+

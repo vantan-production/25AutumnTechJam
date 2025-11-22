@@ -2,6 +2,9 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import Header from "../../../components/layout/header";
+import Bookmark from "../../../components/ui/bookmark";
+import Navbar from "../../../components/layout/navbar";
 
 export default function ShopInfo() {
   const images = [
@@ -38,7 +41,13 @@ export default function ShopInfo() {
   };
 
   return (
-    <div>
+    <div className="bg-beige">
+      <Header
+        getGenreTab={false}
+        getLanguage={false}
+        getSearch={false}
+        getBackButton={true}
+      />
       {selectedImageIndex !== null && (
         <div className="fixed inset-0 bg-white/70 flex items-center justify-center z-50">
           {selectedImageIndex !== null && selectedImageIndex > 0 && (
@@ -105,7 +114,7 @@ export default function ShopInfo() {
         </div>
       )}
 
-      <div className="flex justify-center flex-col my-1">
+      <div className="flex justify-center flex-col my-2">
         <div className="flex gap-2 overflow-x-auto px-2">
           <Image
             src={images[0]}
@@ -149,9 +158,14 @@ export default function ShopInfo() {
           />
         </div>
       </div>
-      <div className="flex justify-center items-center my-1">
+      <div className="flex justify-center items-center my-2">
         <div className="bg-green h-fit w-[377px] radius-3">
-          <div className="grid grid-cols-[4fr_6fr]  text-black pl-4 pb-3 pt-12">
+          <div className="flex justify-end">
+            <div className="p-2">
+              <Bookmark></Bookmark>
+            </div>
+          </div>
+          <div className="grid grid-cols-[4fr_6fr]  text-black pl-4 pb-3">
             <p className="font-bold text-xl">explanation</p>
             <p>
               A Showa-era cafe that will make you feel like you've traveled back
@@ -170,7 +184,24 @@ export default function ShopInfo() {
           </div>
 
           <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
+          <div className="grid grid-cols-[4fr_6fr]  text-black pl-4 pt-3 pb-3">
+            <p className="font-bold text-xl">
+              Distance from<br></br>
+              Nagoya Station
+            </p>
+            <p>6 minutes walk</p>
+          </div>
 
+          <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
+
+          <div className="grid grid-cols-[4fr_6fr]   text-black pl-4 pt-3 pb-3">
+            <p className="font-bold text-xl">Address</p>
+            <p>
+              4-1-4 Taiko, Nakamura-ku,<br></br>
+              Nagoya City,Aichi<br></br>
+              Prefecture, 453-0801
+            </p>
+          </div>
           <div className="grid grid-cols-[4fr_6fr]   text-black pl-4 pt-3 pb-3">
             <p className="font-bold text-xl">Address</p>
             <p>
@@ -181,19 +212,30 @@ export default function ShopInfo() {
           </div>
 
           <div className=" bg-black h-[0.3px] w-[360px] mx-auto"></div>
+          <div className=" bg-black h-[0.3px] w-[360px] mx-auto"></div>
 
+          <div className="grid grid-cols-[4fr_6fr]   text-black pl-4 pt-3 pb-3">
+            <p className="font-bold text-xl">Business hours</p>
+            <p>AM 7:30 ～PM 15:00</p>
+          </div>
           <div className="grid grid-cols-[4fr_6fr]   text-black pl-4 pt-3 pb-3">
             <p className="font-bold text-xl">Business hours</p>
             <p>AM 7:30 ～PM 15:00</p>
           </div>
 
           <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
+          <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
 
           <div className="grid grid-cols-[4fr_6fr]  text-black pl-4 pt-3 pb-3">
             <p className="font-bold text-xl">budget</p>
             <p>¥ 1,000 ~ 5,000</p>
           </div>
+          <div className="grid grid-cols-[4fr_6fr]  text-black pl-4 pt-3 pb-3">
+            <p className="font-bold text-xl">budget</p>
+            <p>¥ 1,000 ~ 5,000</p>
+          </div>
 
+          <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
           <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
 
           <div className="grid grid-cols-[4fr_6fr]   text-black pl-4 pt-3 pb-2">
@@ -201,6 +243,7 @@ export default function ShopInfo() {
             <p>052-452-5113</p>
           </div>
         </div>
+        <Navbar />
       </div>
     </div>
   );

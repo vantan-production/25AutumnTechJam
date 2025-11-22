@@ -21,3 +21,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/travel_plan', [TravelPlansTableController::class, 'index']);
     Route::post('/way_point', [WaypointTableController::class, 'index']);
 });
+Route::post('/travel_plan/{id}/del',[TravelPlansTableController::class,'index']);
+
+Route::get('/way_point', [WaypointTableController::class, 'index']);
+Route::post('/way_point/store',[WaypointTableController::class,'index']);
+Route::post('/way_point/{id}/del',[WaypointTableController::class,'index']);
