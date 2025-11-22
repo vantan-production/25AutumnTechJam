@@ -17,4 +17,20 @@ class WaypointTableController extends Controller
             "data" => $waypoint,
         ]);
     }
+
+    public function store(Request $request){
+        Waypoint::create([
+            'travel_plan_id'=> $request->travel_plan_id,
+            'shop_id'=>$request->shop_id,
+            'time' =>$request->time
+        ]);
+
+        return response()->json([
+            "success"=>true
+        ]);
+    }
+
+    public function destroy($id){
+        Waypoint::destroy($id);
+    }
 }
