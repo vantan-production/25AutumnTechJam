@@ -2,8 +2,11 @@
 import { Card } from "../../../components/features/card";
 import Header from "../../../components/layout/header";
 import TabBar from "../../../components/layout/navbar";
+import { useState } from "react";
 
 export default function ShopList() {
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
   const items = [
     {
       shopName: "shop-name",
@@ -17,10 +20,11 @@ export default function ShopList() {
   return (
     <div className="bg-beige">
       <Header
-        getGenreTab={false}
+        getGenreTab={true}
         getLanguage={true}
         getSearch={true}
         getBackButton={false}
+        onFilterOpen={setIsFilterOpen}
       />
       {repeatedItems.map((item, index) => (
         <div className="py-1" key={index}>
@@ -32,9 +36,11 @@ export default function ShopList() {
           />
         </div>
       ))}
-      <div className="fixed bottom-3">
-        <TabBar />
-      </div>
+      {!isFilterOpen && (
+        <div className="fixed bottom-3">
+          <TabBar />
+        </div>
+      )}
     </div>
   );
 }

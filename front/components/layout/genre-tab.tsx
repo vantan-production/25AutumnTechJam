@@ -3,14 +3,22 @@
 import Filter from "./filter";
 import { useState } from "react";
 
-function GenreTab() {
+type GenreTabProps = {
+  onFilterOpen?: (isOpen: boolean) => void;
+};
+
+function GenreTab({ onFilterOpen }: GenreTabProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [modaleOpen, setModaleOpen] = useState(false);
+
   const handleModaleOpen = () => {
     setModaleOpen(true);
+    onFilterOpen?.(true);
   };
+
   const handleModaleClose = () => {
     setModaleOpen(false);
+    onFilterOpen?.(false);
   };
 
   const genre = [

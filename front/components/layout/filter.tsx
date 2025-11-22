@@ -6,7 +6,11 @@ import "rc-slider/assets/index.css";
 import { useEffect, useState } from "react";
 import Select from "react-select";
 
-function Filter() {
+type FilterProps = {
+  onClose?: () => void;
+};
+
+function Filter({ onClose }: FilterProps) {
   const router = useRouter();
   const [defaultValues, setDefaultValues] = useState([0, 20000]);
   const minBudget = 0;
@@ -56,7 +60,7 @@ function Filter() {
     }
   }, [selectedTime, defaultValues]);
   return (
-    <div className="fixed bottom-0 left-0 bg-beige w-full h-[500px] rounded-t-[50px] z-40">
+    <div className="fixed bottom-0 left-0 bg-beige w-full h-[500px] rounded-t-[50px] z-90">
       <div className="flex justify-center items-center">
         <div className="bg-black w-[138px] h-[3px] mt-[8.5px]"></div>
       </div>
@@ -174,8 +178,8 @@ function Filter() {
         <button
           onClick={() => {
             if (decision) {
+              onClose?.();
               router.push("/");
-              // 仮で"/"にリダイレクト
             } else {
               null;
             }

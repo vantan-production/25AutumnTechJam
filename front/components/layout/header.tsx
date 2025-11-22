@@ -4,10 +4,11 @@ import Search from "./search";
 import BackButton from "../ui/backButton";
 
 type HeaderProps = {
-  getGenreTab: boolean;
-  getLanguage: boolean;
-  getSearch: boolean;
-  getBackButton: boolean;
+  getGenreTab?: boolean;
+  getLanguage?: boolean;
+  getSearch?: boolean;
+  getBackButton?: boolean;
+  onFilterOpen?: (isOpen: boolean) => void;
 };
 
 function Header({
@@ -15,6 +16,7 @@ function Header({
   getLanguage,
   getSearch,
   getBackButton,
+  onFilterOpen,
 }: HeaderProps) {
   return (
     <div className="fixed top-0 left-0 right-0">
@@ -28,7 +30,7 @@ function Header({
             />
           </div>
           {getSearch && <Search />}
-          {getGenreTab && <GenreTab />}
+          {getGenreTab && <GenreTab onFilterOpen={onFilterOpen} />}
           {getLanguage && <Language />}
         </div>
       </div>
