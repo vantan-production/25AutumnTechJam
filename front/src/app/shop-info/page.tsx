@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Header from "../../../components/layout/header";
 import Bookmark from "../../../components/ui/bookmark";
 import Navbar from "../../../components/layout/navbar";
-import { Shop } from "../../../api/auth/shop";
+import { Shop } from "../../../api/shop";
 import { travelMap } from "../../../api/lib/travelMap";
 import { useSearchParams } from "next/navigation";
 import ShopDetailHead from "../../../components/features/shop-detail-head";
