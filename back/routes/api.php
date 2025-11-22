@@ -5,19 +5,23 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ShopTableController;
 use App\Http\Controllers\TravelPlansTableController;
 use App\Http\Controllers\WaypointTableController;
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\BookmarkController;
 
 Route::get('/shop', [ShopTableController::class, 'index']);
+Route::get('/shop/{id}', [ShopTableController::class, 'show']);
 
-Route::get('/travel_plan', [TravelPlansTableController::class, 'index']);
+Route::get('/user', [UserController::class, 'index']);
+Route::post('/user/register', [UserController::class, 'store']);
+Route::post('/user/login', [UserController::class, 'login']);
+
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/travel_plan/store',[TravelPlansTableController::class,'index']);
+    Route::get('/bookmark', [BookmarkController::class, 'index']);
+    ROute::post('/bookmark/store', [BookmarkController::class, 'store']);
+    Route::get('/travel_plan', [TravelPlansTableController::class, 'index']);
+    Route::post('/way_point', [WaypointTableController::class, 'index']);
 });
 Route::post('/travel_plan/{id}/del',[TravelPlansTableController::class,'index']);
 
-Route::get('/way_point', [WaypointTableController::class, 'index']);
 Route::post('/way_point/store',[WaypointTableController::class,'index']);
 Route::post('/way_point/{id}/del',[WaypointTableController::class,'index']);

@@ -1,0 +1,236 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use App\Models\Shop;
+
+class ShopSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        Shop::create([
+            'is_cafe' => true,
+            'name' => 'スターバックスコーヒー 渋谷店',
+            'description' => '世界中で愛されるコーヒーチェーン。落ち着いた雰囲気でゆっくりとコーヒーを楽しめます。Wi-Fi完備で作業にも最適です。',
+            'address' => '東京都渋谷区道玄坂1-5-9',
+            'phone_number' => '03-1234-5678',
+            'image_url' => 'https://example.com/images/starbucks.jpg',
+            'min_budget' => 500,
+            'station_distance' => 250,
+            'opens_at' => '07:00:00',
+            'closes_at' => '22:00:00',
+            'latitude' => 35.6595,
+            'longitude' => 139.7004,
+            'is_sun' => true,
+            'is_mon' => true,
+            'is_tue' => true,
+            'is_wed' => true,
+            'is_thu' => true,
+            'is_fri' => true,
+            'is_sat' => true,
+        ]);
+
+        Shop::create([
+            'is_cafe' => true,
+            'name' => 'ブルーボトルコーヒー 清澄白河店',
+            'description' => 'サードウェーブコーヒーの代表格。丁寧に淹れられたコーヒーと美味しいペストリーが人気です。',
+            'address' => '東京都江東区平野1-4-8',
+            'phone_number' => '03-2345-6789',
+            'image_url' => 'https://example.com/images/bluebottle.jpg',
+            'min_budget' => 600,
+            'station_distance' => 180,
+            'opens_at' => '08:00:00',
+            'closes_at' => '19:00:00',
+            'latitude' => 35.6812,
+            'longitude' => 139.8013,
+            'is_sun' => true,
+            'is_mon' => false,
+            'is_tue' => true,
+            'is_wed' => true,
+            'is_thu' => true,
+            'is_fri' => true,
+            'is_sat' => true,
+        ]);
+
+        Shop::create([
+            'is_cafe' => false,
+            'name' => 'カフェ・ド・クリエ 新宿店',
+            'description' => 'モーニングからランチまで楽しめるカフェ。パスタやサンドイッチなどの軽食も充実しています。',
+            'address' => '東京都新宿区新宿3-38-1',
+            'phone_number' => '03-3456-7890',
+            'image_url' => 'https://example.com/images/crie.jpg',
+            'min_budget' => 800,
+            'station_distance' => 320,
+            'opens_at' => '07:30:00',
+            'closes_at' => '21:00:00',
+            'latitude' => 35.6938,
+            'longitude' => 139.7034,
+            'is_sun' => true,
+            'is_mon' => true,
+            'is_tue' => true,
+            'is_wed' => true,
+            'is_thu' => true,
+            'is_fri' => true,
+            'is_sat' => true,
+        ]);
+
+        Shop::create([
+            'is_cafe' => true,
+            'name' => 'コメダ珈琲店 池袋東口店',
+            'description' => '名古屋発祥の喫茶店チェーン。ボリューム満点のモーニングとシロノワールが名物です。',
+            'address' => '東京都豊島区南池袋1-28-2',
+            'phone_number' => '03-4567-8901',
+            'image_url' => 'https://example.com/images/komeda.jpg',
+            'min_budget' => 450,
+            'station_distance' => 150,
+            'opens_at' => '06:30:00',
+            'closes_at' => '23:00:00',
+            'latitude' => 35.7295,
+            'longitude' => 139.7109,
+            'is_sun' => true,
+            'is_mon' => true,
+            'is_tue' => true,
+            'is_wed' => true,
+            'is_thu' => true,
+            'is_fri' => true,
+            'is_sat' => true,
+        ]);
+
+        Shop::create([
+            'is_cafe' => true,
+            'name' => 'タリーズコーヒー 表参道店',
+            'description' => 'シアトル発祥のコーヒーチェーン。店内は広々としており、ゆったりとした時間を過ごせます。',
+            'address' => '東京都渋谷区神宮前5-10-1',
+            'phone_number' => '03-5678-9012',
+            'image_url' => 'https://example.com/images/tullys.jpg',
+            'min_budget' => 480,
+            'station_distance' => 200,
+            'opens_at' => '07:00:00',
+            'closes_at' => '22:00:00',
+            'latitude' => 35.6644,
+            'longitude' => 139.7128,
+            'is_sun' => true,
+            'is_mon' => true,
+            'is_tue' => true,
+            'is_wed' => true,
+            'is_thu' => true,
+            'is_fri' => true,
+            'is_sat' => true,
+        ]);
+
+        Shop::create([
+            'is_cafe' => true,
+            'name' => 'ドトールコーヒーショップ 新宿西口店',
+            'description' => 'リーズナブルな価格で本格的なコーヒーが楽しめる。朝から夜まで多くの人で賑わっています。',
+            'address' => '東京都新宿区西新宿1-1-3',
+            'phone_number' => '03-6789-0123',
+            'image_url' => 'https://example.com/images/doutor.jpg',
+            'min_budget' => 300,
+            'station_distance' => 100,
+            'opens_at' => '06:00:00',
+            'closes_at' => '22:30:00',
+            'latitude' => 35.6896,
+            'longitude' => 139.6917,
+            'is_sun' => true,
+            'is_mon' => true,
+            'is_tue' => true,
+            'is_wed' => true,
+            'is_thu' => true,
+            'is_fri' => true,
+            'is_sat' => true,
+        ]);
+
+        Shop::create([
+            'is_cafe' => true,
+            'name' => 'エクセルシオールカフェ 銀座店',
+            'description' => 'イタリアンスタイルのカフェ。パスタやサンドイッチも充実しており、ランチ利用にも最適です。',
+            'address' => '東京都中央区銀座4-6-1',
+            'phone_number' => '03-7890-1234',
+            'image_url' => 'https://example.com/images/excelsior.jpg',
+            'min_budget' => 550,
+            'station_distance' => 280,
+            'opens_at' => '07:30:00',
+            'closes_at' => '21:30:00',
+            'latitude' => 35.6717,
+            'longitude' => 139.7645,
+            'is_sun' => true,
+            'is_mon' => true,
+            'is_tue' => true,
+            'is_wed' => true,
+            'is_thu' => true,
+            'is_fri' => true,
+            'is_sat' => true,
+        ]);
+
+        Shop::create([
+            'is_cafe' => false,
+            'name' => 'カフェ・ベローチェ 秋葉原店',
+            'description' => 'コストパフォーマンスに優れたカフェチェーン。気軽に立ち寄れる雰囲気が魅力です。',
+            'address' => '東京都千代田区外神田1-15-9',
+            'phone_number' => '03-8901-2345',
+            'image_url' => 'https://example.com/images/veloce.jpg',
+            'min_budget' => 280,
+            'station_distance' => 220,
+            'opens_at' => '07:00:00',
+            'closes_at' => '22:00:00',
+            'latitude' => 35.6983,
+            'longitude' => 139.7731,
+            'is_sun' => true,
+            'is_mon' => true,
+            'is_tue' => true,
+            'is_wed' => true,
+            'is_thu' => true,
+            'is_fri' => true,
+            'is_sat' => true,
+        ]);
+
+        Shop::create([
+            'is_cafe' => true,
+            'name' => 'サンマルクカフェ 六本木店',
+            'description' => 'チョコクロで有名なカフェチェーン。焼きたてのパンとコーヒーの組み合わせが絶品です。',
+            'address' => '東京都港区六本木3-10-9',
+            'phone_number' => '03-9012-3456',
+            'image_url' => 'https://example.com/images/saintmarc.jpg',
+            'min_budget' => 400,
+            'station_distance' => 300,
+            'opens_at' => '07:00:00',
+            'closes_at' => '23:00:00',
+            'latitude' => 35.6627,
+            'longitude' => 139.7295,
+            'is_sun' => true,
+            'is_mon' => true,
+            'is_tue' => true,
+            'is_wed' => true,
+            'is_thu' => true,
+            'is_fri' => true,
+            'is_sat' => true,
+        ]);
+
+        Shop::create([
+            'is_cafe' => true,
+            'name' => 'プロント 丸の内店',
+            'description' => '昼はカフェ、夜はバーとして営業。ビジネスマンに人気のスポットです。',
+            'address' => '東京都千代田区丸の内2-4-1',
+            'phone_number' => '03-0123-4567',
+            'image_url' => 'https://example.com/images/pronto.jpg',
+            'min_budget' => 520,
+            'station_distance' => 120,
+            'opens_at' => '07:00:00',
+            'closes_at' => '23:00:00',
+            'latitude' => 35.6806,
+            'longitude' => 139.7648,
+            'is_sun' => false,
+            'is_mon' => true,
+            'is_tue' => true,
+            'is_wed' => true,
+            'is_thu' => true,
+            'is_fri' => true,
+            'is_sat' => true,
+        ]);
+    }
+}
