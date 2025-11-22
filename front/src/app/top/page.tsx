@@ -18,7 +18,7 @@ export default function ShopList() {
     <div className="bg-beige">
       <Header
         getGenreTab={false}
-        getLanguage={false}
+        getLanguage={true}
         getSearch={true}
         getBackButton={false}
       />

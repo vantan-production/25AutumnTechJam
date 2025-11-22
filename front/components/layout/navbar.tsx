@@ -6,8 +6,8 @@ export function TabBar() {
   const [active, setActive] = useState(1);
   const router = useRouter();
   return (
-    <div className="fixed bottom-3">
-      <div className="flex bg-beige  h-14 mx-3 rounded-lg justify-between">
+    <div className="fixed bottom-3 ">
+      <div className="flex bg-beige  h-14 mx-3 rounded-lg justify-between box-shadow">
         <button
           onClick={() => {
             setActive(1);

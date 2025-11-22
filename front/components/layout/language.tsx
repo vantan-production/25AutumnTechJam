@@ -42,7 +42,7 @@ function Language() {
   }, [index]);
 
   return (
-    <div className="w-[123px] h-fit radius-3 box-shadow bg-beige">
+    <div className="w-[123px] h-fit radius-3 box-shadow bg-beige mx-1">
       {index === true ? (
         <div
           className="w-full h-10 flex items-center gap-1 px-1"

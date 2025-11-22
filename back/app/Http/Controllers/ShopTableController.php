@@ -9,13 +9,16 @@ class ShopTableController extends Controller
 {
     public function index(Request $request) {
         $shops = Shop::select(
+            'id',
             'is_cafe', 
             'name', 
             'description', 
+            'image_url',
             'opens_at', 
             'closes_at', 
-            'image_url', 
             'min_budget', 
+            'address',
+            'phone_number',
             'latitude', 
             'longitude'  
             )->get();
