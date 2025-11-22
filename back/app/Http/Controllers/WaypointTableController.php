@@ -15,20 +15,12 @@ class WaypointTableController extends Controller
             $times = [];
 
             $travel_plan = TravelPlan::find($request->travel_plan_id);
-            $waypoints = $travel_plan->waypoints()->get();
+            $waypoints = $travel_plan->waypoints()
+                ->with('shopid,name,description,min_budget,opens_at,closes_at')
+                ->get();
             
             foreach ($waypoints as $waypoint) {
-                $shop = $waypoint->shop()
-                ->select(
-                    'id',
-                    'name',
-                    'description',
-                    'min_budget',
-                    'opens_at',
-                    'closes_at',
-                )->first();
-                
-                $shops[] = $shop;
+                $shops[] = $waypoint->shop;
                 $times[] = $waypoint->time;
             };
 

@@ -14,7 +14,6 @@ Route::get('/shop/{id}', [ShopTableController::class, 'show']);
 Route::get('/user', [UserController::class, 'index']);
 Route::post('/user/register', [UserController::class, 'store']);
 Route::post('/user/login', [UserController::class, 'login']);
-Route::delete('/user/{id}/del', [UserController::class, 'delete']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/bookmark', [BookmarkController::class, 'index']);

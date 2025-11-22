@@ -46,7 +46,10 @@ class BookmarkController extends Controller
 
     public function store(Request $request) {
         try {
-            $shop_id = $request['shop_id'];
+            $validated = $request->validate([
+                'shop_id' => 'required|integer|exists:shops,id',
+            ]);
+            $shop_id = $validated['shop_id'];
             /** @var User $user */
             $user = Auth::User();
             $user->bookmarked()->attach([$shop_id]);
@@ -54,7 +57,7 @@ class BookmarkController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'ブックマークの紐付けに失敗しました ' + $e
-            ]);
+            ], 500);
         }
 
         return response()->json([

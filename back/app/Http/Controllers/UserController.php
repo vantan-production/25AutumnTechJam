@@ -74,24 +74,8 @@ class UserController extends Controller
         } catch(Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => $e,
-            ]);
+                'message' => $e->getMessage(),
+            ], 500);
         };
-    }
-
-    public function delete($id) {
-        try {
-            User::destroy($id);
-        } catch(\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'データの削除に失敗しました',
-                'error' => $e->getMessage(),
-            ]);
-        }
-
-        return response()->json([
-            'seccess' => true,
-        ]);
     }
 }

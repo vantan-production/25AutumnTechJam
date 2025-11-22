@@ -42,7 +42,6 @@ class RegisterRequest extends FormRequest
             'password.required' => 'パスワードは必須項目です。',
             'password.string' => 'パスワードは文字列である必要があります。',
             'password.min' => 'パスワードは8文字以上である必要があります。',
-            'password.confirmed' => 'パスワード確認が一致しません。',
         ];
     }
 }
