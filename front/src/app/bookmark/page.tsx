@@ -1,9 +1,8 @@
-"use client";
 import { Card } from "../../../components/features/card";
 import Header from "../../../components/layout/header";
 import TabBar from "../../../components/layout/navbar";
 
-export default function ShopList() {
+export default function Bookmark() {
   const items = [
     {
       shopName: "shop-name",
@@ -23,7 +22,7 @@ export default function ShopList() {
         getBackButton={false}
       />
       {repeatedItems.map((item, index) => (
-        <div className="py-1" key={index}>
+        <div key={index} className="py-1">
           <Card
             shopName={item.shopName}
             businessHours={item.businessHours}
@@ -32,9 +31,7 @@ export default function ShopList() {
           />
         </div>
       ))}
-      <div className="fixed bottom-3">
-        <TabBar />
-      </div>
+      <TabBar />
     </div>
   );
 }
