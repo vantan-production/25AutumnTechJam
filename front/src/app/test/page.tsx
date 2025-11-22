@@ -1,11 +1,11 @@
 
 
-import Page from "../top-page/page";
+import LoginAttention from "../modal/loginattention-modal";
 
 export default function TestPage() {
   return (
     <div>
-      <Page />
+      <LoginAttention />
     </div>
   );
 }
