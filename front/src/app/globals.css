@@ -1,4 +1,13 @@
 @import "tailwindcss";
+:root {
+  --font-size-h1: 26px;
+  --font-size-h2: 22px;
+  --font-size-h3: 20px;
+  --font-size-h4: 18px;
+  --font-size-p: 16px;
+  --font-size-small: 12px;
+  --font-family: "Huninn", sans-serif;
+}
 
 @theme inline {
   /* Color */
@@ -41,8 +50,94 @@ body {
   .radius-3 {
     border-radius: var(--radius-3);
   }
+  .box-shadow {
+    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.25);
+  }
+  .drop-shadow {
+    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.5);
+  }
+  .h1 {
+    font-size: var(--font-size-h1);
+    font-family: var(--font-family);
+    letter-spacing: 0.02em;
+  }
+  .h2 {
+    font-size: var(--font-size-h2);
+    font-family: var(--font-family);
+    letter-spacing: 0.03em;
+  }
+  .h3 {
+    font-size: var(--font-size-h3);
+    font-family: var(--font-family);
+    letter-spacing: 0.03em;
+  }
+  .h4 {
+    font-size: var(--font-size-h4);
+    font-family: var(--font-family);
+    letter-spacing: 0.03em;
+  }
+  .p {
+    font-size: var(--font-size-p);
+    font-family: var(--font-family);
+    letter-spacing: 0.03em;
+  }
+  .small {
+    font-size: var(--font-size-small);
+    font-family: var(--font-family);
+    letter-spacing: 0.02em;
+  }
 }
 
-.drop-shadow-1 {
-  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.25);
+.rc-slider {
+  position: relative;
+  width: 329px !important;
+  height: 24px;
+  border-radius: var(--radius-2) !important;
+  touch-action: none;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: var(--color-black) !important;
+}
+.rc-slider * {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: var(--color-black) !important;
+}
+.rc-slider-track,
+.rc-slider-tracks {
+  position: absolute;
+  height: 8px !important;
+  background-color: var(--color-black) !important;
+  border-radius: var(--radius-2) !important;
+}
+.rc-slider-handle {
+  position: absolute;
+  z-index: 1;
+  width: 14px;
+  height: 14px;
+  margin-top: -6px !important;
+  background-color: var(--color-black) !important;
+  border: solid 2px var(--color-black) !important;
+  border-radius: 50% !important;
+  cursor: pointer;
+  cursor: -webkit-grab;
+  cursor: grab;
+  opacity: 1 !important;
+  user-select: none;
+  touch-action: pan-x;
+}
+.rc-slider-handle-dragging.rc-slider-handle-dragging.rc-slider-handle-dragging {
+  border-color: none !important;
+  box-shadow: none !important;
+}
+.rc-slider-rail {
+  position: absolute;
+  width: 100%;
+  height: 8px !important;
+  background-color: #e9e9e9;
+  border-radius: 6px;
+}
+.rc-slider-step {
+  position: absolute;
+  width: 100%;
+  height: 8px !important;
+  background: transparent;
 }
