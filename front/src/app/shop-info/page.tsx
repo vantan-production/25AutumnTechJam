@@ -5,9 +5,11 @@ import { useEffect, useState } from "react";
 import Header from "../../../components/layout/header";
 import Bookmark from "../../../components/ui/bookmark";
 import Navbar from "../../../components/layout/navbar";
-import { Shop } from "../../../auth/shop";
+import { Shop } from "../../../api/auth/shop";
+import { travelMap } from "../../../api/lib/travelMap";
 import { useSearchParams } from "next/navigation";
 import ShopDetailHead from "../../../components/features/shop-detail-head";
+import { travelMapResponse } from "../../../api/lib/travelMap";
 
 export default function ShopInfo() {
   const searchParams = useSearchParams();
@@ -29,6 +31,21 @@ export default function ShopInfo() {
   const [shopInfo, setShopInfo] = useState<shopRequest | null>(null);
   const [shops, setShops] = useState<shopRequest[]>([]);
   const [loading, setLoading] = useState(true);
+  const [travelTime, setTravelTime] = useState<travelMapResponse | null>(null);
+
+  const fetchMapData = async (address: string) => {
+    if (!address) {
+      return;
+    }
+
+    try {
+      const data = await travelMap(address);
+      console.log("Travel time data:", data);
+      setTravelTime(data);
+    } catch (error) {
+      console.error("Error fetching travel time:", error);
+    }
+  };
 
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(
     null
@@ -60,13 +77,16 @@ export default function ShopInfo() {
 
   const fetchShop = async () => {
     try {
-      const res = await Shop(Number(shopId));
+      const res = await Shop();
       if (res.success && res.data.length > 0) {
         const selectedShop = shopId
           ? res.data.find((s) => s.id === parseInt(shopId))
           : res.data[0];
 
-        setShopInfo(selectedShop || res.data[0]);
+        if (selectedShop) {
+          setShopInfo(selectedShop);
+          await fetchMapData(selectedShop.address);
+        }
       }
     } catch (error) {
       console.error(error);
@@ -74,9 +94,16 @@ export default function ShopInfo() {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchShop();
   }, [shopId]);
+
+  useEffect(() => {
+    if (shopInfo?.address) {
+      fetchMapData(shopInfo.address);
+    }
+  }, [shopInfo?.address]);
   return (
     <div className="bg-beige">
       <div className="h-36"></div>
@@ -188,10 +215,15 @@ export default function ShopInfo() {
 
           <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
 
-          <div className="grid grid-cols-[4fr_6fr]  text-black pl-4 pt-3 pb-3">
-            <p className="font-bold h3">Distance from Nagoya Station</p>
-            {/* 名駅から喫茶店までの時間はまだないの未実装 */}
-            <p>6 minutes walk</p>
+          <div className="grid grid-cols-[4fr_6fr] text-black pl-4 pt-3 pb-3">
+            <p className="font-bold text-xl">From Nagoya Station</p>
+            <div>
+              {travelTime && (
+                <>
+                  <p>Walking: {travelTime.walk.time} minutes</p>
+                </>
+              )}
+            </div>
           </div>
 
           <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
