@@ -6,7 +6,7 @@ export function TabBar() {
   const [active, setActive] = useState(1);
   const router = useRouter();
   return (
-    <div className="fixed bottom-3 z-100">
+    <div className="fixed bottom-0 z-100 left-1/2 -translate-x-1/2">
       <div className="flex bg-beige  h-14 mx-3 rounded-lg justify-between box-shadow">
         <button
           onClick={() => {
