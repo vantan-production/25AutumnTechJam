@@ -1,7 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Image from "next/image";
 import Bookmark from "../ui/bookmark";
 import { useTranslation } from "react-i18next";
 
@@ -22,10 +21,8 @@ type shopRequest = {
 
 type Props = {
   shop: shopRequest;
-  shop: shopRequest;
 };
 
-export function Card({ shop }: Props) {
 export function Card({ shop }: Props) {
   const router = useRouter();
   const { t } = useTranslation();
@@ -41,7 +38,6 @@ export function Card({ shop }: Props) {
     <div
       className="rounded-2 bg-green mx-3 flex p-2 gap-x-4"
       onClick={() => {
-        router.push(`/shop-info?id=${shop.id}`);
         router.push(`/shop-info?id=${shop.id}`);
       }}
     >
@@ -66,11 +62,6 @@ export function Card({ shop }: Props) {
           </div>
           <div className="bg-beige rounded-full text-black small w-fit px-2">
             {shop.min_budget ? `¥${shop.min_budget}~` : ""}
-          <div className="text-black small">
-            {shop.opens_at}-{shop.closes_at}
-          </div>
-          <div className="bg-beige rounded-full text-black small w-fit px-2">
-            {shop.min_budget ? `¥${shop.min_budget}~` : ""}
           </div>
         </div>
         <div className="text-black p text-start">{translatedDescription}</div>
@@ -78,5 +69,3 @@ export function Card({ shop }: Props) {
     </div>
   );
 }
-
-export default Card;

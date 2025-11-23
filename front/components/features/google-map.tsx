@@ -272,7 +272,7 @@ export default function GoogleMapComponent({
   }, []);
 
   return (
-    <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_API_KEY}>
+    <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_API_KEY || ""}>
       <GoogleMap
         mapContainerStyle={sizeStyele}
         center={center}

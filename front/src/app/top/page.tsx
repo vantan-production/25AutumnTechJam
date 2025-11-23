@@ -110,7 +110,6 @@ export default function ShopList() {
         )}
       </div>
       <div className="h-[80px] bg-beige"></div>
-      <div className="h-[80px] bg-beige"></div>
     </div>
   );
 }

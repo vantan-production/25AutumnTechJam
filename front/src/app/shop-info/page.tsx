@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useEffect, useState } from "react";
 import Header from "../../../components/layout/header";
 import Bookmark from "../../../components/ui/bookmark";
 import Navbar from "../../../components/layout/navbar";
@@ -57,14 +56,9 @@ export default function ShopInfoPage() {
 
   const handleImageClick = () => {
     setIsModalOpen(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleImageClick = () => {
-    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
     setIsModalOpen(false);
   };
 
@@ -77,8 +71,10 @@ export default function ShopInfoPage() {
 
   const goToNext = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (selectedImageIndex !== null && selectedImageIndex < shops.length - 1) {
-    if (selectedImageIndex !== null && selectedImageIndex < shops.length - 1) {
+    if (
+      selectedImageIndex !== null &&
+      selectedImageIndex < ShopInfo.length - 1
+    ) {
       setSelectedImageIndex(selectedImageIndex + 1);
     }
   };
@@ -125,8 +121,7 @@ export default function ShopInfoPage() {
     : null;
 
   return (
-    <div className="bg-beige">
-      <div className="h-36"></div>
+    <div className="bg-beige h-screen">
       <div className="h-36"></div>
       <Header
         getGenreTab={false}
@@ -165,13 +160,10 @@ export default function ShopInfoPage() {
           <div className="relative max-w-[90vw] max-h-[90vh]">
             <Image
               src={shopInfo.image_url}
-              src={shopInfo.image_url}
               width={250}
               height={250}
               alt={shopInfo.name}
-              alt={shopInfo.name}
               className="max-w-full max-h-[90vh] object-contain"
-              onClick={handleImageClick}
               onClick={handleImageClick}
             />
             <button
@@ -182,8 +174,7 @@ export default function ShopInfoPage() {
             </button>
           </div>
           {selectedImageIndex !== null &&
-            selectedImageIndex < shops.length - 1 && (
-            selectedImageIndex < shops.length - 1 && (
+            selectedImageIndex < ShopInfo.length - 1 && (
               <div
                 className="absolute top-1/2 right-5 -translate-y-1/2 cursor-pointer"
                 onClick={goToNext}
@@ -224,23 +215,8 @@ export default function ShopInfoPage() {
               <p>No shops found</p>
             </div>
           )}
-          {shopInfo ? (
-            <Image
-              src={shopInfo.image_url}
-              width={110}
-              height={110}
-              alt={shopInfo.name}
-              className="w-[110px] h-[110px]"
-              onClick={handleImageClick}
-            />
-          ) : (
-            <div className="w-[110px] h-[110px]">
-              <p>No shops found</p>
-            </div>
-          )}
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center my-2">
       <div className="flex flex-col justify-center items-center my-2">
         <div className="bg-green h-fit w-[377px] radius-3">
           <div className="flex justify-end">
@@ -264,15 +240,6 @@ export default function ShopInfoPage() {
                 </>
               )}
             </div>
-          <div className="grid grid-cols-[4fr_6fr] text-black pl-4 pt-3 pb-3">
-            <p className="font-bold text-xl">From Nagoya Station</p>
-            <div>
-              {travelTime && (
-                <>
-                  <p>Walking: {travelTime.walk.time} minutes</p>
-                </>
-              )}
-            </div>
           </div>
 
           <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
@@ -284,14 +251,9 @@ export default function ShopInfoPage() {
 
           <div className=" bg-black h-[0.3px] w-[360px] mx-auto"></div>
 
-
-          <div className=" bg-black h-[0.3px] w-[360px] mx-auto"></div>
-
           <div className="grid grid-cols-[4fr_6fr]   text-black pl-4 pt-3 pb-3">
             <p className="font-bold h3">Business hours</p>
-            <p className="font-bold h3">Business hours</p>
             <p>
-              {shopInfo?.opens_at} ～ {shopInfo?.closes_at}
               {shopInfo?.opens_at} ～ {shopInfo?.closes_at}
             </p>
           </div>
@@ -299,7 +261,6 @@ export default function ShopInfoPage() {
           <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
 
           <div className="grid grid-cols-[4fr_6fr]  text-black pl-4 pt-3 pb-3">
-            <p className="font-bold h3">budget</p>
             <p className="font-bold h3">budget</p>
             <p>¥ 1,000 ~ 5,000</p>
           </div>
@@ -309,14 +270,11 @@ export default function ShopInfoPage() {
           <div className="grid grid-cols-[4fr_6fr]   text-black pl-4 pt-3 pb-2">
             <p className="font-bold h3">Tell</p>
             <p>{shopInfo?.phone_number}</p>
-            <p className="font-bold h3">Tell</p>
-            <p>{shopInfo?.phone_number}</p>
           </div>
         </div>
-        <div className="h-20"></div>
-        <div className="h-20"></div>
-        <Navbar />
       </div>
+      <div className="h-20"></div>
+      <Navbar />
     </div>
   );
 }
