@@ -22,11 +22,11 @@ export default function SignupModal() {
             <img src="../../images/x.png" alt="close" className="w-6 h-6 m-auto" />
         </button>
         <div className="mt-6 ">
-            <ModalEmail />
-            <ModalPass />
-            <ConfirmPass />
-            <SignupButton />
-            <LoginSwitch />
+            <ModalEmail/>
+            <ModalPass/>
+            <ConfirmPass></ConfirmPass>
+            <SignupButton></SignupButton>
+            <LoginSwitch></LoginSwitch>
         </div>
         </div>
     </div>

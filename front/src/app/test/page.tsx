@@ -2,7 +2,7 @@ import Header from "../../../components/layout/header";
 
 
 import Page from "../top-page/page";
-import LoginModal from "../../../components/modal/loginModal";
+import LoginModal from "../modal/loginModal";
 import TabBar from "../../../components/layout/navbar";
 import LoginAttention from "../modal/loginattention-modal";
 
