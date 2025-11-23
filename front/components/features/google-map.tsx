@@ -1,6 +1,8 @@
 "use client";
-import React from "react";
-import { GoogleMap, LoadScript } from "@react-google-maps/api";
+import React, { useState, useEffect } from "react";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { Shop } from "../../api/shop";
+import { useRouter } from "next/navigation";
 
 const sizeStyele = {
   width: "100vw",
@@ -228,17 +230,80 @@ const mapStyles = [
   },
 ];
 
-export default function GoogleMapComponent() {
+type ShopData = {
+  id: number;
+  lat: number;
+  lng: number;
+  name: string;
+};
+
+type GoogleMapComponentProps = {
+  className?: string;
+  onMapIntercepted?: () => void;
+};
+
+export default function GoogleMapComponent({
+  className,
+  onMapIntercepted,
+}: GoogleMapComponentProps) {
+  const [shops, setShops] = useState<ShopData[]>([]);
+  const router = useRouter();
+  useEffect(() => {
+    const fetchShops = async () => {
+      try {
+        const res = await Shop();
+        if (res.success) {
+          setShops(
+            res.data.map((shop) => ({
+              id: shop.id,
+              lat: shop.latitude,
+              lng: shop.longitude,
+              name: shop.name,
+            }))
+          );
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchShops();
+  }, []);
+
   return (
     <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_API_KEY}>
       <GoogleMap
         mapContainerStyle={sizeStyele}
         center={center}
-        zoom={15}
+        zoom={13}
         options={{
           styles: mapStyles,
+          streetViewControl: false,
         }}
-      ></GoogleMap>
+      >
+        {shops.map((shop) => (
+          <Marker
+            key={shop.id}
+            position={{
+              lat: shop.lat,
+              lng: shop.lng,
+            }}
+            title={shop.name}
+            icon={{
+              path: google.maps.SymbolPath.CIRCLE,
+              fillColor: "#96514D",
+              fillOpacity: 0.8,
+              strokeColor: "#FFF7EC",
+              strokeOpacity: 0.5,
+              strokeWeight: 3,
+              scale: 10,
+            }}
+            onClick={() => {
+              router.push(`/shop-info?id=${shop.id}`);
+            }}
+          />
+        ))}
+      </GoogleMap>
     </LoadScript>
   );
 }

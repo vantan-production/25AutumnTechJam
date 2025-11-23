@@ -1,10 +1,22 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export function TabBar() {
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState<number | null>(null);
   const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (pathname === "/top") {
+      setActive(1);
+    } else if (pathname === "/map") {
+      setActive(2);
+    } else if (pathname === "/bookmark") {
+      setActive(3);
+    }
+  }, [pathname]);
+
   return (
     <div className="fixed bottom-0 z-100 left-1/2 -translate-x-1/2">
       <div className="flex bg-beige  h-14 mx-3 rounded-lg justify-between box-shadow">
