@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@react-google-maps/api": "^2.20.7",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@types/js-cookie": "^3.0.6",
     "js-cookie": "^3.0.5",
