@@ -39,13 +39,12 @@ class ShopTableController extends Controller
     }
 
     public function show($id) {
-        if (Shop::find($id)) {
-            $shop = Shop::with('images:id,shop_id,image_url')->find($id);
-        } else {
+        $shop = Shop::with('images:id,shop_id,image_url')->find($id);
+        if (!$shop){
             return response()->json([
                 'success' => false,
                 'message' => 'ショップ情報の取得に失敗しました。'
-            ]);
+            ], 404);
         }
         
         // image_urlsに変換
