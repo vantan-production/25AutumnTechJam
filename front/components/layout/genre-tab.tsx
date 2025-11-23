@@ -31,10 +31,12 @@ function GenreTab({
   const handleModaleOpen = () => {
     setModaleOpen(true);
     onFilterOpen?.(true);
+    onFilterOpen?.(true);
   };
 
   const handleModaleClose = () => {
     setModaleOpen(false);
+    onFilterOpen?.(false);
     onFilterOpen?.(false);
   };
 
