@@ -29,7 +29,6 @@ export default function ShopInfo() {
     longitude: number;
   };
   const [shopInfo, setShopInfo] = useState<shopRequest | null>(null);
-  const [shops, setShops] = useState<shopRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [travelTime, setTravelTime] = useState<travelMapResponse | null>(null);
 
