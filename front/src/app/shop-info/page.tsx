@@ -10,6 +10,7 @@ import { travelMap } from "../../../api/lib/travelMap";
 import { useSearchParams } from "next/navigation";
 import ShopDetailHead from "../../../components/features/shop-detail-head";
 import { travelMapResponse } from "../../../api/lib/travelMap";
+import { Omiyage } from "../../../components/features/omiyage";
 
 export default function ShopInfo() {
   const searchParams = useSearchParams();
@@ -69,7 +70,11 @@ export default function ShopInfo() {
 
   const goToNext = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (selectedImageIndex !== null && selectedImageIndex < shops.length - 1) {
+    if (
+      selectedImageIndex !== null &&
+      shopInfo?.image_url &&
+      selectedImageIndex < shopInfo.image_url.length - 1
+    ) {
       setSelectedImageIndex(selectedImageIndex + 1);
     }
   };
@@ -157,7 +162,7 @@ export default function ShopInfo() {
             </button>
           </div>
           {selectedImageIndex !== null &&
-            selectedImageIndex < shops.length - 1 && (
+            selectedImageIndex < shopInfo?.image_url.length - 1 && (
               <div
                 className="absolute top-1/2 right-5 -translate-y-1/2 cursor-pointer"
                 onClick={goToNext}
@@ -181,7 +186,6 @@ export default function ShopInfo() {
             )}
         </div>
       )}
-
       <div className="flex justify-center flex-col my-2">
         <div className="flex gap-2 overflow-x-auto px-2">
           {shopInfo ? (
@@ -200,6 +204,7 @@ export default function ShopInfo() {
           )}
         </div>
       </div>
+      <Omiyage />
       <div className="flex flex-col justify-center items-center my-2">
         <div className="bg-green h-fit w-[377px] radius-3">
           <div className="flex justify-end">

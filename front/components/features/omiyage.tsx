@@ -1,0 +1,75 @@
+import Image from "next/image";
+import { Shop } from "../../api/shop";
+import { useEffect, useState } from "react";
+
+type shopRequest = {
+  id: number;
+  is_cafe: boolean;
+  name: string;
+  description: string;
+  image_url: string;
+};
+
+export function Omiyage() {
+  const [omiyageShops, setOmiyageShops] = useState<shopRequest[]>([]);
+
+  useEffect(() => {
+    const fetchShops = async () => {
+      const shops = await Shop();
+      if (shops.success && shops.data.length > 0) {
+        const filteredOmiyageShops = shops.data.filter((shop) => {
+          const isOmiyage =
+            shop.is_cafe === false || shop.is_cafe === 0 || !shop.is_cafe;
+          return isOmiyage;
+        });
+
+        if (filteredOmiyageShops.length > 0) {
+          setOmiyageShops(filteredOmiyageShops);
+        }
+      }
+    };
+    fetchShops();
+  }, []);
+
+  if (omiyageShops.length === 0) {
+    return <div className="mx-3">お土産屋が見つかりませんでした</div>;
+  }
+
+  return (
+    <div className="flex gap-x-2 w-full overflow-x-auto overflow-y-hidden">
+      {omiyageShops.map((shop) => (
+        <div
+          key={shop.id}
+          className="w-[350px] ml-2 h-[140px] bg-green radius-3 p-2"
+        >
+          <div className="flex justify-between">
+            <div>
+              <h2 className="h2 w-[220px] my-2">{shop.name}</h2>
+              <div className="flex gap-x-2 w-[220px] overflow-x-auto ">
+                <p className="w-fit px-2 py-1 rounded-1 bg-beige small">
+                  タグ1
+                </p>
+                <p className="w-fit px-2 py-1 rounded-1 bg-beige small">
+                  タグ2
+                </p>
+                <p className="w-fit px-2 py-1 rounded-1 bg-beige small">
+                  タグ3
+                </p>
+              </div>
+              <p className="p w-[220px] my-2">{shop.description}</p>
+            </div>
+            <div className="w-[114px] h-[124px]">
+              <Image
+                src={shop.image_url}
+                alt={shop.name}
+                className="w-full h-full object-cover radius-3"
+                width={110}
+                height={110}
+              />
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
