@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string("address");
             $table->unsignedInteger("station_distance");
             $table->string("phone_number");
-            $table->string("image_url");
             $table->unsignedInteger("min_budget")->default(0)->nullable();
             $table->time("opens_at");
             $table->time("closes_at");

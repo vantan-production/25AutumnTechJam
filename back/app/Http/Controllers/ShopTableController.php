@@ -8,20 +8,29 @@ use App\Models\Shop;
 class ShopTableController extends Controller
 {
     public function index(Request $request) {
-        $shops = Shop::select(
-            'id',
-            'is_cafe', 
-            'name', 
-            'description', 
-            'image_url',
-            'opens_at', 
-            'closes_at', 
-            'min_budget', 
-            'address',
-            'phone_number',
-            'latitude', 
-            'longitude'  
-            )->get();
+        // Eager Loadingで画像も一緒に取得
+        $shops = Shop::with('images:id,shop_id,image_url')
+            ->select(
+                'id',
+                'is_cafe', 
+                'name', 
+                'description', 
+                'opens_at', 
+                'closes_at', 
+                'min_budget', 
+                'address',
+                'phone_number',
+                'latitude', 
+                'longitude',
+                'station_distance'  // 追加
+            )
+            ->get();
+
+        // shopのimagesからimage_urlのみを取得
+        $shops->each(function ($shop) {
+            $shop->image_urls = $shop->images->pluck('image_url');
+            unset($shop->images);
+        });
 
         return response()->json([
             "success" => true,
@@ -30,7 +39,19 @@ class ShopTableController extends Controller
     }
 
     public function show($id) {
-        $shop = Shop::find($id);
+        if (Shop::find($id)) {
+            $shop = Shop::with('images:id,shop_id,image_url')->find($id);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'ショップ情報の取得に失敗しました。'
+            ]);
+        }
+        
+        // image_urlsに変換
+        $shop->image_urls = $shop->images->pluck('image_url');
+        unset($shop->images);
+        
         return response()->json([
             'success' => true,
             'data' => $shop,

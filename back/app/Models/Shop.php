@@ -22,4 +22,7 @@ class Shop extends Model
     public function users() {
         return $this->belongsToMany(User::class, "bookmark");
     }
+    public function images() {
+        return $this->hasMany(Image::class);
+    }
 }
