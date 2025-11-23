@@ -12,12 +12,13 @@ class ShopTableController extends Controller
             'id',
             'is_cafe', 
             'name', 
-            'description',
-            'station_distance',
+            'description', 
+            'image_url',
             'opens_at', 
             'closes_at', 
-            'image_url', 
             'min_budget', 
+            'address',
+            'phone_number',
             'latitude', 
             'longitude'  
             )->get();

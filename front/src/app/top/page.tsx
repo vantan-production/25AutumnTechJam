@@ -2,39 +2,65 @@
 import { Card } from "../../../components/features/card";
 import Header from "../../../components/layout/header";
 import TabBar from "../../../components/layout/navbar";
+import { Shop } from "../../../api/shop";
+import { useState, useEffect } from "react";
+
+type shopRequest = {
+  id: number;
+  is_cafe: boolean;
+  name: string;
+  description: string;
+  image_url: string;
+  min_budget: number | null;
+  opens_at: string;
+  closes_at: string;
+  address: string;
+  phone_number: string;
+  latitude: number;
+  longitude: number;
+};
 
 export default function ShopList() {
-  const items = [
-    {
-      shopName: "shop-name",
-      businessHours: "7:00-11:30",
-      parse: "¥800~1000",
-      explanation: "This shop is beautiful and traditional.",
-    },
-  ];
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [shops, setShops] = useState<shopRequest[]>([]);
+  const fetchShops = async () => {
+    try {
+      const res = await Shop();
+      if (res.success && res.data.length > 0) {
+        setShops(res.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  const repeatedItems = Array.from({ length: 10 }, () => items[0]);
+  useEffect(() => {
+    fetchShops();
+  }, []);
+
   return (
-    <div className="bg-beige">
-      <Header
-        getGenreTab={false}
-        getLanguage={false}
-        getSearch={true}
-        getBackButton={false}
-      />
-      {repeatedItems.map((item, index) => (
-        <div className="py-1" key={index}>
-          <Card
-            shopName={item.shopName}
-            businessHours={item.businessHours}
-            parse={item.parse}
-            explanation={item.explanation}
-          />
-        </div>
-      ))}
-      <div className="fixed bottom-3">
-        <TabBar />
+    <div>
+      <div className="h-[258px] bg-beige"></div>
+      <div className="bg-beige">
+        <Header
+          getGenreTab={true}
+          getLanguage={true}
+          getSearch={true}
+          getBackButton={false}
+          onFilterOpen={setIsFilterOpen}
+        />
+        {shops.slice(0, 20).map((item) => (
+          <div className="py-1" key={item.id}>
+            <Card shop={item} />
+          </div>
+        ))}
+        {!isFilterOpen && (
+          <div className="fixed bottom-3">
+            <TabBar />
+          </div>
+        )}
       </div>
+      <div className="h-[80px] bg-beige"></div>
     </div>
   );
 }

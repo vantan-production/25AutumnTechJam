@@ -7,7 +7,7 @@ export function BackButton() {
   return (
     <div className="w-full flex justify-left">
       <div
-        className="w-14 h-10 px-4 py-1.5 rounded-2 bg-green"
+        className="w-14 h-10 px-4 py-1.5 rounded-2 bg-green border-2 border-white"
         onClick={() => router.back()}
       >
         <svg
