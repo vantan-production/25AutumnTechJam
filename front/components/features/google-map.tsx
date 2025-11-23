@@ -240,6 +240,7 @@ type ShopData = {
 type GoogleMapComponentProps = {
   className?: string;
   onMapIntercepted?: () => void;
+  onFilteredShopsChange?: (shops: any[]) => void;
 };
 
 export default function GoogleMapComponent({

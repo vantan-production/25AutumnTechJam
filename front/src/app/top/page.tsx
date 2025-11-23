@@ -38,8 +38,12 @@ export default function ShopList() {
     fetchShops();
   }, []);
 
+  const handleFilteredShopsChange = (filteredShops: any[]) => {
+    setShops(filteredShops);
+  };
+
   return (
-    <div>
+    <div className="bg-beige h-screen w-full">
       <div className="h-[258px] bg-beige"></div>
       <div className="bg-beige">
         <Header
@@ -48,12 +52,19 @@ export default function ShopList() {
           getSearch={true}
           getBackButton={false}
           onFilterOpen={setIsFilterOpen}
+          onFilteredShopsChange={handleFilteredShopsChange}
         />
-        {shops.slice(0, 20).map((item) => (
-          <div className="py-1" key={item.id}>
-            <Card shop={item} />
+        {shops.length > 0 ? (
+          shops.slice(0, 20).map((item) => (
+            <div className="py-1" key={item.id}>
+              <Card shop={item} />
+            </div>
+          ))
+        ) : (
+          <div className="text-center py-8 text-black/60">
+            検索結果がありません
           </div>
-        ))}
+        )}
         {!isFilterOpen && (
           <div className="fixed bottom-3">
             <TabBar />

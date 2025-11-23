@@ -9,6 +9,7 @@ type HeaderProps = {
   getSearch?: boolean;
   getBackButton?: boolean;
   onFilterOpen?: (isOpen: boolean) => void;
+  onFilteredShopsChange?: (shops: any[]) => void;
 };
 
 function Header({
@@ -17,6 +18,7 @@ function Header({
   getSearch,
   getBackButton,
   onFilterOpen,
+  onFilteredShopsChange,
 }: HeaderProps) {
   return (
     <div className="fixed top-0 left-0 right-0 z-50">
@@ -29,7 +31,9 @@ function Header({
               className="w-15 h-15"
             />
           </div>
-          {getSearch && <Search />}
+          {getSearch && (
+            <Search onFilteredShopsChange={onFilteredShopsChange} />
+          )}
           {getGenreTab && <GenreTab onFilterOpen={onFilterOpen} />}
           {getLanguage && <Language />}
         </div>

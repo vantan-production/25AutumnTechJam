@@ -10,24 +10,26 @@ import { travelMap } from "../../../api/lib/travelMap";
 import { useSearchParams } from "next/navigation";
 import ShopDetailHead from "../../../components/features/shop-detail-head";
 import { travelMapResponse } from "../../../api/lib/travelMap";
+import { ShopInfo } from "../../../api/shop-info";
 
-export default function ShopInfo() {
+type shopRequest = {
+  id: number;
+  is_cafe: boolean;
+  name: string;
+  description: string;
+  image_url: string;
+  min_budget: number | null;
+  opens_at: string;
+  closes_at: string;
+  address: string;
+  phone_number: string;
+  latitude: number;
+  longitude: number;
+};
+export default function ShopInfoPage() {
   const searchParams = useSearchParams();
   const shopId = searchParams.get("id");
-  type shopRequest = {
-    id: number;
-    is_cafe: boolean;
-    name: string;
-    description: string;
-    image_url: string;
-    min_budget: number | null;
-    opens_at: string;
-    closes_at: string;
-    address: string;
-    phone_number: string;
-    latitude: number;
-    longitude: number;
-  };
+
   const [shopInfo, setShopInfo] = useState<shopRequest | null>(null);
   const [loading, setLoading] = useState(true);
   const [travelTime, setTravelTime] = useState<travelMapResponse | null>(null);
@@ -39,7 +41,6 @@ export default function ShopInfo() {
 
     try {
       const data = await travelMap(address);
-      console.log("Travel time data:", data);
       setTravelTime(data);
     } catch (error) {
       console.error("Error fetching travel time:", error);
@@ -76,15 +77,11 @@ export default function ShopInfo() {
 
   const fetchShop = async () => {
     try {
-      const res = await Shop();
-      if (res.success && res.data.length > 0) {
-        const selectedShop = shopId
-          ? res.data.find((s) => s.id === parseInt(shopId))
-          : res.data[0];
-
-        if (selectedShop) {
-          setShopInfo(selectedShop);
-          await fetchMapData(selectedShop.address);
+      if (shopId) {
+        const res = await ShopInfo(parseInt(shopId));
+        if (res.success && res.data) {
+          setShopInfo(res.data);
+          await fetchMapData(res.data.address);
         }
       }
     } catch (error) {
