@@ -3,6 +3,7 @@ import { Card } from "../../../components/features/card";
 import Header from "../../../components/layout/header";
 import TabBar from "../../../components/layout/navbar";
 import { Shop } from "../../../api/shop";
+import { FilterConditions } from "../../../components/layout/filter";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -25,20 +26,43 @@ export default function ShopList() {
   const { t } = useTranslation();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [shops, setShops] = useState<shopRequest[]>([]);
-  const fetchShops = async () => {
+  const [filterParams, setFilterParams] = useState<URLSearchParams>(
+    new URLSearchParams()
+  );
+  const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
+
+  const fetchShops = async (params?: URLSearchParams) => {
     try {
-      const res = await Shop();
+      const res = await Shop(params);
       if (res.success && res.data.length > 0) {
         setShops(res.data);
+      } else {
+        setShops([]);
       }
     } catch (error) {
       console.error(error);
+      setShops([]);
     }
   };
 
   useEffect(() => {
-    fetchShops();
-  }, []);
+    const params = new URLSearchParams(filterParams);
+    if (selectedGenre) {
+      params.append("genre", selectedGenre);
+    }
+    fetchShops(params);
+  }, [filterParams, selectedGenre]);
+
+  const handleFilterApply = (
+    conditions: FilterConditions,
+    params: URLSearchParams
+  ) => {
+    setFilterParams(params);
+  };
+
+  const handleGenreChange = (genre: string | null) => {
+    setSelectedGenre(genre);
+  };
 
   const handleFilteredShopsChange = (filteredShops: any[]) => {
     setShops(filteredShops);
@@ -64,6 +88,9 @@ export default function ShopList() {
           getBackButton={false}
           onFilterOpen={setIsFilterOpen}
           onFilteredShopsChange={handleFilteredShopsChange}
+          onFilterApply={handleFilterApply}
+          onGenreChange={handleGenreChange}
+          filteredShops={shops}
         />
         {translatedShops.length > 0 ? (
           translatedShops.slice(0, 20).map((item) => (

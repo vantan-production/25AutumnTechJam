@@ -291,7 +291,7 @@ export default function GoogleMapComponent({
             }}
             title={shop.name}
             icon={{
-              path: google.maps.SymbolPath.CIRCLE,
+              path: 0,
               fillColor: "#96514D",
               fillOpacity: 0.8,
               strokeColor: "#FFF7EC",

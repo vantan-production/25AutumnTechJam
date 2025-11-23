@@ -17,17 +17,18 @@ type shopResponse = {
   data: shopRequest[];
 };
 
-export async function Shop(): Promise<shopResponse> {
+export async function Shop(params?: URLSearchParams): Promise<shopResponse> {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/shop`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/api/shop${
+      params && params.toString() ? `?${params.toString()}` : ""
+    }`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     if (!response.ok) {
       return {
         success: false,

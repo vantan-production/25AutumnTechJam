@@ -41,7 +41,7 @@ export function Card({ shop }: Props) {
         router.push(`/shop-info?id=${shop.id}`);
       }}
     >
-      <div className="rounded-2 bg-white p-18 w-[144px] h-[164px] relative overflow-hidden">
+      <div className="rounded-2 bg-white p-18 w-[144px] h-[190px] relative overflow-hidden">
         <Image
           src={shop.image_url}
           alt={shop.name}

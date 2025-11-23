@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { Shop } from "../../api/shop";
 import { useTranslation } from "react-i18next";
 
@@ -14,9 +14,13 @@ type ShopData = {
 
 type SearchProps = {
   onFilteredShopsChange?: (shops: ShopData[]) => void;
+  filteredShops?: ShopData[];
 };
 
-function Search({ onFilteredShopsChange }: SearchProps) {
+function Search({
+  onFilteredShopsChange,
+  filteredShops: propsFilteredShops,
+}: SearchProps) {
   const { t } = useTranslation();
   const [allShops, setAllShops] = useState<ShopData[]>([]);
   const [filteredShops, setFilteredShops] = useState<ShopData[]>([]);
@@ -24,45 +28,56 @@ function Search({ onFilteredShopsChange }: SearchProps) {
   const [inputPH, setInputPH] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    const fetchShops = async () => {
-      const res = await Shop();
-      if (res.success && res.data.length > 0) {
-        setAllShops(res.data);
-        setFilteredShops(res.data);
-        onFilteredShopsChange?.(res.data);
+  const handleSearchWithShops = useCallback(
+    (shopsToSearch: ShopData[]) => {
+      if (!inputPH.trim()) {
+        setFilteredShops(shopsToSearch);
+        onFilteredShopsChange?.(shopsToSearch);
+      } else {
+        const query = inputPH.toLowerCase().trim();
+        const result = shopsToSearch.filter((shop) => {
+          const translatedName = t(`shops.${shop.id}.name`, {
+            defaultValue: shop.name,
+          });
+          const translatedDescription = t(`shops.${shop.id}.description`, {
+            defaultValue: shop.description,
+          });
+          const translatedAddress = t(`shops.${shop.id}.address`, {
+            defaultValue: shop.address || "",
+          });
+
+          return (
+            translatedName.toLowerCase().includes(query) ||
+            translatedDescription.toLowerCase().includes(query) ||
+            translatedAddress.toLowerCase().includes(query)
+          );
+        });
+        setFilteredShops(result);
+        onFilteredShopsChange?.(result);
       }
-    };
-    fetchShops();
-  }, []);
+    },
+    [inputPH, t, onFilteredShopsChange]
+  );
+
+  useEffect(() => {
+    if (propsFilteredShops && propsFilteredShops.length > 0) {
+      setAllShops(propsFilteredShops);
+      if (!inputPH.trim()) {
+        setFilteredShops(propsFilteredShops);
+        onFilteredShopsChange?.(propsFilteredShops);
+      } else {
+        handleSearchWithShops(propsFilteredShops);
+      }
+    }
+  }, [
+    propsFilteredShops,
+    inputPH,
+    handleSearchWithShops,
+    onFilteredShopsChange,
+  ]);
 
   const handleSearch = () => {
-    if (!inputPH.trim()) {
-      setFilteredShops(allShops);
-      onFilteredShopsChange?.(allShops);
-    } else {
-      const query = inputPH.toLowerCase().trim();
-      const result = allShops.filter((shop) => {
-        const translatedName = t(`shops.${shop.id}.name`, {
-          defaultValue: shop.name,
-        });
-        const translatedDescription = t(`shops.${shop.id}.description`, {
-          defaultValue: shop.description,
-        });
-        const translatedAddress = t(`shops.${shop.id}.address`, {
-          defaultValue: shop.address || "",
-        });
-
-        return (
-          translatedName.toLowerCase().includes(query) ||
-          translatedDescription.toLowerCase().includes(query) ||
-          translatedAddress.toLowerCase().includes(query)
-        );
-      });
-      setFilteredShops(result);
-      onFilteredShopsChange?.(result);
-    }
-
+    handleSearchWithShops(allShops.length > 0 ? allShops : []);
     if (inputRef.current) {
       inputRef.current.blur();
     }
@@ -95,8 +110,9 @@ function Search({ onFilteredShopsChange }: SearchProps) {
 
   const handleClear = () => {
     setInputPH("");
-    setFilteredShops(allShops);
-    onFilteredShopsChange?.(allShops);
+    const shopsToUse = allShops.length > 0 ? allShops : [];
+    setFilteredShops(shopsToUse);
+    onFilteredShopsChange?.(shopsToUse);
     if (inputRef.current) {
       inputRef.current.focus();
     }

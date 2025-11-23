@@ -3,13 +3,30 @@
 import Filter from "./filter";
 import { useState } from "react";
 
+import { FilterConditions } from "./filter";
+
 type GenreTabProps = {
   onFilterOpen?: (isOpen: boolean) => void;
+  onGenreChange?: (genre: string | null) => void;
+  onFilterApply?: (conditions: FilterConditions) => void;
 };
 
-function GenreTab({ onFilterOpen }: GenreTabProps) {
+function GenreTab({
+  onFilterOpen,
+  onGenreChange,
+  onFilterApply,
+}: GenreTabProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [modaleOpen, setModaleOpen] = useState(false);
+
+  const genreList = [
+    "retro",
+    "coffee",
+    "sweets",
+    "bakery",
+    "breakfast",
+    "morning",
+  ];
 
   const handleModaleOpen = () => {
     setModaleOpen(true);
@@ -21,22 +38,23 @@ function GenreTab({ onFilterOpen }: GenreTabProps) {
     onFilterOpen?.(false);
   };
 
-  const genre = [
-    "sweets",
-    "sweets",
-    "sweets",
-    "sweets",
-    "sweets",
-    "sweets",
-  ].map((item, index) => (
+  const handleGenreClick = (index: number) => {
+    const newSelectedIndex = index === selectedIndex ? null : index;
+    setSelectedIndex(newSelectedIndex);
+    onGenreChange?.(
+      newSelectedIndex !== null ? genreList[newSelectedIndex] : null
+    );
+  };
+
+  const genre = genreList.map((item, index) => (
     <div
-      className="w-14 h-11 radius-1 box-shadow flex items-center justify-center flex-shrink-0 cursor-pointer transition-colors"
+      className="w-fit px-2 h-11 radius-1 box-shadow flex items-center justify-center flex-shrink-0 cursor-pointer transition-colors"
       style={{
         backgroundColor: selectedIndex === index ? "#050505" : "#ffffff",
         color: selectedIndex === index ? "#ffffff" : "#050505",
       }}
       key={index}
-      onClick={() => setSelectedIndex(index === selectedIndex ? null : index)}
+      onClick={() => handleGenreClick(index)}
     >
       {item}
     </div>
@@ -72,7 +90,7 @@ function GenreTab({ onFilterOpen }: GenreTabProps) {
             onClick={handleModaleClose}
             className="fixed inset-0 bg-black/50 z-30"
           />
-          <Filter />
+          <Filter onClose={handleModaleClose} onFilterApply={onFilterApply} />
         </>
       )}
     </>
