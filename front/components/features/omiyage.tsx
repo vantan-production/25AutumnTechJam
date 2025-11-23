@@ -18,8 +18,7 @@ export function Omiyage() {
       const shops = await Shop();
       if (shops.success && shops.data.length > 0) {
         const filteredOmiyageShops = shops.data.filter((shop) => {
-          const isOmiyage =
-            shop.is_cafe === false || shop.is_cafe === 0 || !shop.is_cafe;
+          const isOmiyage = shop.is_cafe === false || !shop.is_cafe;
           return isOmiyage;
         });
 
