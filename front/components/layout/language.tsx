@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import i18n from "../../src/providers/i18n";
 
 function Language() {
   const language = ["日本語", "English", "한국어", "中文"];
+  const languageCodes = ["ja", "en", "kr", "cn"];
   const [index, setIndex] = useState(true);
-  const [count, setCount] = useState<number | null>(null);
+  const [count, setCount] = useState<number | null>(1);
   const checkMark = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -24,6 +26,8 @@ function Language() {
     </svg>
   );
   const handleClick = (selectIndex: number) => {
+    const selectedLanguage = languageCodes[selectIndex];
+    i18n.changeLanguage(selectedLanguage);
     setCount(selectIndex);
     setTimeout(() => {
       setIndex(true);
@@ -40,6 +44,26 @@ function Language() {
       setIndex(true);
     }
   }, [index]);
+
+  useEffect(() => {
+    const updateCount = () => {
+      const currentLang = i18n.language || "en";
+      const langIndex = languageCodes.indexOf(currentLang);
+      if (langIndex !== -1) {
+        setCount(langIndex);
+      } else {
+        setCount(1);
+      }
+    };
+
+    updateCount();
+
+    i18n.on("languageChanged", updateCount);
+
+    return () => {
+      i18n.off("languageChanged", updateCount);
+    };
+  }, []);
 
   return (
     <div className="w-[123px] h-fit radius-3 box-shadow bg-beige mx-1">

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { Shop } from "../../api/shop";
+import { useTranslation } from "react-i18next";
 
 type ShopData = {
   id: number;
@@ -16,6 +17,7 @@ type SearchProps = {
 };
 
 function Search({ onFilteredShopsChange }: SearchProps) {
+  const { t } = useTranslation();
   const [allShops, setAllShops] = useState<ShopData[]>([]);
   const [filteredShops, setFilteredShops] = useState<ShopData[]>([]);
   const [search, setSearch] = useState(true);
@@ -40,12 +42,23 @@ function Search({ onFilteredShopsChange }: SearchProps) {
       onFilteredShopsChange?.(allShops);
     } else {
       const query = inputPH.toLowerCase().trim();
-      const result = allShops.filter(
-        (shop) =>
-          shop.name.toLowerCase().includes(query) ||
-          shop.description.toLowerCase().includes(query) ||
-          (shop.address && shop.address.toLowerCase().includes(query))
-      );
+      const result = allShops.filter((shop) => {
+        const translatedName = t(`shops.${shop.id}.name`, {
+          defaultValue: shop.name,
+        });
+        const translatedDescription = t(`shops.${shop.id}.description`, {
+          defaultValue: shop.description,
+        });
+        const translatedAddress = t(`shops.${shop.id}.address`, {
+          defaultValue: shop.address || "",
+        });
+
+        return (
+          translatedName.toLowerCase().includes(query) ||
+          translatedDescription.toLowerCase().includes(query) ||
+          translatedAddress.toLowerCase().includes(query)
+        );
+      });
       setFilteredShops(result);
       onFilteredShopsChange?.(result);
     }

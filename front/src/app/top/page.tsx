@@ -4,6 +4,7 @@ import Header from "../../../components/layout/header";
 import TabBar from "../../../components/layout/navbar";
 import { Shop } from "../../../api/shop";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 type shopRequest = {
   id: number;
@@ -21,6 +22,7 @@ type shopRequest = {
 };
 
 export default function ShopList() {
+  const { t } = useTranslation();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [shops, setShops] = useState<shopRequest[]>([]);
   const fetchShops = async () => {
@@ -42,6 +44,15 @@ export default function ShopList() {
     setShops(filteredShops);
   };
 
+  const translatedShops = shops.map((shop) => ({
+    ...shop,
+    name: t(`shops.${shop.id}.name`, { defaultValue: shop.name }),
+    description: t(`shops.${shop.id}.description`, {
+      defaultValue: shop.description,
+    }),
+    address: t(`shops.${shop.id}.address`, { defaultValue: shop.address }),
+  }));
+
   return (
     <div className="bg-beige h-screen w-full">
       <div className="h-[258px] bg-beige"></div>
@@ -54,15 +65,15 @@ export default function ShopList() {
           onFilterOpen={setIsFilterOpen}
           onFilteredShopsChange={handleFilteredShopsChange}
         />
-        {shops.length > 0 ? (
-          shops.slice(0, 20).map((item) => (
+        {translatedShops.length > 0 ? (
+          translatedShops.slice(0, 20).map((item) => (
             <div className="py-1" key={item.id}>
               <Card shop={item} />
             </div>
           ))
         ) : (
           <div className="text-center py-8 text-black/60">
-            検索結果がありません
+            {t("noResults", { defaultValue: "検索結果がありません" })}
           </div>
         )}
         {!isFilterOpen && (

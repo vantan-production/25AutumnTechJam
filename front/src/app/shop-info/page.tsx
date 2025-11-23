@@ -11,6 +11,7 @@ import { useSearchParams } from "next/navigation";
 import ShopDetailHead from "../../../components/features/shop-detail-head";
 import { travelMapResponse } from "../../../api/lib/travelMap";
 import { ShopInfo } from "../../../api/shop-info";
+import { useTranslation } from "react-i18next";
 
 type shopRequest = {
   id: number;
@@ -100,6 +101,22 @@ export default function ShopInfoPage() {
       fetchMapData(shopInfo.address);
     }
   }, [shopInfo?.address]);
+
+  const { t } = useTranslation();
+
+  const translatedShopInfo = shopInfo
+    ? {
+        ...shopInfo,
+        name: t(`shops.${shopInfo.id}.name`, { defaultValue: shopInfo.name }),
+        description: t(`shops.${shopInfo.id}.description`, {
+          defaultValue: shopInfo.description,
+        }),
+        address: t(`shops.${shopInfo.id}.address`, {
+          defaultValue: shopInfo.address,
+        }),
+      }
+    : null;
+
   return (
     <div className="bg-beige">
       <div className="h-36"></div>
@@ -110,7 +127,7 @@ export default function ShopInfoPage() {
         getBackButton={true}
       />
       <ShopDetailHead
-        shopName={"shopName!!!!!!"}
+        shopName={translatedShopInfo?.name || "shopName!!!!!!"}
         tag={["tag1", "tag2", "tag3"]}
       />
       {shopInfo && isModalOpen && (
@@ -206,7 +223,7 @@ export default function ShopInfoPage() {
           </div>
           <div className="grid grid-cols-[4fr_6fr]  text-black pl-4 pb-3">
             <p className="font-bold h3">explanation</p>
-            <p>{shopInfo?.description}</p>
+            <p>{translatedShopInfo?.description}</p>
           </div>
 
           <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
@@ -226,7 +243,7 @@ export default function ShopInfoPage() {
 
           <div className="grid grid-cols-[4fr_6fr]   text-black pl-4 pt-3 pb-3">
             <p className="font-bold h3">Address</p>
-            <p>{shopInfo?.address}</p>
+            <p>{translatedShopInfo?.address}</p>
           </div>
 
           <div className=" bg-black h-[0.3px] w-[360px] mx-auto"></div>

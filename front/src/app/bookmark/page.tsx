@@ -3,6 +3,7 @@ import { Card } from "../../../components/features/card";
 import Header from "../../../components/layout/header";
 import TabBar from "../../../components/layout/navbar";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 type shopRequest = {
   id: number;
