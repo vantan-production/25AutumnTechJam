@@ -1,9 +1,8 @@
 "use client";
-import React, { useState } from "react";
-import { useRouter } from "next/router";
+import React from "react";
 
-import LoginBuuton from "../../../components/modal-components/login-button";
-import LaterButton from "../../../components/modal-components/later-button";
+import LoginBuuton from "./login-button";
+import LaterButton from "./later-button";
 
 type Props = {
     onClose: () => void;
@@ -22,7 +21,7 @@ export default function LoginAttention({onClose, onSwitchLogin}: Props) {
             className="block w-11 h-11 absolute top-3 right-3 text-xl"
         >
             <img
-            src="../../images/x.png"
+            src="/images/x.png"
             alt="close"
             className="w-6 h-6 m-auto"
             />
@@ -48,3 +47,4 @@ export default function LoginAttention({onClose, onSwitchLogin}: Props) {
     </div>
     );
 }
+

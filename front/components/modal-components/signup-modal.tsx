@@ -1,11 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 
-import ModalEmail from "../../../components/modal-components/modal-email";
-import ModalPass from "../../../components/modal-components/modal-password";
-import ConfirmPass from "../../../components/modal-components/password-confirmbutton";
-import SignupButton from "../../../components/modal-components/signup-button";
-import LoginSwitch from "../../../components/modal-components/login-switchbutton";
+import ModalEmail from "./modal-email";
+import ModalPass from "./modal-password";
+import ConfirmPass from "./password-confirmbutton";
+import SignupButton from "./signup-button";
+import LoginSwitch from "./login-switchbutton";
 
 type Props = {
     onClose:() => void;
@@ -20,7 +20,7 @@ export default function SignupModal({onClose, onSwitchLogin, onSubmit}: Props) {
             <div
                 onClick={() => onClose()}
                 className="absolute p-2 top-2 right-2">
-                <img className="w-6  h-6" src="images/xx4.png" alt="x"/>
+                <img className="w-6  h-6" src="/images/xx4.png" alt="x"/>
             </div>
             <div className="w-auto h-6"/>
             <div className="flex flex-col">
@@ -36,3 +36,4 @@ export default function SignupModal({onClose, onSwitchLogin, onSubmit}: Props) {
     </div>
     );
 }
+
