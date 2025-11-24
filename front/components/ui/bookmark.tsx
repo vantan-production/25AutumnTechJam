@@ -2,11 +2,14 @@
 import { useState } from "react";
 export function Bookmark() {
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const handleBookmark = () => {
+  const handleBookmark = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
     setIsBookmarked(!isBookmarked);
   };
   return isBookmarked ? (
     <button
+      type="button"
       className="flex justify-center items-center w-9 h-9 bg-beige rounded-1"
       onClick={handleBookmark}
     >
@@ -32,6 +35,7 @@ export function Bookmark() {
     </button>
   ) : (
     <button
+      type="button"
       className="flex justify-center items-center w-9 h-9 bg-beige rounded-1"
       onClick={handleBookmark}
     >

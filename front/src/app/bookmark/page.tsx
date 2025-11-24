@@ -1,8 +1,10 @@
 "use client";
+"use client";
 import { Card } from "../../../components/features/card";
 import Header from "../../../components/layout/header";
 import TabBar from "../../../components/layout/navbar";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 type shopRequest = {
   id: number;
@@ -52,11 +54,15 @@ export default function Bookmark() {
         getSearch={true}
         getBackButton={false}
       />
-      {shops.map((shop) => (
-        <div key={shop.id} className="py-1">
-          <Card shop={shop} />
-        </div>
-      ))}
+      {shops.length > 0 ? (
+        shops.map((shop) => (
+          <div key={shop.id} className="py-1">
+            <Card shop={shop} />
+          </div>
+        ))
+      ) : (
+        <div className="text-center py-8 text-black/60">{"noResults"}</div>
+      )}
       <TabBar />
     </div>
   );

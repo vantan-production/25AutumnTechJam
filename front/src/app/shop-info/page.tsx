@@ -10,25 +10,28 @@ import { travelMap } from "../../../api/lib/travelMap";
 import { useSearchParams } from "next/navigation";
 import ShopDetailHead from "../../../components/features/shop-detail-head";
 import { travelMapResponse } from "../../../api/lib/travelMap";
+import { ShopInfo } from "../../../api/shop-info";
+import { useTranslation } from "react-i18next";
 import { Omiyage } from "../../../components/features/omiyage";
 
-export default function ShopInfo() {
+type shopRequest = {
+  id: number;
+  is_cafe: boolean;
+  name: string;
+  description: string;
+  image_url: string;
+  min_budget: number | null;
+  opens_at: string;
+  closes_at: string;
+  address: string;
+  phone_number: string;
+  latitude: number;
+  longitude: number;
+};
+export default function ShopInfoPage() {
   const searchParams = useSearchParams();
   const shopId = searchParams.get("id");
-  type shopRequest = {
-    id: number;
-    is_cafe: boolean;
-    name: string;
-    description: string;
-    image_url: string;
-    min_budget: number | null;
-    opens_at: string;
-    closes_at: string;
-    address: string;
-    phone_number: string;
-    latitude: number;
-    longitude: number;
-  };
+
   const [shopInfo, setShopInfo] = useState<shopRequest | null>(null);
   const [loading, setLoading] = useState(true);
   const [travelTime, setTravelTime] = useState<travelMapResponse | null>(null);
@@ -40,7 +43,6 @@ export default function ShopInfo() {
 
     try {
       const data = await travelMap(address);
-      console.log("Travel time data:", data);
       setTravelTime(data);
     } catch (error) {
       console.error("Error fetching travel time:", error);
@@ -81,15 +83,11 @@ export default function ShopInfo() {
 
   const fetchShop = async () => {
     try {
-      const res = await Shop();
-      if (res.success && res.data.length > 0) {
-        const selectedShop = shopId
-          ? res.data.find((s) => s.id === parseInt(shopId))
-          : res.data[0];
-
-        if (selectedShop) {
-          setShopInfo(selectedShop);
-          await fetchMapData(selectedShop.address);
+      if (shopId) {
+        const res = await ShopInfo(parseInt(shopId));
+        if (res.success && res.data) {
+          setShopInfo(res.data);
+          await fetchMapData(res.data.address);
         }
       }
     } catch (error) {
@@ -108,8 +106,24 @@ export default function ShopInfo() {
       fetchMapData(shopInfo.address);
     }
   }, [shopInfo?.address]);
+
+  const { t } = useTranslation();
+
+  const translatedShopInfo = shopInfo
+    ? {
+        ...shopInfo,
+        name: t(`shops.${shopInfo.id}.name`, { defaultValue: shopInfo.name }),
+        description: t(`shops.${shopInfo.id}.description`, {
+          defaultValue: shopInfo.description,
+        }),
+        address: t(`shops.${shopInfo.id}.address`, {
+          defaultValue: shopInfo.address,
+        }),
+      }
+    : null;
+
   return (
-    <div className="bg-beige">
+    <div className="bg-beige h-screen">
       <div className="h-36"></div>
       <Header
         getGenreTab={false}
@@ -118,7 +132,7 @@ export default function ShopInfo() {
         getBackButton={true}
       />
       <ShopDetailHead
-        shopName={"shopName!!!!!!"}
+        shopName={translatedShopInfo?.name || "shopName!!!!!!"}
         tag={["tag1", "tag2", "tag3"]}
       />
       {shopInfo && isModalOpen && (
@@ -214,7 +228,7 @@ export default function ShopInfo() {
           </div>
           <div className="grid grid-cols-[4fr_6fr]  text-black pl-4 pb-3">
             <p className="font-bold h3">explanation</p>
-            <p>{shopInfo?.description}</p>
+            <p>{translatedShopInfo?.description}</p>
           </div>
 
           <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
@@ -234,7 +248,7 @@ export default function ShopInfo() {
 
           <div className="grid grid-cols-[4fr_6fr]   text-black pl-4 pt-3 pb-3">
             <p className="font-bold h3">Address</p>
-            <p>{shopInfo?.address}</p>
+            <p>{translatedShopInfo?.address}</p>
           </div>
 
           <div className=" bg-black h-[0.3px] w-[360px] mx-auto"></div>
@@ -260,9 +274,9 @@ export default function ShopInfo() {
             <p>{shopInfo?.phone_number}</p>
           </div>
         </div>
-        <div className="h-20"></div>
-        <Navbar />
       </div>
+      <div className="h-20"></div>
+      <Navbar />
     </div>
   );
 }

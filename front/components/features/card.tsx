@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Bookmark from "../ui/bookmark";
+import { useTranslation } from "react-i18next";
 
 type shopRequest = {
   id: number;
@@ -24,6 +25,14 @@ type Props = {
 
 export function Card({ shop }: Props) {
   const router = useRouter();
+  const { t } = useTranslation();
+
+  const translatedName = t(`shops.${shop.id}.name`, {
+    defaultValue: shop.name,
+  });
+  const translatedDescription = t(`shops.${shop.id}.description`, {
+    defaultValue: shop.description,
+  });
 
   return (
     <div
@@ -32,7 +41,7 @@ export function Card({ shop }: Props) {
         router.push(`/shop-info?id=${shop.id}`);
       }}
     >
-      <div className="rounded-2 bg-white p-18 w-[144px] h-[164px] relative overflow-hidden">
+      <div className="rounded-2 bg-white p-18 w-[144px] h-[190px] relative overflow-hidden">
         <Image
           src={shop.image_url}
           alt={shop.name}
@@ -43,7 +52,7 @@ export function Card({ shop }: Props) {
       <div className="w-full flex flex-col gap-1">
         <div className="w-full flex gap-x-4 items-center justify-between">
           <div className="text-black h2 w-[135px] no-wrap text-ellipsis overflow-hidde line-clamp-2">
-            {shop.name}
+            {translatedName}
           </div>
           <Bookmark></Bookmark>
         </div>
@@ -55,10 +64,8 @@ export function Card({ shop }: Props) {
             {shop.min_budget ? `¥${shop.min_budget}~` : ""}
           </div>
         </div>
-        <div className="text-black p text-start">{shop.description}</div>
+        <div className="text-black p text-start">{translatedDescription}</div>
       </div>
     </div>
   );
 }
-
-export default Card;
