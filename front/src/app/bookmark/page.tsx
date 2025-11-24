@@ -1,49 +1,43 @@
 "use client";
-"use client";
 import { Card } from "../../../components/features/card";
 import Header from "../../../components/layout/header";
 import TabBar from "../../../components/layout/navbar";
+import { Shop } from "../../../api/shop";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-
-type shopRequest = {
-  id: number;
-  is_cafe: boolean;
-  name: string;
-  description: string;
-  image_url: string;
-  min_budget: number | null;
-  opens_at: string;
-  closes_at: string;
-  address: string;
-  phone_number: string;
-  latitude: number;
-  longitude: number;
-};
+import { type shopRequest } from "../../../api/shop";
 
 export default function Bookmark() {
+  const { t } = useTranslation();
   const [shops, setShops] = useState<shopRequest[]>([]);
 
+  const fetchShops = async () => {
+      try {
+        const res = await Shop();
+        if (res.success && res.data.length > 0) {
+          setShops(res.data);
+        } else {
+          setShops([]);
+        }
+      } catch (error) {
+        console.error(error);
+        setShops([]);
+      }
+    };
+  
+
   useEffect(() => {
-    const mockShops: shopRequest[] = [
-      {
-        id: 1,
-        is_cafe: true,
-        name: "shop-name",
-        description: "This shop is beautiful and traditional.",
-        image_url:
-          "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=400&h=400&fit=crop",
-        min_budget: 800,
-        opens_at: "7:00",
-        closes_at: "11:30",
-        address: "",
-        phone_number: "",
-        latitude: 0,
-        longitude: 0,
-      },
-    ];
-    setShops(mockShops);
+    fetchShops()
   }, []);
+
+  const translatedShops = shops.map((shop) => ({
+    ...shop,
+    name: t(`shops.${shop.id}.name`, { defaultValue: shop.name }),
+    description: t(`shops.${shop.id}.description`, {
+      defaultValue: shop.description,
+    }),
+    address: t(`shops.${shop.id}.address`, { defaultValue: shop.address }),
+  }));
 
   return (
     <div className="bg-beige h-screen">

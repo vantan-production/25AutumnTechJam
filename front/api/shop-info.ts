@@ -1,24 +1,12 @@
-type shopRequest = {
-  id: number;
-  is_cafe: boolean;
-  name: string;
-  description: string;
-  image_url: string;
-  min_budget: number | null;
-  opens_at: string;
-  closes_at: string;
-  address: string;
-  phone_number: string;
-  latitude: number;
-  longitude: number;
-};
+import { type shopRequest } from "./shop";
 
-type shopInfoResponse = {
-  success: boolean;
-  data: shopRequest | null;
-};
+type ShopInfoResponse = {
+  success: boolean,
+  data?: shopRequest,
+  message?: string
+}
 
-export async function ShopInfo(id: number): Promise<shopInfoResponse> {
+export async function ShopInfo(id: number): Promise<ShopInfoResponse> {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/shop/${id}`,
@@ -29,24 +17,16 @@ export async function ShopInfo(id: number): Promise<shopInfoResponse> {
         },
       }
     );
-
-    if (!response.ok) {
-      return {
-        success: false,
-        data: null,
-      };
-    }
-
     const result = await response.json();
     return {
       success: result.success,
-      data: result.data || null,
+      data: result.data,
     };
   } catch (error) {
     console.error("Error fetching shop by id:", error);
     return {
       success: false,
-      data: null,
-    };
+      message: "情報の取得に失敗しました"
+    }
   }
 }

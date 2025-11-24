@@ -13,26 +13,13 @@ import { travelMapResponse } from "../../../api/lib/travelMap";
 import { ShopInfo } from "../../../api/shop-info";
 import { useTranslation } from "react-i18next";
 import { Omiyage } from "../../../components/features/omiyage";
+import { type shopRequest } from "../../../api/shop";
 
-type shopRequest = {
-  id: number;
-  is_cafe: boolean;
-  name: string;
-  description: string;
-  image_url: string;
-  min_budget: number | null;
-  opens_at: string;
-  closes_at: string;
-  address: string;
-  phone_number: string;
-  latitude: number;
-  longitude: number;
-};
 export default function ShopInfoPage() {
   const searchParams = useSearchParams();
   const shopId = searchParams.get("id");
 
-  const [shopInfo, setShopInfo] = useState<shopRequest | null>(null);
+  const [shopInfo, setShopInfo] = useState<shopRequest>();
   const [loading, setLoading] = useState(true);
   const [travelTime, setTravelTime] = useState<travelMapResponse | null>(null);
 
@@ -74,8 +61,8 @@ export default function ShopInfoPage() {
     e.stopPropagation();
     if (
       selectedImageIndex !== null &&
-      shopInfo?.image_url &&
-      selectedImageIndex < shopInfo.image_url.length - 1
+      shopInfo?.image_urls &&
+      selectedImageIndex < shopInfo.image_urls.length - 1
     ) {
       setSelectedImageIndex(selectedImageIndex + 1);
     }
@@ -161,7 +148,7 @@ export default function ShopInfoPage() {
           )}
           <div className="relative max-w-[90vw] max-h-[90vh]">
             <Image
-              src={shopInfo.image_url}
+              src={shopInfo.image_urls[0]}
               width={250}
               height={250}
               alt={shopInfo.name}
@@ -176,7 +163,7 @@ export default function ShopInfoPage() {
             </button>
           </div>
           {selectedImageIndex !== null &&
-            selectedImageIndex < shopInfo?.image_url.length - 1 && (
+            selectedImageIndex < shopInfo?.image_urls.length - 1 && (
               <div
                 className="absolute top-1/2 right-5 -translate-y-1/2 cursor-pointer"
                 onClick={goToNext}
@@ -204,7 +191,7 @@ export default function ShopInfoPage() {
         <div className="flex gap-2 overflow-x-auto px-2">
           {shopInfo ? (
             <Image
-              src={shopInfo.image_url}
+              src={shopInfo.image_urls[0]}
               width={110}
               height={110}
               alt={shopInfo.name}
