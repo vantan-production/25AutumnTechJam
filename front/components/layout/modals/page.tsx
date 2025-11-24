@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
 
-import TabBar from "../../../components/layout/navbar";
+import TabBar from "../navbar";
 import ModalSwitcher from "./modal-view-switch"
 
-export function ModalNavbar() {
+export function Page() {
     const[isBookmarkClick, setIsBookmarkClick] = useState(false);
     const[isSubmit, setIsSubmit] = useState(false);
     const isModalOpen = () => {
@@ -29,4 +29,4 @@ export function ModalNavbar() {
     )
 }
 
-export default ModalNavbar;
+export default Page;

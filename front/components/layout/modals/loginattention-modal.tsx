@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 
-import LoginBuuton from "../../../components/modal-components/login-button";
-import LaterButton from "../../../components/modal-components/later-button";
+import LoginBuuton from "../../features/modal-components/login-button";
+import LaterButton from "../../features/modal-components/later-button";
 
 type Props = {
     onClose: () => void;

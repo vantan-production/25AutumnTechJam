@@ -36,7 +36,7 @@ export function ShopDetailHead({ shop }: { shop: shopRequest }) {
           alt={shop.name}
           width={160}
           height={160}
-          className="object-cover rounded-2 w-[160px] h-[160px]"
+          className="object-cover rounded-2 w-40 h-40"
         />
       </div>
     </div>

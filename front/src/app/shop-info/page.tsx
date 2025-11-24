@@ -10,7 +10,7 @@ import { travelMap } from "../../../api/lib/travelMap";
 import { useSearchParams } from "next/navigation";
 import ShopDetailHead from "../../../components/features/shop-detail-head";
 import { travelMapResponse } from "../../../api/lib/travelMap";
-import ModalNavbar from "../modal/ModalNavbar";
+import ModalNavbar from "../../../components/layout/modals/ModalNavbar";
 import { ShopInfo } from "../../../api/shop-info";
 import { useTranslation } from "react-i18next";
 import { Omiyage } from "../../../components/features/omiyage";
@@ -291,7 +291,7 @@ export default function ShopInfoPage() {
         <ModalNavbar></ModalNavbar>
       </div>
       <div className="h-20"></div>
-      <Navbar />
+      <ModalNavbar/>
     </div>
   );
 }

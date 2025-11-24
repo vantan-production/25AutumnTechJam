@@ -6,6 +6,7 @@ import { Shop } from "../../../api/shop";
 import { FilterConditions } from "../../../components/layout/filter";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import ModalNavbar from "../../../components/layout/modals/ModalNavbar";
 
 type shopRequest = {
   id: number;
@@ -103,11 +104,11 @@ export default function ShopList() {
         )}
         {!isFilterOpen && (
           <div className="fixed bottom-3">
-            <TabBar />
+            <ModalNavbar></ModalNavbar>
           </div>
         )}
       </div>
-      <div className="h-[80px] bg-beige"></div>
+      <div className="h-20 bg-beige"></div>
     </div>
   );
 }

@@ -1,15 +1,19 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
-import TabBar from "../../../components/layout/navbar";
+import TabBar from "../navbar";
 import ModalSwitcher from "./modal-view-switch"
 
-export function Page() {
+export function ModalNavbar() {
     const[isBookmarkClick, setIsBookmarkClick] = useState(false);
     const[isSubmit, setIsSubmit] = useState(false);
+    const router = useRouter();
     const isModalOpen = () => {
         if (!isSubmit) {
         setIsBookmarkClick(!isBookmarkClick);
+        } else {
+            router.push("/bookmark")
         }};
     const onSubmition = () => {
         setIsSubmit(true);
@@ -29,4 +33,4 @@ export function Page() {
     )
 }
 
-export default Page;
+export default ModalNavbar;

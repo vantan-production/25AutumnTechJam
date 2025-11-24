@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
 
-import ModalEmail from "../../../components/modal-components/modal-email";
-import ModalPass from "../../../components/modal-components/modal-password";
-import ConfirmPass from "../../../components/modal-components/password-confirmbutton";
-import SignupButton from "../../../components/modal-components/signup-button";
-import LoginSwitch from "../../../components/modal-components/login-switchbutton";
+import ModalEmail from "../../features/modal-components/modal-email";
+import ModalPass from "../../features/modal-components/modal-password";
+import ConfirmPass from "../../features/modal-components/password-confirmbutton";
+import SignupButton from "../../features/modal-components/signup-button";
+import LoginSwitch from "../../features/modal-components/login-switchbutton";
 
 type Props = {
     onClose:() => void;
