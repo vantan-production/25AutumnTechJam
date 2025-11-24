@@ -1,14 +1,18 @@
 type registerRequest = {
-  name: String;
-  email: String;
-  password: String;
+  name: string;
+  email: string;
+  password: string;
 };
+
 type registerResponse = {
-  sucsess: Boolean;
-  data: {
-    user_id: Number;
-    user_name: String;
+  success: boolean;
+  message?: string;
+  data?: {
+    user_id: number;
+    user_name: string;
+    token?: string;
   };
+  errors?: Record<string, string[]>;
 };
 
 export const register = async (
@@ -25,7 +29,25 @@ export const register = async (
         body: JSON.stringify(req),
       }
     );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return {
+        success: false,
+        message: data.message || "登録に失敗しました",
+        errors: data.errors,
+      };
+    }
+
+    return {
+      success: true,
+      data: data.data,
+    };
   } catch (error) {
     console.error(error);
+    return {
+      success: false,
+    };
   }
 };
