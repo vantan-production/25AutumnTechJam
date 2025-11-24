@@ -245,6 +245,7 @@ type ShopData = {
 type GoogleMapComponentProps = {
   className?: string;
   onMapIntercepted?: () => void;
+  onFilteredShopsChange?: (shops: any[]) => void;
 };
 
 export default function GoogleMapComponent({
@@ -280,7 +281,7 @@ export default function GoogleMapComponent({
   }, []);
 
   return (
-    <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_API_KEY}>
+    <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_API_KEY || ""}>
       <GoogleMap
         mapContainerStyle={sizeStyele}
         center={center}
@@ -299,7 +300,7 @@ export default function GoogleMapComponent({
             }}
             title={shop.name}
             icon={{
-              path: google.maps.SymbolPath.CIRCLE,
+              path: 0,
               fillColor: "#96514D",
               fillOpacity: 0.8,
               strokeColor: "#FFF7EC",

@@ -1,10 +1,94 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
-function Search() {
+import { useEffect, useState, useRef, useCallback } from "react";
+import { Shop } from "../../api/shop";
+import { useTranslation } from "react-i18next";
+
+type ShopData = {
+  id: number;
+  name: string;
+  description: string;
+  image_url: string;
+  address?: string;
+};
+
+type SearchProps = {
+  onFilteredShopsChange?: (shops: ShopData[]) => void;
+  filteredShops?: ShopData[];
+};
+
+function Search({
+  onFilteredShopsChange,
+  filteredShops: propsFilteredShops,
+}: SearchProps) {
+  const { t } = useTranslation();
+  const [allShops, setAllShops] = useState<ShopData[]>([]);
+  const [filteredShops, setFilteredShops] = useState<ShopData[]>([]);
   const [search, setSearch] = useState(true);
   const [inputPH, setInputPH] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleSearchWithShops = useCallback(
+    (shopsToSearch: ShopData[]) => {
+      if (!inputPH.trim()) {
+        setFilteredShops(shopsToSearch);
+        onFilteredShopsChange?.(shopsToSearch);
+      } else {
+        const query = inputPH.toLowerCase().trim();
+        const result = shopsToSearch.filter((shop) => {
+          const translatedName = t(`shops.${shop.id}.name`, {
+            defaultValue: shop.name,
+          });
+          const translatedDescription = t(`shops.${shop.id}.description`, {
+            defaultValue: shop.description,
+          });
+          const translatedAddress = t(`shops.${shop.id}.address`, {
+            defaultValue: shop.address || "",
+          });
+
+          return (
+            translatedName.toLowerCase().includes(query) ||
+            translatedDescription.toLowerCase().includes(query) ||
+            translatedAddress.toLowerCase().includes(query)
+          );
+        });
+        setFilteredShops(result);
+        onFilteredShopsChange?.(result);
+      }
+    },
+    [inputPH, t, onFilteredShopsChange]
+  );
+
+  useEffect(() => {
+    if (propsFilteredShops && propsFilteredShops.length > 0) {
+      setAllShops(propsFilteredShops);
+      if (!inputPH.trim()) {
+        setFilteredShops(propsFilteredShops);
+        onFilteredShopsChange?.(propsFilteredShops);
+      } else {
+        handleSearchWithShops(propsFilteredShops);
+      }
+    }
+  }, [
+    propsFilteredShops,
+    inputPH,
+    handleSearchWithShops,
+    onFilteredShopsChange,
+  ]);
+
+  const handleSearch = () => {
+    handleSearchWithShops(allShops.length > 0 ? allShops : []);
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   const closePH = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -23,6 +107,16 @@ function Search() {
       />
     </svg>
   );
+
+  const handleClear = () => {
+    setInputPH("");
+    const shopsToUse = allShops.length > 0 ? allShops : [];
+    setFilteredShops(shopsToUse);
+    onFilteredShopsChange?.(shopsToUse);
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
 
   useEffect(() => {
     if (inputPH) {
@@ -72,27 +166,28 @@ function Search() {
           </div>
         </div>
       ) : (
-        <div className="w-full h-full flex">
+        <div className="w-full h-full flex justify-between">
           <div className="relative w-[297px] h-full">
             <input
               type="text"
               placeholder=" search coffee shop..."
               value={inputPH}
               onChange={(e) => setInputPH(e.target.value)}
+              onKeyPress={handleKeyPress}
               ref={inputRef}
               className="w-[297px] h-full bg-white radius-1 text-black/60 pl-1 text-start outline-none !important auto-line: none !important drop-shadow-1"
             />
             {inputPH && (
               <button
-                onClick={() => setInputPH("")}
+                onClick={handleClear}
                 className="absolute right-2 top-1/2 -translate-y-1/2"
               >
                 {closePH}
               </button>
             )}
           </div>
-          <div className="w-21 h-full flex items-center justify-center">
-            <button className="w-8 h-8">
+          <div className="w-12 h-full flex items-center justify-center border-green border-1 radius-2">
+            <button className="w-8 h-8" onClick={handleSearch} type="button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="32"

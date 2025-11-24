@@ -1,4 +1,5 @@
 "use client";
+"use client";
 import { Card } from "../../../components/features/card";
 import Header from "../../../components/layout/header";
 import TabBar from "../../../components/layout/navbar";

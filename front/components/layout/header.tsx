@@ -2,6 +2,7 @@ import GenreTab from "./genre-tab";
 import Language from "./language";
 import Search from "./search";
 import BackButton from "../ui/backButton";
+import { FilterConditions } from "./filter";
 
 type HeaderProps = {
   getGenreTab?: boolean;
@@ -33,8 +34,19 @@ function Header({
               className="w-15 h-15"
             />
           </div>
-          {getSearch && <Search />}
-          {getGenreTab && <GenreTab onFilterOpen={onFilterOpen} />}
+          {getSearch && (
+            <Search
+              onFilteredShopsChange={onFilteredShopsChange}
+              filteredShops={filteredShops}
+            />
+          )}
+          {getGenreTab && (
+            <GenreTab
+              onFilterOpen={onFilterOpen}
+              onGenreChange={onGenreChange}
+              onFilterApply={onFilterApply}
+            />
+          )}
           {getLanguage && <Language />}
         </div>
       </div>

@@ -10,8 +10,25 @@ import { travelMap } from "../../../api/lib/travelMap";
 import { useSearchParams } from "next/navigation";
 import ShopDetailHead from "../../../components/features/shop-detail-head";
 import { travelMapResponse } from "../../../api/lib/travelMap";
+import { ShopInfo } from "../../../api/shop-info";
+import { useTranslation } from "react-i18next";
+import { Omiyage } from "../../../components/features/omiyage";
 
-export default function ShopInfo() {
+type shopRequest = {
+  id: number;
+  is_cafe: boolean;
+  name: string;
+  description: string;
+  image_url: string;
+  min_budget: number | null;
+  opens_at: string;
+  closes_at: string;
+  address: string;
+  phone_number: string;
+  latitude: number;
+  longitude: number;
+};
+export default function ShopInfoPage() {
   const searchParams = useSearchParams();
   const shopId = searchParams.get("id");
   type shopRequest = {
@@ -39,7 +56,6 @@ export default function ShopInfo() {
 
     try {
       const data = await travelMap(address);
-      console.log("Travel time data:", data);
       setTravelTime(data);
     } catch (error) {
       console.error("Error fetching travel time:", error);
@@ -103,8 +119,24 @@ export default function ShopInfo() {
       fetchMapData(shopInfo.address);
     }
   }, [shopInfo?.address]);
+
+  const { t } = useTranslation();
+
+  const translatedShopInfo = shopInfo
+    ? {
+        ...shopInfo,
+        name: t(`shops.${shopInfo.id}.name`, { defaultValue: shopInfo.name }),
+        description: t(`shops.${shopInfo.id}.description`, {
+          defaultValue: shopInfo.description,
+        }),
+        address: t(`shops.${shopInfo.id}.address`, {
+          defaultValue: shopInfo.address,
+        }),
+      }
+    : null;
+
   return (
-    <div className="bg-beige">
+    <div className="bg-beige h-screen">
       <div className="h-36"></div>
       <Header
         getGenreTab={false}
@@ -198,6 +230,7 @@ export default function ShopInfo() {
           )}
         </div>
       </div>
+      <Omiyage />
       <div className="flex flex-col justify-center items-center my-2">
         <div className="bg-green h-fit w-[377px] radius-3">
           <div className="flex justify-end">
@@ -253,9 +286,9 @@ export default function ShopInfo() {
             <p className="p">{shopInfo?.phone_number}</p>
           </div>
         </div>
-        <div className="h-20"></div>
-        <Navbar />
       </div>
+      <div className="h-20"></div>
+      <Navbar />
     </div>
   );
 }
