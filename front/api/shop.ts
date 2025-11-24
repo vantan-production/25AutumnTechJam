@@ -23,6 +23,8 @@ export async function Shop(params?: URLSearchParams): Promise<shopResponse> {
       params && params.toString() ? `?${params.toString()}` : ""
     }`;
 
+    console.log(url)
+
     const response = await fetch(url, {
       method: "GET",
       headers: {

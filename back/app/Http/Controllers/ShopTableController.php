@@ -8,12 +8,12 @@ use App\Models\Shop;
 class ShopTableController extends Controller
 {
     public function index(Request $request) {
-        $query = Shop::select(
+        $query = Shop::with('images:id,shop_id,image_url')
+        ->select(
             'id',
             'is_cafe', 
             'name', 
             'description', 
-            'image_url',
             'opens_at', 
             'closes_at', 
             'min_budget', 
@@ -30,18 +30,20 @@ class ShopTableController extends Controller
             'is_sat'
         );
 
-        if ($request->has('min_budget')) {
-            $query->where('min_budget', '>=', $request->input('min_budget'));
+        $filters = $request->all();
+
+        if (isset($filters['min_budget'])) {
+            $query->where('min_budget', '>=', (int)$filters['min_budget']);
         }
-        if ($request->has('max_budget')) {
-            $query->where(function($q) use ($request) {
-                $q->where('min_budget', '<=', $request->input('max_budget'))
-                  ->orWhereNull('min_budget');
+        if (isset($filters['max_budget'])) {
+            $query->where(function($q) use ($filters) {
+                $q->where('min_budget', '<=', (int)$filters['max_budget'])
+                    ->orWhereNull('min_budget');
             });
         }
 
-        if ($request->has('day_of_week')) {
-            $dayOfWeek = (int)$request->input('day_of_week');
+        if (isset($filters['day_of_week'])) {
+            $dayOfWeek = (int)$filters['day_of_week'];
             $dayFields = [
                 0 => 'is_sun',
                 1 => 'is_mon',
@@ -56,21 +58,27 @@ class ShopTableController extends Controller
             }
         }
 
-        if ($request->has('genre') && $request->input('genre')) {
-            $genre = $request->input('genre');
+        if (isset($filters['genre']) && $filters['genre']) {
+            $genre = $filters['genre'];
             $query->where('description', 'LIKE', '%' . $genre . '%');
         }
 
-        if ($request->has('staying_time')) {
-            $stayingTimeMinutes = (int)$request->input('staying_time');
+        if (isset($filters['staying_time'])) {
+            $stayingTimeMinutes = (int)$filters['staying_time'];
             $query->whereRaw('TIMESTAMPDIFF(MINUTE, CONCAT(CURDATE(), " ", opens_at), CONCAT(CURDATE(), " ", closes_at)) >= ?', [$stayingTimeMinutes]);
         }
 
         $shops = $query->get();
 
+        $shops->each(function ($shop) {
+            $shop->image_urls = $shop->images->pluck('image_url');
+            unset($shop->images);
+        });
+
         return response()->json([
             "success" => true,
             "data" => $shops,
+            "test" => $filters,
         ]);
     }
 
