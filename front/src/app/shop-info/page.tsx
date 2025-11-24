@@ -14,6 +14,7 @@ import { ShopInfo } from "../../../api/shop-info";
 import { useTranslation } from "react-i18next";
 import { Omiyage } from "../../../components/features/omiyage";
 import { type shopRequest } from "../../../api/shop";
+import { Go } from "../../../components/ui/go";
 
 export default function ShopInfoPage() {
   const searchParams = useSearchParams();
@@ -36,13 +37,12 @@ export default function ShopInfoPage() {
     }
   };
 
-  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(
-    null
-  );
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleImageClick = () => {
+  const handleImageClick = (index: number) => {
+    setSelectedImageIndex(index);
     setIsModalOpen(true);
   };
 
@@ -52,29 +52,30 @@ export default function ShopInfoPage() {
 
   const goToPrevious = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (selectedImageIndex !== null && selectedImageIndex > 0) {
+    if (selectedImageIndex > 0) {
       setSelectedImageIndex(selectedImageIndex - 1);
     }
   };
 
   const goToNext = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (
-      selectedImageIndex !== null &&
-      shopInfo?.image_urls &&
-      selectedImageIndex < shopInfo.image_urls.length - 1
-    ) {
+    if (shopInfo && selectedImageIndex < shopInfo.image_urls.length - 1) {
       setSelectedImageIndex(selectedImageIndex + 1);
     }
   };
 
   const fetchShop = async () => {
     try {
-      if (shopId) {
-        const res = await ShopInfo(parseInt(shopId));
-        if (res.success && res.data) {
-          setShopInfo(res.data);
-          await fetchMapData(res.data.address);
+      const res = await Shop();
+      if (res.success && res.data.length > 0) {
+        const selectedShop = shopId
+          ? res.data.find((s) => s.id === parseInt(shopId))
+          : res.data[0];
+
+        if (selectedShop) {
+          setShopInfo(selectedShop);
+          setSelectedImageIndex(0); // 初期化
+          await fetchMapData(selectedShop.address);
         }
       }
     } catch (error) {
@@ -110,7 +111,7 @@ export default function ShopInfoPage() {
     : null;
 
   return (
-    <div className="bg-beige h-screen">
+    <div className="bg-beige h-full">
       <div className="h-36"></div>
       <Header
         getGenreTab={false}
@@ -118,15 +119,12 @@ export default function ShopInfoPage() {
         getSearch={false}
         getBackButton={true}
       />
-      <ShopDetailHead
-        shopName={translatedShopInfo?.name || "shopName!!!!!!"}
-        tag={["tag1", "tag2", "tag3"]}
-      />
-      {shopInfo && isModalOpen && (
+      {shopInfo && <ShopDetailHead shop={shopInfo} />}
+      {shopInfo && shopInfo.image_urls.length > 0 && isModalOpen && (
         <div className="fixed inset-0 bg-white/70 flex items-center justify-center z-50">
-          {selectedImageIndex !== null && selectedImageIndex > 0 && (
+          {selectedImageIndex > 0 && (
             <div
-              className="absolute top-1/2 left-5 -translate-y-1/2 cursor-pointer"
+              className="absolute top-1/2 left-5 -translate-y-1/2 cursor-pointer z-10"
               onClick={goToPrevious}
             >
               <svg
@@ -148,59 +146,61 @@ export default function ShopInfoPage() {
           )}
           <div className="relative max-w-[90vw] max-h-[90vh]">
             <Image
-              src={shopInfo.image_urls[0]}
+              src={shopInfo.image_urls[selectedImageIndex]}
               width={250}
               height={250}
               alt={shopInfo.name}
               className="max-w-full max-h-[90vh] object-contain"
-              onClick={handleImageClick}
             />
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 text-white text-2xl font-bold bg-black/80 rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-70"
+              className="absolute top-4 right-4 text-white text-2xl font-bold bg-black/80 rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-70 z-10"
             >
               ×
             </button>
           </div>
-          {selectedImageIndex !== null &&
-            selectedImageIndex < shopInfo?.image_urls.length - 1 && (
-              <div
-                className="absolute top-1/2 right-5 -translate-y-1/2 cursor-pointer"
-                onClick={goToNext}
+          {selectedImageIndex < shopInfo.image_urls.length - 1 && (
+            <div
+              className="absolute top-1/2 right-5 -translate-y-1/2 cursor-pointer z-10"
+              onClick={goToNext}
+            >
+              <svg
+                className="w-9 h-9 text-black"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 8 14"
               >
-                <svg
-                  className="w-9 h-9 text-black"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 8 14"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"
-                  />
-                </svg>
-              </div>
-            )}
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"
+                />
+              </svg>
+            </div>
+          )}
         </div>
       )}
-      <div className="flex justify-center flex-col my-2">
+
+      <div className="flex justify-center flex-col my-2 mx-1">
         <div className="flex gap-2 overflow-x-auto px-2">
-          {shopInfo ? (
-            <Image
-              src={shopInfo.image_urls[0]}
-              width={110}
-              height={110}
-              alt={shopInfo.name}
-              className="w-[110px] h-[110px]"
-              onClick={handleImageClick}
-            />
+          {shopInfo && shopInfo.image_urls.length > 0 ? (
+            shopInfo.image_urls.map((image, index) => (
+              <Image
+                key={index}
+                src={image}
+                width={110}
+                height={110}
+                alt={shopInfo.name}
+                className="w-[110px] h-[110px] object-cover flex-shrink-0 cursor-pointer rounded"
+                onClick={() => handleImageClick(index)}
+              />
+            ))
           ) : (
             <div className="w-[110px] h-[110px]">
-              <p>No shops found</p>
+              <p className="text-black p">画像がありません</p>
             </div>
           )}
         </div>
@@ -210,19 +210,19 @@ export default function ShopInfoPage() {
         <div className="bg-green h-fit w-[377px] radius-3">
           <div className="flex justify-end">
             <div className="p-2">
-              <Bookmark></Bookmark>
+              <Bookmark shopId={shopInfo?.id}></Bookmark>
             </div>
           </div>
           <div className="grid grid-cols-[4fr_6fr]  text-black pl-4 pb-3">
             <p className="font-bold h3">explanation</p>
-            <p>{translatedShopInfo?.description}</p>
+            <p className="p">{shopInfo?.description}</p>
           </div>
 
           <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
 
           <div className="grid grid-cols-[4fr_6fr] text-black pl-4 pt-3 pb-3">
             <p className="font-bold text-xl">From Nagoya Station</p>
-            <div>
+            <div className="p">
               {travelTime && (
                 <>
                   <p>Walking: {travelTime.walk.time} minutes</p>
@@ -235,14 +235,14 @@ export default function ShopInfoPage() {
 
           <div className="grid grid-cols-[4fr_6fr]   text-black pl-4 pt-3 pb-3">
             <p className="font-bold h3">Address</p>
-            <p>{translatedShopInfo?.address}</p>
+            <p className="p">{shopInfo?.address}</p>
           </div>
 
           <div className=" bg-black h-[0.3px] w-[360px] mx-auto"></div>
 
           <div className="grid grid-cols-[4fr_6fr]   text-black pl-4 pt-3 pb-3">
             <p className="font-bold h3">Business hours</p>
-            <p>
+            <p className="p">
               {shopInfo?.opens_at} ～ {shopInfo?.closes_at}
             </p>
           </div>
@@ -251,17 +251,18 @@ export default function ShopInfoPage() {
 
           <div className="grid grid-cols-[4fr_6fr]  text-black pl-4 pt-3 pb-3">
             <p className="font-bold h3">budget</p>
-            <p>¥ 1,000 ~ 5,000</p>
+            <p className="p">{`¥${shopInfo?.min_budget}~`}</p>
           </div>
 
           <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
 
           <div className="grid grid-cols-[4fr_6fr]   text-black pl-4 pt-3 pb-2">
             <p className="font-bold h3">Tell</p>
-            <p>{shopInfo?.phone_number}</p>
+            <p className="p">{shopInfo?.phone_number}</p>
           </div>
         </div>
       </div>
+      <Go />
       <div className="h-20"></div>
       <Navbar />
     </div>

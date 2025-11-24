@@ -14,6 +14,7 @@ export default function Map() {
         getLanguage={true}
         getSearch={true}
         getBackButton={false}
+        className="h-[188px]"
       />
       <GoogleMapComponent
         className="w-[393px] h-full"

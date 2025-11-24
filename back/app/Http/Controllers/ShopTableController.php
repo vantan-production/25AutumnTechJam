@@ -19,7 +19,7 @@ class ShopTableController extends Controller
             'min_budget', 
             'address',
             'phone_number',
-            'latitude', 
+            'latitude',
             'longitude',
             'is_sun',
             'is_mon',

@@ -6,6 +6,7 @@ import { Shop } from "../../../api/shop";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { type shopRequest } from "../../../api/shop";
+import Cookies from "js-cookie";
 
 export default function Bookmark() {
   const { t } = useTranslation();
@@ -26,9 +27,27 @@ export default function Bookmark() {
     };
   
 
-  useEffect(() => {
-    fetchShops()
-  }, []);
+  const loadShops = () => {
+    const raw = Cookies.get("selectedShops");
+    if (!raw) {
+      setShops([]);
+      return;
+    }
+
+    try {
+      const parsed: shopRequest[] = JSON.parse(raw);
+      const normalized = parsed.map((shop) => ({
+        ...shop,
+        image_urls: shop.image_urls ?? (shop.image_urls ? [shop.image_urls] : []),
+      }));
+      setShops(normalized);
+    } catch (err) {
+      console.error("failed to parse selectedShops", err);
+      setShops([]);
+    }
+  };
+
+
 
   const translatedShops = shops.map((shop) => ({
     ...shop,
@@ -38,6 +57,13 @@ export default function Bookmark() {
     }),
     address: t(`shops.${shop.id}.address`, { defaultValue: shop.address }),
   }));
+  const removeShop = (id: number) => {
+    setShops((prev) => {
+      const next = prev.filter((shop) => shop.id !== id);
+      Cookies.set("selectedShops", JSON.stringify(next));
+      return next;
+    });
+  };
 
   return (
     <div className="bg-beige h-screen">
@@ -55,7 +81,9 @@ export default function Bookmark() {
           </div>
         ))
       ) : (
-        <div className="text-center py-8 text-black/60">{"noResults"}</div>
+        <p className="text-center text-black py-4 p">
+          ブックマークした店舗はありません。
+        </p>
       )}
       <TabBar />
     </div>

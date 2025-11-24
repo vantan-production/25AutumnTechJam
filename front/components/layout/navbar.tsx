@@ -2,7 +2,11 @@
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export function TabBar() {
+type Props = {
+  onBookmarkClick: () => void;
+};
+
+export function TabBar({ onBookmarkClick }: Props) {
   const [active, setActive] = useState<number | null>(null);
   const router = useRouter();
   const pathname = usePathname();
@@ -46,24 +50,31 @@ export function TabBar() {
         >
           <img className="w-8 h-8 m-auto" src="images/mapInner.png" alt="map" />
         </button>
-        <button
-          onClick={() => {
-            setActive(3);
-            router.push("/bookmark");
-          }}
-          className={`w-28 h-12 my-1 mx-1.5 rounded-md ${
-            active === 3 ? "bg-white shadow-md" : "bg-beige shadow-none"
-          }`}
-        >
-          <img
-            className="w-8 h-8 m-auto"
-            src="images/bookmarkInner.png"
-            alt="keep"
-          />
-        </button>
+        <div>
+          <button
+            onClick={() => {
+              setActive(3);
+              onBookmarkClick();
+            }}
+            className={`w-28 h-12 my-1 mx-1.5 rounded-md ${
+              active === 3 ? "bg-white shadow-md" : "bg-beige shadow-none"
+            }`}
+          >
+            <img
+              className="w-8 h-8 m-auto"
+              src="images/bookmarkInner.png"
+              alt="keep"
+            />
+          </button>
+        </div>
       </div>
     </div>
   );
 }
 
 export default TabBar;
+
+{
+  /*setActive(3);
+router.push("/bookmark");*/
+}

@@ -64,8 +64,8 @@ export default function ShopList() {
   }));
 
   return (
-    <div className="bg-beige h-screen w-full">
-      <div className="h-[258px] bg-beige"></div>
+    <div className="bg-beige h-screen">
+      <div className="h-[260px] bg-beige"></div>
       <div className="bg-beige">
         <Header
           getGenreTab={true}
@@ -73,10 +73,7 @@ export default function ShopList() {
           getSearch={true}
           getBackButton={false}
           onFilterOpen={setIsFilterOpen}
-          onFilteredShopsChange={handleFilteredShopsChange}
-          onFilterApply={handleFilterApply}
-          onGenreChange={handleGenreChange}
-          filteredShops={shops}
+          className="max-h-[248px]"
         />
         {translatedShops.length > 0 ? (
           translatedShops.slice(0, 20).map((item) => (
@@ -86,7 +83,7 @@ export default function ShopList() {
           ))
         ) : (
           <div className="text-center py-8 text-black/60">
-            {t("noResults", { defaultValue: "検索結果がありません" })}
+            {t("noResults", { defaultValue: "結果がありません" })}
           </div>
         )}
         {!isFilterOpen && (

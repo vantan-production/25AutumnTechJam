@@ -1,17 +1,14 @@
 import Image from "next/image";
-import { Shop } from "../../api/shop";
+import { ShopRequest } from "../../api/shop";
 import { useEffect, useState } from "react";
 
-type shopRequest = {
-  id: number;
-  is_cafe: boolean;
-  name: string;
-  description: string;
-  image_url: string;
-};
-
 export function Omiyage() {
-  const [omiyageShops, setOmiyageShops] = useState<shopRequest[]>([]);
+  const [omiyageShops, setOmiyageShops] = useState<ShopRequest[]>([]);
+  const [selectedShopId, setSelectedShopId] = useState<number | null>(null);
+
+  const handleClick = (shopId: number) => {
+    setSelectedShopId(selectedShopId === shopId ? null : shopId);
+  };
 
   useEffect(() => {
     const fetchShops = async () => {
@@ -35,11 +32,14 @@ export function Omiyage() {
   }
 
   return (
-    <div className="flex gap-x-2 w-full overflow-x-auto overflow-y-hidden">
+    <button className="flex gap-x-2 w-full overflow-x-auto overflow-y-hidden">
       {omiyageShops.map((shop) => (
         <div
           key={shop.id}
-          className="w-[350px] ml-2 h-[140px] bg-green radius-3 p-2"
+          className={`w-[350px] ml-2 h-[140px] bg-green radius-3 p-2 ${
+            selectedShopId === shop.id ? "border-[1.5px] border-black" : ""
+          }`}
+          onClick={() => handleClick(shop.id)}
         >
           <div className="flex justify-between">
             <div>
@@ -69,6 +69,6 @@ export function Omiyage() {
           </div>
         </div>
       ))}
-    </div>
+    </button>
   );
 }
