@@ -3,13 +3,13 @@ import { Card } from "../../../components/features/card";
 import Header from "../../../components/layout/header";
 import TabBar from "../../../components/layout/navbar";
 import { useState, useEffect } from "react";
-
+import Cookies from "js-cookie";
 type shopRequest = {
   id: number;
   is_cafe: boolean;
   name: string;
   description: string;
-  image_url: string;
+  image_urls: string[];
   min_budget: number | null;
   opens_at: string;
   closes_at: string;
@@ -17,31 +17,53 @@ type shopRequest = {
   phone_number: string;
   latitude: number;
   longitude: number;
+  image_url?: string;
 };
 
 export default function Bookmark() {
   const [shops, setShops] = useState<shopRequest[]>([]);
 
+  const loadShops = () => {
+    const raw = Cookies.get("selectedShops");
+    if (!raw) {
+      setShops([]);
+      return;
+    }
+
+    try {
+      const parsed: shopRequest[] = JSON.parse(raw);
+      const normalized = parsed.map((shop) => ({
+        ...shop,
+        image_urls: shop.image_urls ?? (shop.image_url ? [shop.image_url] : []),
+      }));
+      setShops(normalized);
+    } catch (err) {
+      console.error("failed to parse selectedShops", err);
+      setShops([]);
+    }
+  };
+
   useEffect(() => {
-    const mockShops: shopRequest[] = [
-      {
-        id: 1,
-        is_cafe: true,
-        name: "shop-name",
-        description: "This shop is beautiful and traditional.",
-        image_url:
-          "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=400&h=400&fit=crop",
-        min_budget: 800,
-        opens_at: "7:00",
-        closes_at: "11:30",
-        address: "",
-        phone_number: "",
-        latitude: 0,
-        longitude: 0,
-      },
-    ];
-    setShops(mockShops);
+    loadShops();
+
+    // ブックマーク変更イベントを監視
+    const handleBookmarkChange = () => {
+      loadShops();
+    };
+
+    window.addEventListener("bookmarkChanged", handleBookmarkChange);
+
+    return () => {
+      window.removeEventListener("bookmarkChanged", handleBookmarkChange);
+    };
   }, []);
+  const removeShop = (id: number) => {
+    setShops((prev) => {
+      const next = prev.filter((shop) => shop.id !== id);
+      Cookies.set("selectedShops", JSON.stringify(next));
+      return next;
+    });
+  };
 
   return (
     <div className="bg-beige h-screen">
@@ -52,11 +74,17 @@ export default function Bookmark() {
         getSearch={true}
         getBackButton={false}
       />
-      {shops.map((shop) => (
-        <div key={shop.id} className="py-1">
-          <Card shop={shop} />
-        </div>
-      ))}
+      {shops.length > 0 ? (
+        shops.map((shop) => (
+          <div key={shop.id} className="py-1">
+            <Card shop={shop} />
+          </div>
+        ))
+      ) : (
+        <p className="text-center text-black py-4 p">
+          ブックマークした店舗はありません。
+        </p>
+      )}
       <TabBar />
     </div>
   );

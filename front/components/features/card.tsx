@@ -24,6 +24,7 @@ type Props = {
 
 export function Card({ shop }: Props) {
   const router = useRouter();
+  const coverImage = shop.image_urls?.[0];
 
   return (
     <div
@@ -33,20 +34,26 @@ export function Card({ shop }: Props) {
       }}
     >
       <div className="rounded-2 bg-white p-18 w-[144px] h-[164px] relative overflow-hidden">
-        <Image
-          src={shop.image_urls[0]}
-          alt={shop.name}
-          fill
-          sizes="144px"
-          className="object-cover rounded-2"
-        />
+        {coverImage ? (
+          <Image
+            src={coverImage}
+            alt={shop.name}
+            fill
+            sizes="144px"
+            className="object-cover rounded-2"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-black/50 bg-beige">
+            No Image
+          </div>
+        )}
       </div>
       <div className="w-full flex flex-col gap-1">
         <div className="w-full flex gap-x-4 items-center justify-between">
           <div className="text-black h2 w-[135px] no-wrap text-ellipsis overflow-hidde line-clamp-2">
             {shop.name}
           </div>
-          <Bookmark></Bookmark>
+          <Bookmark shopId={shop.id} />
         </div>
         <div className="w-full flex gap-x-4 items-center justify-between">
           <div className="text-black small">

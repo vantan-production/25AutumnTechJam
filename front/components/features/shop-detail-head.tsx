@@ -21,8 +21,8 @@ export function ShopDetailHead({ shop }: { shop: shopRequest }) {
   return (
     <div className="flex gap-x-4 mx-3 p-2 rounded-2 bg-green">
       <div className="flex flex-col gap-y-6 pt-1 pl-1 w-[180px]">
-        <div className="text-black text-2xl">{shop.name}</div>
-        <div className="flex flex-wrap gap-1">
+        <div className="text-black h2">{shop.name}</div>
+        <div className="flex flex-wrap gap-1 p">
           {shop.is_cafe ? (
             <Tag content="カフェ"></Tag>
           ) : (

@@ -41,7 +41,7 @@ export default function ShopList() {
 
   return (
     <div>
-      <div className="h-[30px] bg-beige"></div>
+      <div className="h-[260px] bg-beige"></div>
       <div className="bg-beige">
         <Header
           getGenreTab={true}
@@ -51,7 +51,6 @@ export default function ShopList() {
           onFilterOpen={setIsFilterOpen}
           className="max-h-[248px]"
         />
-        <p className="mb-[200px]">hgfds</p>
         {shops.slice(0, 20).map((item) => (
           <div className="py-1" key={item.id}>
             <Card shop={item} />

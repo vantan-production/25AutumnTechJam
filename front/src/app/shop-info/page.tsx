@@ -193,7 +193,7 @@ export default function ShopInfo() {
             ))
           ) : (
             <div className="w-[110px] h-[110px]">
-              <p>No shops found</p>
+              <p className="text-black p">画像がありません</p>
             </div>
           )}
         </div>
@@ -207,14 +207,14 @@ export default function ShopInfo() {
           </div>
           <div className="grid grid-cols-[4fr_6fr]  text-black pl-4 pb-3">
             <p className="font-bold h3">explanation</p>
-            <p>{shopInfo?.description}</p>
+            <p className="p">{shopInfo?.description}</p>
           </div>
 
           <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
 
           <div className="grid grid-cols-[4fr_6fr] text-black pl-4 pt-3 pb-3">
             <p className="font-bold text-xl">From Nagoya Station</p>
-            <div>
+            <div className="p">
               {travelTime && (
                 <>
                   <p>Walking: {travelTime.walk.time} minutes</p>
@@ -227,14 +227,14 @@ export default function ShopInfo() {
 
           <div className="grid grid-cols-[4fr_6fr]   text-black pl-4 pt-3 pb-3">
             <p className="font-bold h3">Address</p>
-            <p>{shopInfo?.address}</p>
+            <p className="p">{shopInfo?.address}</p>
           </div>
 
           <div className=" bg-black h-[0.3px] w-[360px] mx-auto"></div>
 
           <div className="grid grid-cols-[4fr_6fr]   text-black pl-4 pt-3 pb-3">
             <p className="font-bold h3">Business hours</p>
-            <p>
+            <p className="p">
               {shopInfo?.opens_at} ～ {shopInfo?.closes_at}
             </p>
           </div>
@@ -243,14 +243,14 @@ export default function ShopInfo() {
 
           <div className="grid grid-cols-[4fr_6fr]  text-black pl-4 pt-3 pb-3">
             <p className="font-bold h3">budget</p>
-            <p>{`¥${shopInfo?.min_budget}~`}</p>
+            <p className="p">{`¥${shopInfo?.min_budget}~`}</p>
           </div>
 
           <div className="bg-black h-[0.3px] w-[360px] mx-auto"></div>
 
           <div className="grid grid-cols-[4fr_6fr]   text-black pl-4 pt-3 pb-2">
             <p className="font-bold h3">Tell</p>
-            <p>{shopInfo?.phone_number}</p>
+            <p className="p">{shopInfo?.phone_number}</p>
           </div>
         </div>
         <div className="h-20"></div>
