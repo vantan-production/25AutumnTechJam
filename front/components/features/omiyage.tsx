@@ -1,17 +1,9 @@
 import Image from "next/image";
-import { Shop } from "../../api/shop";
+import { ShopRequest } from "../../api/shop";
 import { useEffect, useState } from "react";
 
-type shopRequest = {
-  id: number;
-  is_cafe: boolean;
-  name: string;
-  description: string;
-  image_url: string;
-};
-
 export function Omiyage() {
-  const [omiyageShops, setOmiyageShops] = useState<shopRequest[]>([]);
+  const [omiyageShops, setOmiyageShops] = useState<ShopRequest[]>([]);
   const [selectedShopId, setSelectedShopId] = useState<number | null>(null);
 
   const handleClick = (shopId: number) => {
