@@ -6,7 +6,7 @@ type Props = {
   onBookmarkClick: () => void;
 };
 
-export function TabBar({ onBookmarkClick }: Props) {
+export function TabBar() { // { onBookmarkClick }: Props
   const [active, setActive] = useState<number | null>(null);
   const router = useRouter();
   const pathname = usePathname();
@@ -54,7 +54,8 @@ export function TabBar({ onBookmarkClick }: Props) {
           <button
             onClick={() => {
               setActive(3);
-              onBookmarkClick();
+              // onBookmarkClick(); // 不要と思ったのでコメントアウト
+              router.push("/bookmark")
             }}
             className={`w-28 h-12 my-1 mx-1.5 rounded-md ${
               active === 3 ? "bg-white shadow-md" : "bg-beige shadow-none"
