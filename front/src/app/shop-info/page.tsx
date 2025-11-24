@@ -12,6 +12,7 @@ import ShopDetailHead from "../../../components/features/shop-detail-head";
 import { travelMapResponse } from "../../../api/lib/travelMap";
 import { ShopInfo } from "../../../api/shop-info";
 import { useTranslation } from "react-i18next";
+import { Omiyage } from "../../../components/features/omiyage";
 
 type shopRequest = {
   id: number;
@@ -73,7 +74,8 @@ export default function ShopInfoPage() {
     e.stopPropagation();
     if (
       selectedImageIndex !== null &&
-      selectedImageIndex < ShopInfo.length - 1
+      shopInfo?.image_url &&
+      selectedImageIndex < shopInfo.image_url.length - 1
     ) {
       setSelectedImageIndex(selectedImageIndex + 1);
     }
@@ -174,7 +176,7 @@ export default function ShopInfoPage() {
             </button>
           </div>
           {selectedImageIndex !== null &&
-            selectedImageIndex < ShopInfo.length - 1 && (
+            selectedImageIndex < shopInfo?.image_url.length - 1 && (
               <div
                 className="absolute top-1/2 right-5 -translate-y-1/2 cursor-pointer"
                 onClick={goToNext}
@@ -198,7 +200,6 @@ export default function ShopInfoPage() {
             )}
         </div>
       )}
-
       <div className="flex justify-center flex-col my-2">
         <div className="flex gap-2 overflow-x-auto px-2">
           {shopInfo ? (
@@ -217,6 +218,7 @@ export default function ShopInfoPage() {
           )}
         </div>
       </div>
+      <Omiyage />
       <div className="flex flex-col justify-center items-center my-2">
         <div className="bg-green h-fit w-[377px] radius-3">
           <div className="flex justify-end">
