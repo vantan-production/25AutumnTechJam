@@ -7,6 +7,7 @@ import { ShopDetail, type shopRequest } from "../../api/shop";
 
 type bookmarkProps = {
   shopId: number;
+  onLoginRequired?: () => void;
 };
 
 function readSelectedShops(): shopRequest[] {
@@ -31,7 +32,7 @@ function writeSelectedShops(shops: shopRequest[]) {
   Cookies.set("selectedShops", JSON.stringify(shops));
 }
 
-export function Bookmark({ shopId }: bookmarkProps) {
+export function Bookmark({ shopId, onLoginRequired }: bookmarkProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);

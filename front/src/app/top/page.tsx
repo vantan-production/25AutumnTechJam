@@ -7,6 +7,13 @@ import { FilterConditions } from "../../../components/layout/filter";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { type shopRequest } from "../../../api/shop";
+import Cookies from 'js-cookie';
+
+type UserInfo = {
+  userId: number | null;
+  userName: string | null;
+  token: string | null;
+};
 
 export default function ShopList() {
   const { t } = useTranslation();
@@ -16,12 +23,30 @@ export default function ShopList() {
     new URLSearchParams()
   );
   const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
+  const [userInfo, setUserInfo] = useState<UserInfo>({
+    userId: null,
+    userName: null,
+    token: null,
+  });
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+    const userId = Cookies.get("user_id");
+    const userName = Cookies.get("user_name");
+
+    setUserInfo({
+      userId: userId ? parseInt(userId, 10) : null,
+      userName: userName || null,
+      token: token || null,
+    });
+  }, []);
 
   const fetchShops = async (params?: URLSearchParams) => {
     try {
       const res = await Shop(params);
       if (res.success && res.data.length > 0) {
         setShops(res.data);
+        Cookies.set("selectedShops", JSON.stringify(res.data));
       } else {
         setShops([]);
       }
@@ -37,7 +62,7 @@ export default function ShopList() {
       params.append("genre", selectedGenre);
     }
     fetchShops(params);
-  }, [filterParams, selectedGenre]);
+  }, [filterParams, selectedGenre, userInfo.token]);
 
   const handleFilterApply = (
     conditions: FilterConditions,
