@@ -1,9 +1,9 @@
-type shopRequest = {
+export type shopRequest = {
   id: number;
   is_cafe: boolean;
   name: string;
   description: string;
-  image_url: string;
+  image_urls: string[];
   min_budget: number | null;
   opens_at: string;
   closes_at: string;
@@ -15,15 +15,24 @@ type shopRequest = {
 type shopResponse = {
   success: boolean;
   data: shopRequest[];
+  message?: string;
 };
 
-export async function Shop(params?: URLSearchParams): Promise<shopResponse> {
-  try {
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/api/shop${
-      params && params.toString() ? `?${params.toString()}` : ""
-    }`;
+type shopDetailResponse = {
+  success: boolean;
+  data: shopRequest | null;
+  message?: string;
+};
 
-    const response = await fetch(url, {
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+
+export async function Shop(): Promise<shopResponse> {
+  if (!API_BASE_URL) {
+    throw new Error("NEXT_PUBLIC_API_URL is not defined");
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/shop`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -41,6 +50,36 @@ export async function Shop(params?: URLSearchParams): Promise<shopResponse> {
     return {
       success: false,
       data: [],
+    };
+  }
+}
+
+export async function ShopDetail(id: number): Promise<shopDetailResponse> {
+  if (!API_BASE_URL) {
+    throw new Error("NEXT_PUBLIC_API_URL is not defined");
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/shop/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      return {
+        success: false,
+        data: null,
+      };
+    }
+
+    const data: shopDetailResponse = await response.json();
+    return data;
+  } catch (error) {
+    return {
+      success: false,
+      data: null,
     };
   }
 }

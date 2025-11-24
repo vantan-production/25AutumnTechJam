@@ -12,7 +12,7 @@ type shopRequest = {
   is_cafe: boolean;
   name: string;
   description: string;
-  image_url: string;
+  image_urls: string[];
   min_budget: number | null;
   opens_at: string;
   closes_at: string;
@@ -20,6 +20,7 @@ type shopRequest = {
   phone_number: string;
   latitude: number;
   longitude: number;
+  station_distance: number;
 };
 
 export default function ShopList() {
@@ -78,8 +79,8 @@ export default function ShopList() {
   }));
 
   return (
-    <div className="bg-beige h-screen w-full">
-      <div className="h-[258px] bg-beige"></div>
+    <div>
+      <div className="h-[260px] bg-beige"></div>
       <div className="bg-beige">
         <Header
           getGenreTab={true}
@@ -87,10 +88,7 @@ export default function ShopList() {
           getSearch={true}
           getBackButton={false}
           onFilterOpen={setIsFilterOpen}
-          onFilteredShopsChange={handleFilteredShopsChange}
-          onFilterApply={handleFilterApply}
-          onGenreChange={handleGenreChange}
-          filteredShops={shops}
+          className="max-h-[248px]"
         />
         {translatedShops.length > 0 ? (
           translatedShops.slice(0, 20).map((item) => (

@@ -1,6 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  LoadScript,
+  Marker,
+  useJsApiLoader,
+} from "@react-google-maps/api";
 import { Shop } from "../../api/shop";
 import { useRouter } from "next/navigation";
 
@@ -249,6 +254,10 @@ export default function GoogleMapComponent({
 }: GoogleMapComponentProps) {
   const [shops, setShops] = useState<ShopData[]>([]);
   const router = useRouter();
+
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_API_KEY,
+  });
   useEffect(() => {
     const fetchShops = async () => {
       try {

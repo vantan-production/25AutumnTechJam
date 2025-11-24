@@ -9,7 +9,7 @@ type shopRequest = {
   is_cafe: boolean;
   name: string;
   description: string;
-  image_url: string;
+  image_urls: string[];
   min_budget: number | null;
   opens_at: string;
   closes_at: string;
@@ -25,14 +25,7 @@ type Props = {
 
 export function Card({ shop }: Props) {
   const router = useRouter();
-  const { t } = useTranslation();
-
-  const translatedName = t(`shops.${shop.id}.name`, {
-    defaultValue: shop.name,
-  });
-  const translatedDescription = t(`shops.${shop.id}.description`, {
-    defaultValue: shop.description,
-  });
+  const coverImage = shop.image_urls?.[0];
 
   return (
     <div
@@ -41,27 +34,34 @@ export function Card({ shop }: Props) {
         router.push(`/shop-info?id=${shop.id}`);
       }}
     >
-      <div className="rounded-2 bg-white p-18 w-[144px] h-[190px] relative overflow-hidden">
-        <Image
-          src={shop.image_url}
-          alt={shop.name}
-          fill
-          className="object-cover rounded-2"
-        />
+      <div className="rounded-2 bg-white p-18 w-[144px] h-[164px] relative overflow-hidden">
+        {coverImage ? (
+          <Image
+            src={coverImage}
+            alt={shop.name}
+            fill
+            sizes="144px"
+            className="object-cover rounded-2"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-black/50 bg-beige">
+            No Image
+          </div>
+        )}
       </div>
       <div className="w-full flex flex-col gap-1">
         <div className="w-full flex gap-x-4 items-center justify-between">
           <div className="text-black h2 w-[135px] no-wrap text-ellipsis overflow-hidde line-clamp-2">
             {translatedName}
           </div>
-          <Bookmark></Bookmark>
+          <Bookmark shopId={shop.id} />
         </div>
         <div className="w-full flex gap-x-4 items-center justify-between">
           <div className="text-black small">
             {shop.opens_at}-{shop.closes_at}
           </div>
           <div className="bg-beige rounded-full text-black small w-fit px-2">
-            {shop.min_budget ? `¥${shop.min_budget}~` : ""}
+            {`¥${shop.min_budget}~`}
           </div>
         </div>
         <div className="text-black p text-start">{translatedDescription}</div>
