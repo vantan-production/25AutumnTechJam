@@ -8,7 +8,7 @@ type shopRequest = {
   is_cafe: boolean;
   name: string;
   description: string;
-  image_url: string;
+  image_urls: string[];
   min_budget: number | null;
   opens_at: string;
   closes_at: string;
@@ -34,9 +34,10 @@ export function Card({ shop }: Props) {
     >
       <div className="rounded-2 bg-white p-18 w-[144px] h-[164px] relative overflow-hidden">
         <Image
-          src={shop.image_url}
+          src={shop.image_urls[0]}
           alt={shop.name}
           fill
+          sizes="144px"
           className="object-cover rounded-2"
         />
       </div>
@@ -52,7 +53,7 @@ export function Card({ shop }: Props) {
             {shop.opens_at}-{shop.closes_at}
           </div>
           <div className="bg-beige rounded-full text-black small w-fit px-2">
-            {shop.min_budget ? `¥${shop.min_budget}~` : ""}
+            {`¥${shop.min_budget}~`}
           </div>
         </div>
         <div className="text-black p text-start">{shop.description}</div>

@@ -10,7 +10,7 @@ type shopRequest = {
   is_cafe: boolean;
   name: string;
   description: string;
-  image_url: string;
+  image_urls: string[];
   min_budget: number | null;
   opens_at: string;
   closes_at: string;
@@ -18,6 +18,7 @@ type shopRequest = {
   phone_number: string;
   latitude: number;
   longitude: number;
+  station_distance: number;
 };
 
 export default function ShopList() {
@@ -40,7 +41,7 @@ export default function ShopList() {
 
   return (
     <div>
-      <div className="h-[258px] bg-beige"></div>
+      <div className="h-[30px] bg-beige"></div>
       <div className="bg-beige">
         <Header
           getGenreTab={true}
@@ -48,7 +49,9 @@ export default function ShopList() {
           getSearch={true}
           getBackButton={false}
           onFilterOpen={setIsFilterOpen}
+          className="max-h-[248px]"
         />
+        <p className="mb-[200px]">hgfds</p>
         {shops.slice(0, 20).map((item) => (
           <div className="py-1" key={item.id}>
             <Card shop={item} />

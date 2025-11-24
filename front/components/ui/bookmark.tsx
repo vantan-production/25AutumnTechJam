@@ -1,10 +1,37 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { login } from "../../api/auth/login";
+import { register } from "../../api/auth/register";
 export function Bookmark() {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const handleBookmark = () => {
     setIsBookmarked(!isBookmarked);
   };
+
+  useEffect(() => {
+    const fetchBookmark = async () => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/bookmark`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+      setIsBookmarked(data.isBookmarked);
+    };
+    fetchBookmark();
+  }, []);
+  if (login.success) {
+    return (
+      <button
+        className="flex justify-center items-center w-9 h-9 bg-beige rounded-1"
+        onClick={handleBookmark}
+      ></button>
+    );
+  }
   return isBookmarked ? (
     <button
       className="flex justify-center items-center w-9 h-9 bg-beige rounded-1"
