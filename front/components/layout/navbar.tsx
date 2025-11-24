@@ -54,7 +54,7 @@ export function TabBar({ onBookmarkClick }: Props) {
           <button
             onClick={() => {
               setActive(3);
-              onBookmarkClick();
+              router.push("/bookmark");
             }}
             className={`w-28 h-12 my-1 mx-1.5 rounded-md ${
               active === 3 ? "bg-white shadow-md" : "bg-beige shadow-none"
