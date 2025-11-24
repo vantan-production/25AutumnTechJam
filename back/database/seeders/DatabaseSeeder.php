@@ -22,5 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(BookmarkSeeder::class);
         $this->call(TravelPlanSeeder::class);
         $this->call(WaypointSeeder::class);
+        $this->call(ImageSeeder::class);
     }
 }
