@@ -26,13 +26,17 @@ type shopDetailResponse = {
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export async function Shop(): Promise<shopResponse> {
+export async function Shop(params?: URLSearchParams): Promise<shopResponse> {
   if (!API_BASE_URL) {
     throw new Error("NEXT_PUBLIC_API_URL is not defined");
   }
 
   try {
-    const response = await fetch(`${API_BASE_URL}/api/shop`, {
+    const url = params
+      ? `${API_BASE_URL}/api/shop?${params.toString()}`
+      : `${API_BASE_URL}/api/shop`;
+
+    const response = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -71,6 +75,7 @@ export async function ShopDetail(id: number): Promise<shopDetailResponse> {
       return {
         success: false,
         data: null,
+        message: "Failed to fetch shop detail",
       };
     }
 
@@ -80,6 +85,7 @@ export async function ShopDetail(id: number): Promise<shopDetailResponse> {
     return {
       success: false,
       data: null,
+      message: "Unexpected error while fetching shop detail",
     };
   }
 }

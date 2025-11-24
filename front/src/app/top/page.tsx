@@ -20,7 +20,6 @@ type shopRequest = {
   phone_number: string;
   latitude: number;
   longitude: number;
-  station_distance: number;
 };
 
 export default function ShopList() {
@@ -79,7 +78,7 @@ export default function ShopList() {
   }));
 
   return (
-    <div>
+    <div className="bg-beige h-screen">
       <div className="h-[260px] bg-beige"></div>
       <div className="bg-beige">
         <Header
@@ -98,7 +97,7 @@ export default function ShopList() {
           ))
         ) : (
           <div className="text-center py-8 text-black/60">
-            {t("noResults", { defaultValue: "検索結果がありません" })}
+            {t("noResults", { defaultValue: "結果がありません" })}
           </div>
         )}
         {!isFilterOpen && (

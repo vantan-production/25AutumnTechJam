@@ -13,6 +13,7 @@ import { travelMapResponse } from "../../../api/lib/travelMap";
 import { ShopInfo } from "../../../api/shop-info";
 import { useTranslation } from "react-i18next";
 import { Omiyage } from "../../../components/features/omiyage";
+import { Go } from "../../../components/ui/go";
 
 type shopRequest = {
   id: number;
@@ -136,7 +137,7 @@ export default function ShopInfoPage() {
     : null;
 
   return (
-    <div className="bg-beige h-screen">
+    <div className="bg-beige h-full">
       <div className="h-36"></div>
       <Header
         getGenreTab={false}
@@ -235,7 +236,7 @@ export default function ShopInfoPage() {
         <div className="bg-green h-fit w-[377px] radius-3">
           <div className="flex justify-end">
             <div className="p-2">
-              <Bookmark></Bookmark>
+              <Bookmark shopId={shopInfo?.id}></Bookmark>
             </div>
           </div>
           <div className="grid grid-cols-[4fr_6fr]  text-black pl-4 pb-3">
@@ -287,6 +288,7 @@ export default function ShopInfoPage() {
           </div>
         </div>
       </div>
+      <Go />
       <div className="h-20"></div>
       <Navbar />
     </div>

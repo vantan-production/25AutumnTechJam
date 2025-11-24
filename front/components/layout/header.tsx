@@ -11,6 +11,10 @@ type HeaderProps = {
   getBackButton?: boolean;
   onFilterOpen?: (isOpen: boolean) => void;
   className?: string;
+  onFilteredShopsChange?: (shops: ShopData[]) => void;
+  filteredShops?: ShopData[];
+  onGenreChange?: (genre: string) => void;
+  onFilterApply?: (conditions: FilterConditions) => void;
 };
 
 function Header({
@@ -20,6 +24,10 @@ function Header({
   getBackButton,
   onFilterOpen,
   className,
+  onFilteredShopsChange,
+  filteredShops,
+  onGenreChange,
+  onFilterApply,
 }: HeaderProps) {
   return (
     <div className="fixed top-0 left-0 right-0 z-50">

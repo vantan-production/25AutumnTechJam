@@ -12,6 +12,11 @@ type shopRequest = {
 
 export function Omiyage() {
   const [omiyageShops, setOmiyageShops] = useState<shopRequest[]>([]);
+  const [selectedShopId, setSelectedShopId] = useState<number | null>(null);
+
+  const handleClick = (shopId: number) => {
+    setSelectedShopId(selectedShopId === shopId ? null : shopId);
+  };
 
   useEffect(() => {
     const fetchShops = async () => {
@@ -35,11 +40,14 @@ export function Omiyage() {
   }
 
   return (
-    <div className="flex gap-x-2 w-full overflow-x-auto overflow-y-hidden">
+    <button className="flex gap-x-2 w-full overflow-x-auto overflow-y-hidden">
       {omiyageShops.map((shop) => (
         <div
           key={shop.id}
-          className="w-[350px] ml-2 h-[140px] bg-green radius-3 p-2"
+          className={`w-[350px] ml-2 h-[140px] bg-green radius-3 p-2 ${
+            selectedShopId === shop.id ? "border-[1.5px] border-black" : ""
+          }`}
+          onClick={() => handleClick(shop.id)}
         >
           <div className="flex justify-between">
             <div>
@@ -69,6 +77,6 @@ export function Omiyage() {
           </div>
         </div>
       ))}
-    </div>
+    </button>
   );
 }
