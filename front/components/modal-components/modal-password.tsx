@@ -5,7 +5,7 @@ export function ModalPass () {
             <input 
             type="text"
             placeholder="Password"
-            className="p w-full"
+            className="p w-full text-green"
             />
         </div>
     )

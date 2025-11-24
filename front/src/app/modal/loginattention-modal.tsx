@@ -1,13 +1,16 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 
-import LoginBuuton from "../../../components/modal/login-button";
-import LaterButton from "../../../components/modal/later-button";
+import LoginBuuton from "../../../components/modal-components/login-button";
+import LaterButton from "../../../components/modal-components/later-button";
 
-export default function LoginAttention() {
-    const [open, setOpen] = useState(true);
+type Props = {
+    onClose: () => void;
+    onSwitchLogin: () => void;
+}
 
-    if (!open) return null;
+export default function LoginAttention({onClose, onSwitchLogin}: Props) {
 
     return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
@@ -15,7 +18,7 @@ export default function LoginAttention() {
 
         {/* ✖ ボタン */}
         <button
-            onClick={() => setOpen(false)}
+            onClick={() => onClose()}
             className="block w-11 h-11 absolute top-3 right-3 text-xl"
         >
             <img
@@ -26,7 +29,7 @@ export default function LoginAttention() {
         </button>
 
         {/* 🔽 ログイン促しテキスト */}
-        <div className="text-center text-lg leading-relaxed mt-4">
+        <div className="text-center text-lg text-black leading-relaxed mt-4">
             You need to{" "}
             <span className="text-green font-semibold">login</span> or <br />
             <span className="text-green font-semibold"> sign up </span>
@@ -35,8 +38,10 @@ export default function LoginAttention() {
 
         {/* ボタン２つ */}
         <div className="mt-6 flex gap-4 justify-center">
-            <LoginBuuton />
-            <LaterButton />
+            <LoginBuuton
+            onClick={() => onSwitchLogin()
+            }></LoginBuuton>
+            <LaterButton onClick={() => onClose()}></LaterButton>
         </div>
 
         </div>

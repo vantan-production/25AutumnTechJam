@@ -7,9 +7,9 @@ export function LoginSwitch ({onClick}: Props) {
     return(
         <div
         onClick={() => onClick()}
-        className="w-14 mx-auto mt-4">
+        className="w-14 mx-auto">
             <button>
-                <p className="h4 underline">Login</p>
+                <p className="h4 underline text-black">Login</p>
             </button>
         </div>
     )

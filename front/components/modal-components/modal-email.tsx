@@ -5,7 +5,7 @@ export function ModalEmail () {
         <input
         type="text"
         placeholder="Email"
-        className="p w-full"
+        className="p w-full text-green"
         />
     </div>
 )}

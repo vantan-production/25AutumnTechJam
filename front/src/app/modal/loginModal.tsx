@@ -1,34 +1,37 @@
 "use client";
 import React, { useState } from "react";
 
-import LoginButton from "../../../components/modal/login-button";
-import SignupSwitch from "../../../components/modal/signup-switchbutton";
-import ModalEmail from "../../../components/modal/modal-email";
-import ModalPass from "../../../components/modal/modal-password";
+import LoginButton from "../../../components/modal-components/login-button";
+import SignupSwitch from "../../../components/modal-components/signup-switchbutton";
+import ModalEmail from "../../../components/modal-components/modal-email";
+import ModalPass from "../../../components/modal-components/modal-password";
 
-export default function LoginModal() {
+type Props = {
+    onClose: () => void;
+    onSwitchSignup: () => void;
+    onSubmit: () => void;
+}
 
-    const[open, setOpen] = useState(true);
-
-    if (!open) return null;
-
+export default function LoginModal({onClose, onSwitchSignup, onSubmit}: Props) {
     return(
-        <div className="relative w-fit h-fit px-10 py-2 rounded-3 flex flex-col gap-4 bg-white">
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
+        <div className="relative w-fit h-fit px-10 py-2 rounded-3 flex flex-col gap-4 shadow-xl bg-white">
             <div
-            onClick={() => setOpen(false)}
-            className="absolute p-2 top-2 right-2">
+                onClick={() => onClose()}
+                className="absolute p-2 top-2 right-2">
                 <img className="w-6  h-6" src="images/xx4.png" alt="x"/>
             </div>
             <div className="w-auto h-6"/>
-            <div className="flex-col">
+            <div className="flex flex-col">
                 <ModalEmail/>
                 <ModalPass/>
             </div>
             <div className="flex flex-col gap-y-1 mt-4">
-                <LoginButton></LoginButton>
-                <SignupSwitch></SignupSwitch>
+                <LoginButton onClick={() => onSubmit()}></LoginButton>
+                <SignupSwitch onClick={() => onSwitchSignup()}></SignupSwitch>
             </div>
-
         </div>
+        </div>
+
     )
 }
