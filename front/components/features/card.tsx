@@ -3,21 +3,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Bookmark from "../ui/bookmark";
 import { useTranslation } from "react-i18next";
-
-type shopRequest = {
-  id: number;
-  is_cafe: boolean;
-  name: string;
-  description: string;
-  image_url: string;
-  min_budget: number | null;
-  opens_at: string;
-  closes_at: string;
-  address: string;
-  phone_number: string;
-  latitude: number;
-  longitude: number;
-};
+import { type shopRequest } from "../../api/shop";
 
 type Props = {
   shop: shopRequest;
@@ -34,6 +20,8 @@ export function Card({ shop }: Props) {
     defaultValue: shop.description,
   });
 
+  console.log(shop)
+
   return (
     <div
       className="rounded-2 bg-green mx-3 flex p-2 gap-x-4"
@@ -43,7 +31,7 @@ export function Card({ shop }: Props) {
     >
       <div className="rounded-2 bg-white p-18 w-[144px] h-[190px] relative overflow-hidden">
         <Image
-          src={shop.image_url}
+          src={shop.image_urls[0]}
           alt={shop.name}
           fill
           className="object-cover rounded-2"

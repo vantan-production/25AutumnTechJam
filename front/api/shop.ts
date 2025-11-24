@@ -1,9 +1,8 @@
-type shopRequest = {
+export type shopRequest = {
   id: number;
   is_cafe: boolean;
   name: string;
   description: string;
-  image_url: string;
   min_budget: number | null;
   opens_at: string;
   closes_at: string;
@@ -11,6 +10,7 @@ type shopRequest = {
   phone_number: string;
   latitude: number;
   longitude: number;
+  image_urls: string[];
 };
 type shopResponse = {
   success: boolean;

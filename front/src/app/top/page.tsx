@@ -6,21 +6,7 @@ import { Shop } from "../../../api/shop";
 import { FilterConditions } from "../../../components/layout/filter";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-
-type shopRequest = {
-  id: number;
-  is_cafe: boolean;
-  name: string;
-  description: string;
-  image_url: string;
-  min_budget: number | null;
-  opens_at: string;
-  closes_at: string;
-  address: string;
-  phone_number: string;
-  latitude: number;
-  longitude: number;
-};
+import { type shopRequest } from "../../../api/shop";
 
 export default function ShopList() {
   const { t } = useTranslation();
