@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { ShopRequest } from "../../api/shop";
+import { type shopRequest, Shop } from "../../api/shop";
 import { useEffect, useState } from "react";
 
 export function Omiyage() {
-  const [omiyageShops, setOmiyageShops] = useState<ShopRequest[]>([]);
+  const [omiyageShops, setOmiyageShops] = useState<shopRequest[]>([]);
   const [selectedShopId, setSelectedShopId] = useState<number | null>(null);
 
   const handleClick = (shopId: number) => {
@@ -59,7 +59,7 @@ export function Omiyage() {
             </div>
             <div className="w-[114px] h-[124px]">
               <Image
-                src={shop.image_url}
+                src={shop.image_urls[0]}
                 alt={shop.name}
                 className="w-full h-full object-cover radius-3"
                 width={110}
