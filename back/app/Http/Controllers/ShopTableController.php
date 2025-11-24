@@ -8,18 +8,17 @@ use App\Models\Shop;
 class ShopTableController extends Controller
 {
     public function index(Request $request) {
-        $query = Shop::select(
+        $query = Shop::with('images:id,shop_id,image_url')->select(
             'id',
-            'is_cafe', 
-            'name', 
-            'description', 
-            'image_url',
-            'opens_at', 
-            'closes_at', 
-            'min_budget', 
+            'is_cafe',
+            'name',
+            'description',
+            'opens_at',
+            'closes_at',
+            'min_budget',
             'address',
             'phone_number',
-            'latitude', 
+            'latitude',
             'longitude',
             'is_sun',
             'is_mon',
@@ -67,6 +66,13 @@ class ShopTableController extends Controller
         }
 
         $shops = $query->get();
+
+        // image_urlsに変換
+        $shops->transform(function ($shop) {
+            $shop->image_urls = $shop->images->pluck('image_url');
+            unset($shop->images);
+            return $shop;
+        });
 
         return response()->json([
             "success" => true,

@@ -52,7 +52,7 @@ export function Card({ shop }: Props) {
       <div className="w-full flex flex-col gap-1">
         <div className="w-full flex gap-x-4 items-center justify-between">
           <div className="text-black h2 w-[135px] no-wrap text-ellipsis overflow-hidde line-clamp-2">
-            {translatedName}
+            {shop.name}
           </div>
           <Bookmark shopId={shop.id} />
         </div>
@@ -64,7 +64,7 @@ export function Card({ shop }: Props) {
             {`¥${shop.min_budget}~`}
           </div>
         </div>
-        <div className="text-black p text-start">{translatedDescription}</div>
+        <div className="text-black p text-start">{shop.description}</div>
       </div>
     </div>
   );
