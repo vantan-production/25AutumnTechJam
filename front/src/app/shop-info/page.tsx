@@ -10,6 +10,7 @@ import { travelMap } from "../../../api/lib/travelMap";
 import { useSearchParams } from "next/navigation";
 import ShopDetailHead from "../../../components/features/shop-detail-head";
 import { travelMapResponse } from "../../../api/lib/travelMap";
+import ModalNavbar from "../modal/ModalNavbar";
 
 export default function ShopInfo() {
   const searchParams = useSearchParams();
@@ -256,7 +257,7 @@ export default function ShopInfo() {
           </div>
         </div>
         <div className="h-20"></div>
-        <Navbar />
+        <ModalNavbar></ModalNavbar>
       </div>
     </div>
   );
