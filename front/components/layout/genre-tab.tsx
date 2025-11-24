@@ -30,7 +30,7 @@ function GenreTab({ onFilterOpen }: GenreTabProps) {
     "sweets",
   ].map((item, index) => (
     <div
-      className="w-14 h-11 radius-1 box-shadow flex items-center justify-center flex-shrink-0 cursor-pointer transition-colors"
+      className="w-14 h-11 radius-1 box-shadow flex items-center justify-center shrink-0 cursor-pointer transition-colors"
       style={{
         backgroundColor: selectedIndex === index ? "#050505" : "#ffffff",
         color: selectedIndex === index ? "#ffffff" : "#050505",
@@ -63,7 +63,7 @@ function GenreTab({ onFilterOpen }: GenreTabProps) {
             />
           </svg>
         </button>
-        <div className="w-[0.7px] h-8 bg-black flex-shrink-0"></div>
+        <div className="w-[0.7px] h-8 bg-black shrink-0"></div>
         <div className="flex gap-2 overflow-x-auto flex-2 min-w-0">{genre}</div>
       </div>
       {modaleOpen && (

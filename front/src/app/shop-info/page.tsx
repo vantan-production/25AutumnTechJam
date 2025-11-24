@@ -70,7 +70,7 @@ export default function ShopInfo() {
 
   const goToNext = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (selectedImageIndex !== null && selectedImageIndex < shops.length - 1) {
+    if (selectedImageIndex !== null && selectedImageIndex < Shop.length - 1) {
       setSelectedImageIndex(selectedImageIndex + 1);
     }
   };
@@ -158,7 +158,7 @@ export default function ShopInfo() {
             </button>
           </div>
           {selectedImageIndex !== null &&
-            selectedImageIndex < shops.length - 1 && (
+            selectedImageIndex < Shop.length - 1 && (
               <div
                 className="absolute top-1/2 right-5 -translate-y-1/2 cursor-pointer"
                 onClick={goToNext}
