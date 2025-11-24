@@ -13,40 +13,14 @@ import { travelMapResponse } from "../../../api/lib/travelMap";
 import { ShopInfo } from "../../../api/shop-info";
 import { useTranslation } from "react-i18next";
 import { Omiyage } from "../../../components/features/omiyage";
+import { type shopRequest } from "../../../api/shop";
 import { Go } from "../../../components/ui/go";
 
-type shopRequest = {
-  id: number;
-  is_cafe: boolean;
-  name: string;
-  description: string;
-  image_url: string;
-  min_budget: number | null;
-  opens_at: string;
-  closes_at: string;
-  address: string;
-  phone_number: string;
-  latitude: number;
-  longitude: number;
-};
 export default function ShopInfoPage() {
   const searchParams = useSearchParams();
   const shopId = searchParams.get("id");
-  type shopRequest = {
-    id: number;
-    is_cafe: boolean;
-    name: string;
-    description: string;
-    image_urls: string[];
-    min_budget: number | null;
-    opens_at: string;
-    closes_at: string;
-    address: string;
-    phone_number: string;
-    latitude: number;
-    longitude: number;
-  };
-  const [shopInfo, setShopInfo] = useState<shopRequest | null>(null);
+
+  const [shopInfo, setShopInfo] = useState<shopRequest>();
   const [loading, setLoading] = useState(true);
   const [travelTime, setTravelTime] = useState<travelMapResponse | null>(null);
 

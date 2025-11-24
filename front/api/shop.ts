@@ -3,16 +3,26 @@ export type shopRequest = {
   is_cafe: boolean;
   name: string;
   description: string;
-  image_urls: string[];
+  address: string;
+  station_distance: number,
+  phone_number: string;
   min_budget: number | null;
   opens_at: string;
   closes_at: string;
-  address: string;
-  phone_number: string;
   latitude: number;
   longitude: number;
+  is_sun: number,
+  is_mon: number,
+  is_tue: number,
+  is_wed: number,
+  is_thu: number,
+  is_fri: number,
+  is_sat: number,
+  created_at: string,
+  updated_at: string,
+  image_urls: string[];
 };
-type shopResponse = {
+export type shopResponse = {
   success: boolean;
   data: shopRequest[];
   message?: string;
@@ -32,9 +42,11 @@ export async function Shop(params?: URLSearchParams): Promise<shopResponse> {
   }
 
   try {
-    const url = params
-      ? `${API_BASE_URL}/api/shop?${params.toString()}`
-      : `${API_BASE_URL}/api/shop`;
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/api/shop${
+      params && params.toString() ? `?${params.toString()}` : ""
+    }`;
+
+    console.log(url)
 
     const response = await fetch(url, {
       method: "GET",

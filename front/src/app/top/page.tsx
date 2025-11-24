@@ -6,22 +6,8 @@ import { Shop } from "../../../api/shop";
 import { FilterConditions } from "../../../components/layout/filter";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import Cookies from "js-cookie";
-
-type shopRequest = {
-  id: number;
-  is_cafe: boolean;
-  name: string;
-  description: string;
-  image_urls: string[];
-  min_budget: number | null;
-  opens_at: string;
-  closes_at: string;
-  address: string;
-  phone_number: string;
-  latitude: number;
-  longitude: number;
-};
+import { type shopRequest } from "../../../api/shop";
+import Cookies from 'js-cookie';
 
 type UserInfo = {
   userId: number | null;
@@ -57,7 +43,7 @@ export default function ShopList() {
 
   const fetchShops = async (params?: URLSearchParams) => {
     try {
-      const res = await Shop(params, userInfo.token || undefined);
+      const res = await Shop(params);
       if (res.success && res.data.length > 0) {
         setShops(res.data);
         Cookies.set("selectedShops", JSON.stringify(res.data));

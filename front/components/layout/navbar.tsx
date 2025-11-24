@@ -6,7 +6,7 @@ type Props = {
   onBookmarkClick: () => void;
 };
 
-export function TabBar({ onBookmarkClick }: Props) {
+export function TabBar() { // { onBookmarkClick }: Props
   const [active, setActive] = useState<number | null>(null);
   const router = useRouter();
   const pathname = usePathname();

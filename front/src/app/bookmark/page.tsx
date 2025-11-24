@@ -1,28 +1,31 @@
 "use client";
-"use client";
 import { Card } from "../../../components/features/card";
 import Header from "../../../components/layout/header";
 import TabBar from "../../../components/layout/navbar";
+import { Shop } from "../../../api/shop";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { type shopRequest } from "../../../api/shop";
 import Cookies from "js-cookie";
-type shopRequest = {
-  id: number;
-  is_cafe: boolean;
-  name: string;
-  description: string;
-  image_urls: string[];
-  min_budget: number | null;
-  opens_at: string;
-  closes_at: string;
-  address: string;
-  phone_number: string;
-  latitude: number;
-  longitude: number;
-  image_url?: string;
-};
 
 export default function Bookmark() {
+  const { t } = useTranslation();
   const [shops, setShops] = useState<shopRequest[]>([]);
+
+  const fetchShops = async () => {
+      try {
+        const res = await Shop();
+        if (res.success && res.data.length > 0) {
+          setShops(res.data);
+        } else {
+          setShops([]);
+        }
+      } catch (error) {
+        console.error(error);
+        setShops([]);
+      }
+    };
+  
 
   const loadShops = () => {
     const raw = Cookies.get("selectedShops");
@@ -35,7 +38,7 @@ export default function Bookmark() {
       const parsed: shopRequest[] = JSON.parse(raw);
       const normalized = parsed.map((shop) => ({
         ...shop,
-        image_urls: shop.image_urls ?? (shop.image_url ? [shop.image_url] : []),
+        image_urls: shop.image_urls ?? (shop.image_urls ? [shop.image_urls] : []),
       }));
       setShops(normalized);
     } catch (err) {
@@ -44,20 +47,16 @@ export default function Bookmark() {
     }
   };
 
-  useEffect(() => {
-    loadShops();
 
-    // ブックマーク変更イベントを監視
-    const handleBookmarkChange = () => {
-      loadShops();
-    };
 
-    window.addEventListener("bookmarkChanged", handleBookmarkChange);
-
-    return () => {
-      window.removeEventListener("bookmarkChanged", handleBookmarkChange);
-    };
-  }, []);
+  const translatedShops = shops.map((shop) => ({
+    ...shop,
+    name: t(`shops.${shop.id}.name`, { defaultValue: shop.name }),
+    description: t(`shops.${shop.id}.description`, {
+      defaultValue: shop.description,
+    }),
+    address: t(`shops.${shop.id}.address`, { defaultValue: shop.address }),
+  }));
   const removeShop = (id: number) => {
     setShops((prev) => {
       const next = prev.filter((shop) => shop.id !== id);

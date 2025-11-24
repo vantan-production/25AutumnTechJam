@@ -3,21 +3,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Bookmark from "../ui/bookmark";
 import { useTranslation } from "react-i18next";
-
-type shopRequest = {
-  id: number;
-  is_cafe: boolean;
-  name: string;
-  description: string;
-  image_urls: string[];
-  min_budget: number | null;
-  opens_at: string;
-  closes_at: string;
-  address: string;
-  phone_number: string;
-  latitude: number;
-  longitude: number;
-};
+import { type shopRequest } from "../../api/shop";
 
 type Props = {
   shop: shopRequest;
@@ -25,7 +11,14 @@ type Props = {
 
 export function Card({ shop }: Props) {
   const router = useRouter();
-  const coverImage = shop.image_urls?.[0];
+  const { t } = useTranslation();
+
+  const translatedName = t(`shops.${shop.id}.name`, {
+    defaultValue: shop.name,
+  });
+  const translatedDescription = t(`shops.${shop.id}.description`, {
+    defaultValue: shop.description,
+  });
 
   return (
     <div
@@ -34,20 +27,13 @@ export function Card({ shop }: Props) {
         router.push(`/shop-info?id=${shop.id}`);
       }}
     >
-      <div className="rounded-2 bg-white p-18 w-[144px] h-[164px] relative overflow-hidden">
-        {coverImage ? (
-          <Image
-            src={coverImage}
-            alt={shop.name}
-            fill
-            sizes="144px"
-            className="object-cover rounded-2"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-black/50 bg-beige">
-            No Image
-          </div>
-        )}
+      <div className="rounded-2 bg-white p-18 w-[144px] h-[190px] relative overflow-hidden">
+        <Image
+          src={shop.image_urls[0]}
+          alt={shop.name}
+          fill
+          className="object-cover rounded-2"
+        />
       </div>
       <div className="w-full flex flex-col gap-1">
         <div className="w-full flex gap-x-4 items-center justify-between">
