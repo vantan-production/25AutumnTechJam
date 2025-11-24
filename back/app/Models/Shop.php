@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Image;
 class Shop extends Model
 {
     protected $fillable = [
@@ -21,5 +21,8 @@ class Shop extends Model
     }
     public function users() {
         return $this->belongsToMany(User::class, "bookmark");
+    }
+    public function images() {
+        return $this->hasMany(Image::class);
     }
 }

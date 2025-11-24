@@ -1,6 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  LoadScript,
+  Marker,
+  useJsApiLoader,
+} from "@react-google-maps/api";
 import { Shop } from "../../api/shop";
 import { useRouter } from "next/navigation";
 
@@ -240,6 +245,7 @@ type ShopData = {
 type GoogleMapComponentProps = {
   className?: string;
   onMapIntercepted?: () => void;
+  onFilteredShopsChange?: (shops: any[]) => void;
 };
 
 export default function GoogleMapComponent({
@@ -248,6 +254,10 @@ export default function GoogleMapComponent({
 }: GoogleMapComponentProps) {
   const [shops, setShops] = useState<ShopData[]>([]);
   const router = useRouter();
+
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_API_KEY,
+  });
   useEffect(() => {
     const fetchShops = async () => {
       try {
@@ -271,7 +281,7 @@ export default function GoogleMapComponent({
   }, []);
 
   return (
-    <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_API_KEY}>
+    <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_API_KEY || ""}>
       <GoogleMap
         mapContainerStyle={sizeStyele}
         center={center}
@@ -290,7 +300,7 @@ export default function GoogleMapComponent({
             }}
             title={shop.name}
             icon={{
-              path: google.maps.SymbolPath.CIRCLE,
+              path: 0,
               fillColor: "#96514D",
               fillOpacity: 0.8,
               strokeColor: "#FFF7EC",

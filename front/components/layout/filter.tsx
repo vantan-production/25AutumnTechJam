@@ -1,17 +1,51 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { useEffect, useState } from "react";
 import Select from "react-select";
 
-type FilterProps = {
-  onClose?: () => void;
+export type FilterConditions = {
+  min_budget?: number;
+  max_budget?: number;
+  day_of_week?: number;
+  staying_time?: number;
 };
 
-function Filter({ onClose }: FilterProps) {
-  const router = useRouter();
+export const buildFilterParams = (
+  conditions: FilterConditions,
+  genre?: string | null
+): URLSearchParams => {
+  const params = new URLSearchParams();
+
+  if (conditions.min_budget !== undefined) {
+    params.append("min_budget", conditions.min_budget.toString());
+  }
+  if (conditions.max_budget !== undefined) {
+    params.append("max_budget", conditions.max_budget.toString());
+  }
+  if (conditions.day_of_week !== undefined) {
+    params.append("day_of_week", conditions.day_of_week.toString());
+  }
+  if (conditions.staying_time !== undefined) {
+    params.append("staying_time", conditions.staying_time.toString());
+  }
+  if (genre) {
+    params.append("genre", genre);
+  }
+
+  return params;
+};
+
+type FilterProps = {
+  onClose?: () => void;
+  onFilterApply?: (
+    conditions: FilterConditions,
+    params: URLSearchParams
+  ) => void;
+};
+
+function Filter({ onClose, onFilterApply }: FilterProps) {
   const [defaultValues, setDefaultValues] = useState([0, 20000]);
   const minBudget = 0;
   const maxBudget = 20000;
@@ -178,8 +212,35 @@ function Filter({ onClose }: FilterProps) {
         <button
           onClick={() => {
             if (decision) {
+              const timeToMinutes: { [key: string]: number } = {
+                "30 min": 30,
+                "1h": 60,
+                "1h 30min": 90,
+                "2h": 120,
+                "2h 30min": 150,
+                "3h": 180,
+              };
+
+              let dayOfWeek: number | undefined;
+              if (year && month && day) {
+                const date = new Date(year, month - 1, day);
+                dayOfWeek = date.getDay();
+              }
+
+              const conditions: FilterConditions = {
+                min_budget:
+                  defaultValues[0] !== 0 ? defaultValues[0] : undefined,
+                max_budget:
+                  defaultValues[1] !== 20000 ? defaultValues[1] : undefined,
+                day_of_week: dayOfWeek,
+                staying_time: selectedTime
+                  ? timeToMinutes[selectedTime]
+                  : undefined,
+              };
+
+              const params = buildFilterParams(conditions);
+              onFilterApply?.(conditions, params);
               onClose?.();
-              router.push("/");
             } else {
               null;
             }
